@@ -1,0 +1,21 @@
+{
+  "name": "My Training",
+  "short_name": "Training",
+  "description": "App de suivi d'entraînement — offline ready",
+  "start_url": "./app.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080410",
+  "theme_color": "#080410",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Programme", "url": "./app.html", "description": "Mon programme" },
+    { "name": "Timer", "url": "./app.html#timer", "description": "Chronomètre" }
+  ]
+}
