@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.mytraining.app",
+        "sha256_cert_fingerprints": ["66:61:BD:40:CC:97:BC:81:13:9B:5D:8A:A0:B4:AF:25:F1:68:2D:CE:77:78:90:CB:58:77:5E:32:87:9A:7F:A7"]
+      }
+    }]
