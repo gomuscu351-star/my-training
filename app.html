@@ -1,0 +1,2705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ASCENSION TRAINING</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#080410">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Training">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080410;--bg2:#0d0619;
+  --panel:rgba(124,58,237,.05);--soft:rgba(124,58,237,.03);--softer:rgba(124,58,237,.014);
+  --border:rgba(124,58,237,.22);--border-s:rgba(124,58,237,.11);
+  --text:#ede9fe;--muted:rgba(237,233,254,.42);
+  --accent:#7c3aed;--accent-inv:#fff;--accent-glow:rgba(124,58,237,.22);
+  --accent-btn:#7c3aed;--accent-btn-inv:#fff;
+  --nav-on:#7c3aed;--nav-on-inv:#fff;
+  --bar:linear-gradient(90deg,#7c3aed,#8b5cf6);
+  --grid-clr:rgba(255,255,255,.018);
+  --mono:'Share Tech Mono',monospace;
+  --r:22px;--r2:16px;--r3:11px;--r4:7px;
+  --bnav-h:62px;
+}
+
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh;min-height:100dvh;overflow-x:hidden;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(255,255,255,.04),transparent);
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+button{border:none;cursor:pointer;font-family:inherit;outline:none;-webkit-tap-highlight-color:transparent}
+input,textarea,select{font-family:inherit;outline:none;color:var(--text);-webkit-appearance:none;appearance:none;background:transparent;-webkit-tap-highlight-color:transparent}
+a{-webkit-tap-highlight-color:transparent}
+::-webkit-scrollbar{width:2px;height:2px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:1px}
+
+/* ── LAYOUT ── */
+.wrap{
+  max-width:680px;margin:0 auto;
+  padding:12px 12px calc(var(--bnav-h) + 32px);
+  display:flex;flex-direction:column;gap:12px;
+}
+@media(min-width:900px){
+  .wrap{max-width:1100px;padding:24px 24px 32px}
+}
+
+/* ── CARDS ── */
+.card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--r);overflow:visible;position:relative;
+  box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 14px 36px -16px rgba(0,0,0,.55);
+  transition:background .25s,border-color .25s,box-shadow .3s;
+}
+.card::before{
+  content:'';position:absolute;inset:0;border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(255,255,255,.018) 0%,transparent 55%);
+  pointer-events:none;z-index:0;
+}
+.card>*{position:relative;z-index:1}
+.soft-c{background:var(--soft);border:1px solid var(--border-s);border-radius:var(--r2)}
+
+/* ── TYPOGRAPHY ── */
+.tag{font-size:8.5px;font-weight:700;letter-spacing:3px;color:var(--muted);text-transform:uppercase}
+.title-xl{font-size:clamp(28px,7vw,56px);font-weight:900;letter-spacing:-1.5px;line-height:.95}
+.title-md{font-size:clamp(16px,3.5vw,20px);font-weight:900;letter-spacing:-.4px}
+.mono{font-family:var(--mono)}
+
+/* ── BUTTONS ── */
+.btn-w{
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 45%),var(--accent-btn);
+  color:var(--accent-btn-inv);
+  font-weight:800;font-size:13px;border-radius:var(--r3);
+  padding:11px 18px;letter-spacing:.2px;
+  box-shadow:0 1px 0 rgba(255,255,255,.18) inset, 0 1px 0 rgba(0,0,0,.1),
+             0 8px 20px -6px var(--accent-glow), 0 2px 6px -2px rgba(124,58,237,.35);
+  transition:opacity .18s, transform .22s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .25s cubic-bezier(.16,1,.3,1);
+}
+.btn-w:active{
+  transform:scale(.955);opacity:.92;
+  box-shadow:0 1px 0 rgba(255,255,255,.12) inset, 0 2px 8px -2px var(--accent-glow);
+}
+.btn-g{
+  background:var(--soft);border:1px solid var(--border-s);
+  color:var(--muted);font-weight:700;font-size:13px;
+  border-radius:var(--r3);padding:11px 18px;
+  box-shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 2px 8px -4px rgba(0,0,0,.3);
+  transition:border-color .2s, color .2s, background .2s,
+             transform .22s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .25s cubic-bezier(.16,1,.3,1);
+}
+.btn-g:hover{border-color:var(--border);color:var(--text);background:var(--panel)}
+.btn-g:active{
+  transform:scale(.955);background:var(--panel);
+  box-shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 1px 4px -2px rgba(0,0,0,.3);
+}
+.btn-d{
+  background:linear-gradient(180deg,rgba(248,113,113,.16),rgba(239,68,68,.08));
+  border:1px solid rgba(239,68,68,.28);
+  color:#F87171;font-size:11px;font-weight:700;border-radius:var(--r4);padding:6px 11px;
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 3px 10px -4px rgba(239,68,68,.35);
+  transition:background .18s, border-color .18s, box-shadow .25s cubic-bezier(.16,1,.3,1),
+             transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-d:active{
+  background:rgba(239,68,68,.24);transform:scale(.93);
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 1px 4px -2px rgba(239,68,68,.3);
+}
+/* Variante pleine rouge pour les confirmations destructives (ex: "Effacer
+   tout") — même relief/glow que .btn-w mais teinté danger, pour distinguer
+   visuellement une action irréversible d'une simple validation neutre. */
+.btn-danger-solid{
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%),#ef4444;
+  color:#fff;font-weight:800;font-size:13px;border-radius:var(--r3);
+  padding:11px 18px;letter-spacing:.2px;
+  box-shadow:0 1px 0 rgba(255,255,255,.16) inset, 0 1px 0 rgba(0,0,0,.1),
+             0 8px 20px -6px rgba(239,68,68,.4), 0 2px 6px -2px rgba(239,68,68,.45);
+  transition:opacity .18s, transform .22s cubic-bezier(.34,1.56,.64,1),
+             box-shadow .25s cubic-bezier(.16,1,.3,1);
+}
+.btn-danger-solid:active{
+  transform:scale(.955);opacity:.92;
+  box-shadow:0 1px 0 rgba(255,255,255,.1) inset, 0 2px 8px -2px rgba(239,68,68,.4);
+}
+.btn-sm{padding:8px 13px;font-size:11.5px}
+
+.btn-ic{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--soft);border:1px solid var(--border-s);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;flex-shrink:0;
+  color:var(--text);
+  box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
+  transition:background .18s, border-color .18s,
+             transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-ic:active{background:var(--panel);transform:scale(.9)}
+
+/* Bouton développer/réduire une carte d'exercice : un seul SVG qui pivote
+   en CSS plutôt que d'échanger brutalement deux icônes différentes au
+   re-render — rotation fluide à ressort, plus élégant et plus premium. */
+.btn-toggle-collapse{
+  transition:background .18s, border-color .18s, transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.chevron-icon{
+  display:block;
+  transition:transform .32s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-toggle-collapse.is-expanded .chevron-icon{
+  transform:rotate(180deg);
+}
+
+/* ── INPUTS ── */
+.inp{
+  background:var(--softer);border:1px solid var(--border-s);border-radius:var(--r3);
+  padding:11px 13px;font-size:15px;font-weight:500;color:var(--text);width:100%;
+  transition:border-color .14s;
+}
+.inp:focus{border-color:var(--accent);box-shadow:0 0 0 3.5px var(--accent-glow)}
+.inp::placeholder{color:var(--muted);font-weight:400;opacity:.6}
+.inp-sm{padding:9px 11px;font-size:13px;border-radius:var(--r4)}
+@media(max-width:899px){.inp-sm:focus{font-size:16px}}
+.inp-c{text-align:center}
+.inp-mono{font-family:var(--mono)}
+select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
+
+/* ── BARS ── */
+.bar-t{height:8px;border-radius:99px;background:rgba(128,128,140,.26);border:1px solid rgba(128,128,140,.14);overflow:hidden}
+.bar-f{height:100%;border-radius:99px;background:var(--bar);transition:width .8s cubic-bezier(.16,1,.3,1);box-shadow:0 0 14px var(--accent-glow),0 0 3px rgba(255,255,255,.25) inset}
+
+/* ── GRIDS ── */
+/* mobile: single column by default */
+.g2{display:grid;grid-template-columns:1fr;gap:12px;align-items:stretch}
+.g2>*{min-width:0}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rows{display:flex;flex-direction:column;gap:10px}
+/* desktop */
+@media(min-width:900px){
+  .g2{grid-template-columns:1fr 1fr;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr);gap:14px}
+}
+
+/* ── HEADER ── */
+.hdr-card{position:relative;overflow:hidden}
+.hdr-card::after{
+  content:'';position:absolute;top:-60%;left:50%;
+  width:280px;height:280px;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(124,58,237,.16),transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.hdr-logo{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;flex-shrink:0;border-radius:10px;
+  background:radial-gradient(circle at 32% 28%, #a78bfa 0%, var(--accent) 55%, #6d28d9 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 2px 3px rgba(255,255,255,.16) inset,
+             0 0 16px -2px var(--accent-glow);
+  color:#fff;position:relative;z-index:1;
+}
+/* Point pulsant affiché uniquement quand une séance/repos est active —
+   piloté en JS (display none/flex sur #hdr-live-dot) plutôt qu'en CSS pur,
+   l'état "en cours" dépendant de variables JS (restRunning / session timer)
+   qu'on ne peut pas exprimer en sélecteur CSS seul. */
+.hdr-live-dot{
+  display:none;width:8px;height:8px;border-radius:50%;
+  background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.6);
+  margin-left:auto;flex-shrink:0;position:relative;z-index:1;
+  animation:hdrLivePulse 1.8s ease-out infinite;
+}
+.hdr-live-dot.on{ display:block }
+@keyframes hdrLivePulse{
+  0%{ box-shadow:0 0 0 0 rgba(52,211,153,.55) }
+  70%{ box-shadow:0 0 0 7px rgba(52,211,153,0) }
+  100%{ box-shadow:0 0 0 0 rgba(52,211,153,0) }
+}
+.stat-lbl{font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:6px;font-weight:700;text-transform:uppercase}
+.stat-val{font-size:clamp(20px,5vw,32px);font-weight:900;letter-spacing:-1px;line-height:1}
+.stat-box{padding:13px 12px;border:1px solid var(--border-s);border-radius:var(--r2);transition:border-color .25s,background .25s}
+.stat-box-primary{
+  background:linear-gradient(160deg,rgba(124,58,237,.12),rgba(124,58,237,.04));
+  border-color:rgba(124,58,237,.3);
+}
+.stat-box-primary .stat-lbl{color:#c4b5fd}
+
+/* Grille asymétrique du header : la stat Séance (hero) prend toute la
+   hauteur à gauche et se démarque visuellement ; Repos/Exercices sont
+   empilées en plus discret à droite — hiérarchise l'info la plus utile
+   en cours d'entraînement plutôt que de traiter les 3 stats à égalité. */
+.hdr-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch}
+.hdr-stats-side{display:flex;flex-direction:column;gap:8px}
+.stat-box-hero{
+  background:linear-gradient(160deg,rgba(124,58,237,.16),rgba(124,58,237,.05));
+  border-color:rgba(124,58,237,.35);
+  display:flex;flex-direction:column;justify-content:center;
+  box-shadow:0 0 22px -8px var(--accent-glow);
+}
+.stat-box-hero .stat-lbl{color:#c4b5fd}
+.stat-box-hero .stat-val{font-size:clamp(26px,7vw,38px)}
+.stat-box-sm{padding:9px 12px;flex:1;display:flex;flex-direction:column;justify-content:center}
+.stat-box-sm .stat-val{font-size:clamp(16px,4vw,22px)}
+@media(min-width:520px){
+  .hdr-stats{grid-template-columns:1.3fr 1fr}
+}
+
+/* ── TOP NAV (desktop) ── */
+.nav-wrap{
+  display:none; /* hidden on mobile */
+  gap:4px;background:var(--soft);border:1px solid var(--border-s);
+  border-radius:var(--r2);padding:4px;overflow-x:auto;
+}
+@media(min-width:900px){
+  .nav-wrap{display:flex}
+  .bottom-nav{display:none !important}
+}
+.nav-tab{
+  flex:1;min-width:max-content;padding:9px 16px;border-radius:12px;
+  font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
+  text-align:center;white-space:nowrap;background:none;border:none;
+  transition:color .14s,background .14s;
+}
+.nav-tab.on{background:var(--nav-on);color:var(--nav-on-inv)}
+.nav-tab:hover:not(.on){color:var(--text)}
+
+/* ── BOTTOM NAV — redesign complet ── */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--bnav-h);
+  background:var(--bg2);
+  border-top:1px solid rgba(255,255,255,.06);
+  z-index:300;display:flex;align-items:center;justify-content:space-around;
+  padding-bottom:env(safe-area-inset-bottom,0);
+  padding-left:8px;padding-right:8px;
+  box-shadow:0 -1px 0 rgba(255,255,255,.04), 0 -16px 44px rgba(0,0,0,.55);
+}
+.bn-item{
+  flex:1;max-width:80px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;color:rgba(255,255,255,.32);
+  background:none;border:none;padding:6px 4px;cursor:pointer;
+  transition:color .28s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.bn-item.on{ color:var(--accent) }
+.bn-sym{
+  display:flex;align-items:center;justify-content:center;
+  width:46px;height:32px;
+  border-radius:14px;
+  background:transparent;
+  transition:background .32s cubic-bezier(.16,1,.3,1),
+             box-shadow .32s cubic-bezier(.16,1,.3,1),
+             transform .32s cubic-bezier(.34,1.56,.64,1);
+  margin-bottom:4px;
+}
+/* Pilule rectangulaire à bords arrondis, dégradé directionnel + halo —
+   plus "app premium" qu'un disque rond plein façon horloge système. */
+.bn-item.on .bn-sym{
+  background:linear-gradient(155deg, rgba(167,139,250,.95) 0%, var(--accent) 55%, #6d28d9 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,
+             0 2px 3px rgba(255,255,255,.16) inset,
+             0 0 18px -1px var(--accent-glow),
+             0 0 32px -6px var(--accent-glow);
+  transform:scale(1.05);
+  color:#fff;
+}
+.bn-sym.tap{
+  animation:iconTap .58s cubic-bezier(.22,.61,.36,1);
+}
+.bn-lbl{
+  font-size:7px;letter-spacing:.4px;text-transform:uppercase;font-weight:800;
+  line-height:1;opacity:0;transform:translateY(4px);
+  transition:opacity .25s, transform .25s;
+}
+.bn-item.on .bn-lbl{
+  opacity:1;transform:translateY(0);
+}
+
+/* ── Animations spécifiques par icône, déclenchées via classes jetables
+   (ajoutées/retirées en JS à chaque tap, comme .bn-sym.tap déjà en place) ── */
+
+/* Haltère (Séance) — shake amorti : amplitude de rotation qui décroît à
+   chaque oscillation (comme un objet qu'on relâche après l'avoir secoué),
+   plutôt qu'une translation de 1-2px à peine perceptible avec un seul
+   easing pour toute la séquence. */
+@keyframes bnShakeDumbbell{
+  0%{ transform:rotate(0deg) }
+  15%{ transform:rotate(-11deg) }
+  32%{ transform:rotate(9deg) }
+  48%{ transform:rotate(-6deg) }
+  64%{ transform:rotate(3.5deg) }
+  80%{ transform:rotate(-1.5deg) }
+  100%{ transform:rotate(0deg) }
+}
+.bn-sym.tap-shake svg{
+  transform-origin:50% 60%;
+  animation:bnShakeDumbbell .5s cubic-bezier(.36,.07,.19,.97);
+}
+
+/* Barres (Volume) — chaque barre apparaît en cascade, une après l'autre,
+   en partant du bas (scaleY) avec un léger overshoot. Délais resserrés et
+   durée allongée par rapport à la version initiale : sinon la 1ère barre
+   finit son rebond avant même que la 3e démarre, ce qui casse la sensation
+   de mouvement continu et donne un effet décousu plutôt qu'une vague fluide. */
+@keyframes bnBarGrow{
+  0%{ transform:scaleY(0); opacity:.35 }
+  55%{ transform:scaleY(1.1) }
+  75%{ transform:scaleY(.97) }
+  100%{ transform:scaleY(1); opacity:1 }
+}
+.bn-sym.tap-bars svg .bn-bar{
+  transform-box:fill-box;
+  transform-origin:50% 100%;
+  animation:bnBarGrow .46s cubic-bezier(.22,.61,.36,1) both;
+}
+.bn-sym.tap-bars svg .bn-bar:nth-child(1){ animation-delay:0ms }
+.bn-sym.tap-bars svg .bn-bar:nth-child(2){ animation-delay:60ms }
+.bn-sym.tap-bars svg .bn-bar:nth-child(3){ animation-delay:120ms }
+
+/* Chronomètre (Timer) — l'aiguille fait un tour complet, le cadran reste fixe.
+   transform-origin en coordonnées SVG absolues (centre du cadran = 12px 13px).
+   Sur un <path> SVG, transform-origin en px est interprété nativement dans le
+   repère du viewBox sans dépendre de transform-box — c'est plus largement
+   supporté que transform-box:view-box, et évite tout risque que l'aiguille
+   pivote autour du centre de sa propre bounding box (excentré) plutôt
+   qu'autour du vrai pivot du chronomètre. */
+@keyframes bnSweepHand{
+  from{ transform:rotate(0deg) }
+  to{ transform:rotate(360deg) }
+}
+.bn-sym.tap-sweep svg .bn-hand{
+  transform-origin:12px 13px;
+  animation:bnSweepHand .62s cubic-bezier(.65,0,.35,1);
+}
+#notif-banner.notif-banner-on{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25)}
+#notif-banner.notif-banner-on #notif-banner-icon{color:var(--accent)}
+
+/* ── PROG BAR ── */
+.prog-bar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.prog-days-row{
+  display:flex;flex-direction:column;align-items:stretch;gap:14px;
+  margin-bottom:18px;padding-top:16px;border-top:1px solid var(--border-s);
+}
+.prog-action-btn{flex:1;white-space:nowrap}
+@media(min-width:600px){
+  .prog-days-row{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:12px}
+  .prog-actions-col{flex-shrink:0}
+  .prog-action-btn{flex:none}
+}
+.prog-chip{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 14px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--border-s);background:var(--softer);color:var(--muted);
+  transition:border-color .22s cubic-bezier(.16,1,.3,1), background .22s cubic-bezier(.16,1,.3,1),
+             color .18s, box-shadow .25s cubic-bezier(.16,1,.3,1), transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.prog-chip:active{transform:scale(.96)}
+.prog-chip.on{
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%),var(--accent-btn);
+  color:var(--accent-btn-inv);border-color:transparent;
+  box-shadow:0 1px 0 rgba(255,255,255,.15) inset, 0 6px 16px -4px var(--accent-glow);
+}
+.prog-chip input{
+  background:transparent;border:none;font:inherit;font-weight:700;font-size:12px;
+  color:inherit;width:100px;outline:none;
+}
+.prog-chip.on input{color:var(--accent-btn-inv)}
+
+/* Bouton supprimer accolé au chip de programme — même langage visuel que
+   .btn-d (rouge, glow, ressort au tap) plutôt qu'un "×" plat en styles
+   inline sans aucune transition. */
+.prog-del-btn{
+  height:100%;padding:7px 12px;font-size:14px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  border-left:none;border-radius:0 99px 99px 0;
+  transition:background .2s cubic-bezier(.16,1,.3,1), color .2s,
+             box-shadow .25s cubic-bezier(.16,1,.3,1), transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.prog-del-btn:active{transform:scale(.88)}
+.prog-del-btn.on{
+  background:rgba(255,255,255,.14);color:var(--accent-btn-inv);
+  border:1.5px solid transparent;border-left:none;
+}
+.prog-del-btn.off{
+  background:var(--softer);color:var(--muted);
+  border:1.5px solid var(--border-s);border-left:none;
+}
+.prog-del-btn.off:hover{ background:rgba(239,68,68,.12); color:#F87171; border-color:rgba(239,68,68,.3) }
+
+/* Bouton "+" ajouter un programme : pointillés discrets au repos, qui se
+   transforment en plein violet au survol/tap — cohérent avec le ressort
+   et le glow des autres boutons plutôt qu'un simple carré statique. */
+.prog-add-btn{
+  padding:7px 16px;border-radius:99px;font-size:18px;font-weight:700;
+  background:var(--softer);border:1.5px dashed var(--border-s);
+  color:var(--muted);cursor:pointer;flex-shrink:0;line-height:1;
+  touch-action:manipulation;
+  transition:background .22s cubic-bezier(.16,1,.3,1), border-color .22s cubic-bezier(.16,1,.3,1),
+             color .2s, box-shadow .25s cubic-bezier(.16,1,.3,1), transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.prog-add-btn:hover{
+  border-color:var(--accent);color:var(--accent);background:var(--panel);
+}
+.prog-add-btn:active{
+  transform:scale(.9) rotate(90deg);
+  background:var(--accent-btn);border-style:solid;border-color:transparent;color:#fff;
+  box-shadow:0 0 14px -3px var(--accent-glow);
+}
+
+/* ── EXERCISE CARD ── */
+.ex-card{
+  background:linear-gradient(160deg,var(--soft),var(--softer));
+  border:1px solid var(--border-s);
+  border-radius:var(--r2);padding:16px;
+  box-shadow:0 8px 24px -14px rgba(0,0,0,.5);
+  transition:border-color .14s,box-shadow .2s;
+  /* pan-y (pas "manipulation", pas "none") dès le départ — pas seulement
+     pendant .ex-card-dragging. "manipulation" laissait le navigateur capturer
+     tout geste (y compris un appui qui bouge à peine) comme un scroll de page
+     pendant le délai d'appui long (450ms), avant que startDrag() ait pu
+     intervenir : le pointer capture se faisait voler par le scroll natif et
+     pointermove/pointerup n'étaient plus délivrés à notre listener, donc le
+     drag ne démarrait jamais. "pan-y" autorise le navigateur à scroller
+     verticalement nativement (swipe normal sur la liste reste fluide) sans
+     pour autant intercepter le pointer capture qu'on prend nous-mêmes dans
+     startDrag() une fois le seuil de long-press atteint.
+  */
+  touch-action:pan-y;
+}
+.ex-card:focus-within{border-color:var(--border);box-shadow:0 8px 24px -14px rgba(0,0,0,.5),0 0 0 1px rgba(124,58,237,.18)}
+.ex-card-dragging{
+  box-shadow:0 18px 40px -12px rgba(0,0,0,.6),0 0 0 1.5px var(--accent);
+  cursor:grabbing;touch-action:none;user-select:none;
+  transition:box-shadow .15s;
+}
+
+/* État replié: item de liste compact, juste le nom */
+.ex-card-collapsed{padding:0;overflow:hidden}
+.ex-collapsed-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:14px 16px;cursor:pointer;transition:background .14s;
+  -webkit-tap-highlight-color:transparent;
+}
+.ex-collapsed-row:active{background:var(--panel)}
+.ex-collapsed-main{flex:1;min-width:0}
+.ex-collapsed-name{font-size:14px;font-weight:800;letter-spacing:-.2px;line-height:1.3}
+.ex-collapsed-meta{font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:600}
+
+/* En-tête exercice — nom pleine largeur */
+.ex-header{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.ex-header-top{display:flex;align-items:flex-end;gap:8px}
+.ex-name-wrap{flex:1;min-width:0}
+.ex-name-label{font-size:7.5px;letter-spacing:2px;color:var(--muted);margin-bottom:5px;font-weight:700;text-transform:uppercase}
+/* Champ nom avec bouton clear intégré */
+.ex-name-inp-wrap{position:relative;display:flex;align-items:center}
+.ex-name-inp{font-size:14px;font-weight:800;width:100%;margin-bottom:0;padding:10px 36px 10px 12px}
+@media(max-width:899px){.ex-name-inp:focus{font-size:16px}}
+.ex-name-clear{
+  position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  width:22px;height:22px;border-radius:50%;
+  background:var(--soft);border:1px solid var(--border-s);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:900;cursor:pointer;
+  color:var(--accent);transition:all .15s;
+  flex-shrink:0;padding:0;line-height:1;
+}
+.ex-name-clear:hover{background:var(--accent);color:var(--accent-inv,#fff);border-color:var(--accent)}
+.ex-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;padding-bottom:1px}
+
+/* Muscles section — plus larges */
+.muscles-grid{display:flex;flex-direction:column;gap:14px;margin-top:12px}
+.muscle-label{font-size:7.5px;color:var(--muted);letter-spacing:1.5px;margin-bottom:5px;font-weight:700;text-transform:uppercase}
+.muscle-tags{display:flex;flex-wrap:wrap;gap:4px;min-height:22px;margin-bottom:7px}
+.muscle-add-row{display:flex;gap:6px;align-items:center}
+.muscle-add-row .inp{flex:1;min-width:0;font-size:12px;padding:9px 12px}
+@media(max-width:899px){.muscle-add-row .inp:focus{font-size:16px}}
+
+/* Config grid: séries / reps / kg / repos — 4 colonnes égales */
+.ex-config{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0;padding-top:14px;border-top:1px solid var(--border-s)}
+.ex-config-item{}
+.cfg-lbl{font-size:6.5px;color:var(--muted);letter-spacing:1px;margin-bottom:4px;font-weight:700;text-transform:uppercase;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Set log */
+.set-log-wrap{margin:10px 0}
+.set-log-head{
+  display:grid;grid-template-columns:24px 1fr 1fr 32px;
+  gap:7px;margin-bottom:5px;padding:0 2px;
+}
+.set-log-head>*{font-size:7px;color:var(--muted);text-align:center;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.set-log-row{
+  display:grid;grid-template-columns:24px 1fr 1fr 32px;
+  gap:7px;align-items:center;margin-bottom:6px;
+}
+.set-n{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;font-weight:700;padding-top:2px}
+.set-ok{
+  width:36px;height:40px;border-radius:var(--r4);background:var(--softer);
+  border:1px solid var(--border-s);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:11px;flex-shrink:0;color:transparent;
+  box-shadow:0 1px 0 rgba(255,255,255,.03) inset;
+  transition:background .22s cubic-bezier(.16,1,.3,1), border-color .22s cubic-bezier(.16,1,.3,1),
+             box-shadow .25s cubic-bezier(.16,1,.3,1), transform .22s cubic-bezier(.34,1.56,.64,1);
+}
+.set-ok.done{
+  background:linear-gradient(160deg,rgba(52,211,153,.22),rgba(52,211,153,.08));
+  border-color:rgba(52,211,153,.5);color:#34D399;
+  box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 0 14px -3px rgba(52,211,153,.5);
+  animation:setOkPop .42s cubic-bezier(.22,.61,.36,1);
+}
+.set-ok.done svg{ animation:setOkCheckDraw .32s cubic-bezier(.16,1,.3,1) .05s both; }
+.set-ok:active{transform:scale(.9)}
+/* Bouton reset (chrono séance / repos) : l'icône fait une rotation
+   complète au clic — feedback visuel cohérent et lisible pour une action
+   "remettre à zéro", plutôt qu'un simple changement d'opacité statique.
+   Classe jetable (ajoutée/retirée en JS) plutôt que :active, pour que la
+   rotation complète se joue jusqu'au bout même sur un tap mobile très bref
+   où le doigt ne reste pas "enfoncé" assez longtemps pour :active seul. */
+.reset-icon-btn svg{
+  transition:transform .1s;
+}
+.reset-icon-btn.spin svg{
+  animation:resetSpin .42s cubic-bezier(.65,0,.35,1);
+}
+@keyframes resetSpin{
+  from{ transform:rotate(0deg) }
+  to{ transform:rotate(-360deg) }
+}
+/* Pop satisfaisant à la validation d'une série — un ressort net plutôt
+   qu'un simple changement de couleur statique, pour que cocher une série
+   donne une vraie sensation de feedback "premium" accompli. */
+@keyframes setOkPop{
+  0%{ transform:scale(1) }
+  35%{ transform:scale(1.22) }
+  60%{ transform:scale(.92) }
+  100%{ transform:scale(1) }
+}
+@keyframes setOkCheckDraw{
+  from{ opacity:0; transform:scale(.4) }
+  to{ opacity:1; transform:scale(1) }
+}
+.mtag{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:9.5px;font-weight:700;letter-spacing:.5px;
+  padding:3px 8px;border-radius:5px;
+  background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.22);color:#c4b5fd;
+}
+
+/* ── HISTORY DRAWER ── */
+.hist-drawer{margin-top:14px;border-top:1px solid var(--border-s);padding-top:14px;display:none}
+.hist-drawer.open{display:block}
+.hist-entry{
+  padding:10px 12px;border-radius:var(--r4);
+  background:var(--softer);border:1px solid var(--border-s);
+  margin-bottom:7px;
+}
+.hist-entry-top{
+  display:flex;align-items:center;gap:8px;margin-bottom:7px;
+}
+.hist-date{
+  font-family:var(--mono);font-size:9px;color:var(--accent);
+  font-weight:700;flex-shrink:0;
+  background:var(--soft);border:1px solid var(--border-s);
+  padding:2px 7px;border-radius:4px;
+}
+.hist-vol{
+  font-size:9px;color:var(--muted);font-style:italic;flex:1;
+}
+.hist-del{
+  font-size:11px;color:rgba(239,68,68,.4);cursor:pointer;
+  padding:2px 6px;border-radius:4px;transition:color .13s;flex-shrink:0;
+}
+.hist-del:active{color:#F87171}
+.hist-sets{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.hist-pill{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  background:var(--soft);border:1px solid var(--border-s);
+  padding:4px 9px;border-radius:6px;white-space:nowrap;color:var(--text);
+  letter-spacing:.3px;
+}
+
+/* ── TIMER ── */
+.t-ring{position:relative;display:flex;align-items:center;justify-content:center;width:200px;height:200px;margin:0 auto}
+.t-ring::before{
+  content:'';position:absolute;inset:-14px;border-radius:50%;
+  background:radial-gradient(circle,rgba(124,58,237,.16),transparent 72%);
+  pointer-events:none;
+}
+.t-ring svg{display:block;width:200px;height:200px;flex-shrink:0;position:relative;z-index:1}
+.t-center{position:absolute;top:0;left:0;width:200px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;z-index:2}
+.t-disp{font-family:var(--mono);font-size:36px;line-height:1;font-weight:700;letter-spacing:2px;color:var(--text)}
+.t-lbl{font-size:8px;letter-spacing:2px;color:var(--muted);margin-top:6px;font-weight:700;text-transform:uppercase}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:calc(var(--bnav-h) + 10px);left:50%;
+  transform:translateX(-50%) translateY(8px);
+  z-index:9999;padding:9px 18px;border-radius:var(--r3);
+  background:var(--bg2);border:1px solid var(--border);
+  font-size:12.5px;font-weight:700;letter-spacing:.5px;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:all .22s cubic-bezier(.16,1,.3,1);
+  max-width:calc(100vw - 32px);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(min-width:900px){
+  #toast{bottom:20px;left:auto;right:20px;transform:translateY(8px)}
+  #toast.show{transform:translateY(0)}
+}
+
+/* ── ANIM ── */
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes gaugePop{0%{transform:translateX(-50%) scale(.6)}70%{transform:translateX(-50%) scale(1.2)}100%{transform:translateX(-50%) scale(1)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+/* Pop du conteneur au tap : ressort amorti à plusieurs rebonds, plus doux
+   qu'un aller-retour scale brutal en 2 paliers — la légère oscillation
+   décroissante (1→0.93→1.07→0.985→1.015→1) lit comme un vrai matériau
+   physique plutôt qu'un "boing" mécanique. */
+@keyframes iconTap{
+  0%{ transform:scale(1) }
+  22%{ transform:scale(.93) }
+  48%{ transform:scale(1.07) }
+  68%{ transform:scale(.985) }
+  86%{ transform:scale(1.015) }
+  100%{ transform:scale(1) }
+}
+.anim{animation:fi .22s cubic-bezier(.16,1,.3,1)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="card hdr-card" style="padding:22px 24px">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:relative">
+    <div class="hdr-logo" aria-hidden="true">
+      <img src="./hdr-logo-silhouette.png" alt="" width="22" height="22" style="display:block;object-fit:contain">
+    </div>
+    <h1 class="title-xl" style="font-size:clamp(22px,5vw,32px);line-height:1.25;padding-bottom:2px;background:var(--bar);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--text)">My Training</h1>
+    <span class="hdr-live-dot" id="hdr-live-dot" aria-hidden="true"></span>
+  </div>
+  <div class="hdr-stats" style="margin-top:18px">
+    <div class="stat-box stat-box-hero">
+      <div class="stat-lbl">Séance en cours</div>
+      <div class="stat-val mono" id="h-session">00:00</div>
+    </div>
+    <div class="hdr-stats-side">
+      <div class="stat-box stat-box-sm"><div class="stat-lbl">Repos</div><div class="stat-val mono" id="h-rest">—</div></div>
+      <div class="stat-box stat-box-sm"><div class="stat-lbl">Exercices</div><div class="stat-val" id="h-count">0</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap" id="main-nav">
+  <button class="nav-tab on" data-tab="programme">Programme</button>
+  <button class="nav-tab" data-tab="volume">Volume</button>
+  <button class="nav-tab" data-tab="timer">Timers</button>
+</div>
+
+<!-- ═══ TAB: PROGRAMME (full width, no sidebar) ═══ -->
+<div id="tab-programme">
+  <div class="card" style="padding:26px">
+    <!-- Programs bar -->
+    <div style="margin-bottom:6px">
+      <div class="tag" style="margin-bottom:10px">Programmes</div>
+      <div class="prog-bar" id="prog-bar"></div>
+    </div>
+    <div class="prog-days-row">
+      <div class="prog-days-col" style="min-width:0">
+        <div class="tag" style="margin-bottom:4px">Jours d'entraînement</div>
+        <div id="prog-days-inline" style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;margin-top:3px;padding-bottom:2px"></div>
+      </div>
+      <div class="prog-actions-col" style="display:flex;gap:8px">
+        <button class="btn-g btn-sm prog-action-btn" onclick="clearAll()">Effacer tout</button>
+        <button class="btn-w btn-sm prog-action-btn" onclick="addExercise()">+ Exercice</button>
+      </div>
+    </div>
+
+    <div id="exercise-list" class="rows"></div>
+    <div id="ex-empty" style="text-align:center;padding:48px 20px;color:var(--muted)">
+      <div style="display:flex;justify-content:center;margin-bottom:14px;color:var(--muted)"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9.5v5M21 9.5v5M6.5 12h11"/></svg></div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:6px">Aucun exercice</div>
+      <div style="font-size:11px;opacity:.7">Ajoute ton premier exercice ci-dessus</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ TAB: VOLUME ═══ -->
+<div id="tab-volume" style="display:none">
+  <div class="card" style="padding:18px 16px">
+    <div style="margin-bottom:18px">
+      <div class="title-md">Volume Musculaire</div>
+    </div>
+    <div id="volume-list"></div>
+    <div id="vol-empty" style="text-align:center;padding:40px;color:var(--muted)">
+      <div style="display:flex;justify-content:center;margin-bottom:10px;color:var(--muted)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+      <div style="font-size:13px;font-weight:700;margin-bottom:5px">Aucun exercice</div>
+      <div style="font-size:11px;opacity:.7">Ajoute des exercices dans Programme</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB: TIMER ═══ -->
+<div id="tab-timer" style="display:none">
+  <div class="g2" style="gap:18px">
+
+    <!-- Session -->
+    <div class="card" style="padding:30px;display:flex;flex-direction:column;align-items:center;gap:20px;justify-content:space-between">
+      <div style="align-self:flex-start;width:100%">
+        <div class="tag" style="margin-bottom:4px">Chronomètre</div>
+        <div class="title-md">Séance</div>
+      </div>
+      <div class="t-ring" style="width:230px;height:230px">
+        <svg viewBox="0 0 200 200" width="230" height="230" style="transform:rotate(-90deg);display:block;flex-shrink:0">
+          <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="7"/>
+          <circle id="sess-arc" cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="7"
+            stroke-linecap="round" stroke-dasharray="540.35" stroke-dashoffset="540.35"
+            style="transition:stroke-dashoffset .5s ease;transform-origin:100px 100px"/>
+        </svg>
+        <div class="t-center" style="width:230px;height:230px">
+          <div class="t-disp" id="sess-time" style="font-size:44px">00:00</div>
+          <div class="t-lbl" id="sess-lbl">PRÊT</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;width:100%">
+        <button class="btn-w" style="flex:1;padding:14px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:7px" id="sess-btn" onclick="toggleSession()"><span class="btn-icon-slot" id="sess-btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg></span><span id="sess-btn-label">Démarrer</span></button>
+        <button class="btn-g reset-icon-btn" style="padding:14px 18px;font-size:14px;display:flex;align-items:center;justify-content:center" onclick="resetSession()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Rest -->
+    <div class="card" style="padding:30px;display:flex;flex-direction:column;align-items:center;gap:18px;justify-content:space-between">
+      <div style="align-self:flex-start;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div>
+          <div class="tag" style="margin-bottom:4px">Récupération</div>
+          <div class="title-md">Repos</div>
+        </div>
+      </div>
+
+      <!-- Bandeau de gestion des notifications — état "Activer" ou "Désactiver"
+           selon la permission accordée et le flag interne notifDisabled. -->
+      <div id="notif-banner" style="display:none;width:100%;background:var(--soft);border:1px solid var(--border-s);border-radius:14px;padding:12px 14px;align-items:center;gap:10px;transition:background .2s,border-color .2s">
+        <svg id="notif-banner-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted);flex-shrink:0"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div id="notif-banner-text" style="flex:1;font-size:11px;color:var(--muted);line-height:1.4">Active les notifications pour être averti(e) quand le repos est fini.</div>
+        <button id="notif-banner-btn" class="btn-g" style="padding:8px 12px;font-size:11px;flex-shrink:0" onclick="enableNotifications()">Activer</button>
+      </div>
+
+      <div class="t-ring">
+        <svg viewBox="0 0 200 200" width="200" height="200" style="transform:rotate(-90deg);display:block;flex-shrink:0">
+          <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="7"/>
+          <circle id="rest-arc" cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="7"
+            stroke-linecap="round" stroke-dasharray="540.35" stroke-dashoffset="0"
+            style="transition:stroke-dashoffset .5s ease;transform-origin:100px 100px"/>
+        </svg>
+        <div class="t-center">
+          <div class="t-disp" id="rest-time" style="font-size:38px">90</div>
+          <div class="t-lbl" id="rest-lbl">PRÊT</div>
+        </div>
+      </div>
+      <!-- Temps personnalisé min + sec -->
+      <div style="width:100%;background:var(--soft);border:1px solid var(--border-s);border-radius:14px;padding:14px 16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div>
+            <div style="font-size:8px;letter-spacing:1.5px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:5px">Minutes</div>
+            <input class="inp inp-mono" id="rest-min" type="number" min="0" max="60" value="1" placeholder="0"
+              style="text-align:center;font-size:22px;font-weight:800;padding:12px 8px;width:100%"
+              onchange="updateCustomRestPreview()">
+          </div>
+          <div>
+            <div style="font-size:8px;letter-spacing:1.5px;color:var(--muted);font-weight:700;text-transform:uppercase;margin-bottom:5px">Secondes</div>
+            <input class="inp inp-mono" id="rest-sec-inp" type="number" min="0" max="59" value="30" placeholder="0"
+              style="text-align:center;font-size:22px;font-weight:800;padding:12px 8px;width:100%"
+              onchange="updateCustomRestPreview()">
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;width:100%">
+        <button class="btn-w" style="flex:1;padding:14px;font-size:14px;display:flex;align-items:center;justify-content:center;gap:7px" id="rest-btn" onclick="toggleRest()"><span class="btn-icon-slot" id="rest-btn-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg></span><span id="rest-btn-label">Lancer</span></button>
+        <button class="btn-g reset-icon-btn" style="padding:14px 18px;font-size:14px;display:flex;align-items:center;justify-content:center" onclick="resetRest()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<div id="toast"></div>
+
+<!-- ═══ MODAL DE CONFIRMATION CUSTOM ═══ -->
+<div id="confirm-ov" style="display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:24px">
+  <div style="background:linear-gradient(160deg,var(--bg2),rgba(124,58,237,.05));border:1px solid var(--border);border-radius:18px;padding:24px;max-width:340px;width:100%;box-shadow:0 24px 70px rgba(0,0,0,.55),0 0 40px -16px var(--accent-glow);animation:slideUp .3s cubic-bezier(.16,1,.3,1)">
+    <div id="confirm-msg" style="font-size:14px;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:20px;text-align:center"></div>
+    <div style="display:flex;gap:10px">
+      <button id="confirm-cancel" class="btn-g" style="flex:1;padding:12px;justify-content:center">Annuler</button>
+      <button id="confirm-ok" class="btn-w" style="flex:1;padding:12px;justify-content:center">Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════
+// EXERCISE DATABASE — exhaustive
+// ════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// MUSCLE TAXONOMY
+// Groupes → sous-parties
+// Chaque exercice : p = muscle primaire exact, s = secondaire exact
+// ═══════════════════════════════════════════════════════
+
+// Hiérarchie : grande catégorie → sous-parties incluses
+const MUSCLE_GROUPS = {
+  'Pectoraux':         ['Pecs Haut','Pecs Milieu','Pecs Bas'],
+  'Dos':               ['Grand Dorsal','Trapèzes Sup.','Trapèzes Moy.','Trapèzes Inf.','Lombaires','Rhomboïdes'],
+  'Épaules':           ['Deltoïde Ant.','Deltoïde Post.','Deltoïde Lat.'],
+  'Biceps':            ['Biceps'],
+  'Triceps':           ['Triceps'],
+  'Avant-bras':        ['Avant-bras','Brachial'],
+  'Abdominaux':        ['Abdos Haut','Abdos Bas','Obliques'],
+  'Fessiers':          ['Fessiers'],
+  'Quadriceps':        ['Quadriceps'],
+  'Ischio-jambiers':   ['Ischio-jambiers'],
+  'Mollets':           ['Mollets','Soléaire'],
+  'Cou':               ['Cou Ant.','Cou Post.','Cou Lat.'],
+};
+
+// Inverse map : sous-partie → grande catégorie
+const MUSCLE_PARENT = {};
+Object.entries(MUSCLE_GROUPS).forEach(([parent, children])=>{
+  MUSCLE_PARENT[parent] = parent; // la catégorie se mappe à elle-même
+  children.forEach(c => { MUSCLE_PARENT[c] = parent; });
+});
+
+const DB_EX = {
+  // ── PECTORAUX ─────────────────────────────────────────
+  'Développé couché barre':       {p:'Pecs Milieu',        s:'Triceps'},
+  'Développé couché haltères':    {p:'Pecs Milieu',        s:'Triceps'},
+  'Développé incliné barre':      {p:'Pecs Haut',          s:'Deltoïde Ant.'},
+  'Développé incliné haltères':   {p:'Pecs Haut',          s:'Triceps'},
+  'Développé décliné barre':      {p:'Pecs Bas',           s:'Triceps'},
+  'Développé décliné haltères':   {p:'Pecs Bas',           s:'Triceps'},
+  'Écarté haltères plat':         {p:'Pecs Milieu',        s:'Deltoïde Ant.'},
+  'Écarté haltères incliné':      {p:'Pecs Haut',          s:'Deltoïde Ant.'},
+  'Écarté poulie basse':          {p:'Pecs Milieu',        s:'Pecs Haut'},
+  'Écarté poulie haute':          {p:'Pecs Bas',           s:'Pecs Milieu'},
+  'Pec deck':                     {p:'Pecs Milieu',        s:'Pecs Haut'},
+  'Dips pectoraux':               {p:'Pecs Bas',           s:'Triceps'},
+  'Push-up classique':            {p:'Pecs Milieu',        s:'Triceps'},
+  'Push-up décliné':              {p:'Pecs Haut',          s:'Triceps'},
+  'Push-up diamant':              {p:'Triceps',            s:'Pecs Milieu'},
+  'Weighted decline push up':     {p:'Pecs Haut',          s:'Triceps'},
+  'Développé Smith couché':       {p:'Pecs Milieu',        s:'Triceps'},
+
+  // ── DOS ───────────────────────────────────────────────
+  'Tractions prise large':        {p:'Grand Dorsal',       s:'Biceps'},
+  'Tractions prise neutre':       {p:'Grand Dorsal',       s:'Brachial'},
+  'Tractions prise serrée':       {p:'Grand Dorsal',       s:'Rhomboïdes'},
+  'Tractions supination':         {p:'Grand Dorsal',       s:'Biceps'},
+  'Pull up':                      {p:'Grand Dorsal',       s:'Biceps'},
+  'Chin up':                      {p:'Grand Dorsal',       s:'Biceps'},
+  'Neutral grip pull up':         {p:'Grand Dorsal',       s:'Brachial'},
+  'Rowing barre pronation':       {p:'Grand Dorsal',       s:'Rhomboïdes'},
+  'Rowing barre supination':      {p:'Grand Dorsal',       s:'Biceps'},
+  'Rowing haltère unilatéral':    {p:'Grand Dorsal',       s:'Rhomboïdes'},
+  'Rowing poulie basse':          {p:'Rhomboïdes',         s:'Grand Dorsal'},
+  'Rowing machine':               {p:'Grand Dorsal',       s:'Rhomboïdes'},
+  'Rowing':                       {p:'Grand Dorsal',       s:'Rhomboïdes'},
+  'Tirage vertical prise large':  {p:'Grand Dorsal',       s:'Biceps'},
+  'Tirage vertical prise serrée': {p:'Grand Dorsal',       s:'Rhomboïdes'},
+  'Tirage vertical bras tendus':  {p:'Grand Dorsal',       s:''},
+  'Pull-over haltère':            {p:'Grand Dorsal',       s:'Pecs Milieu'},
+  'Pull-over poulie':             {p:'Grand Dorsal',       s:'Triceps'},
+  'Face pull':                    {p:'Deltoïde Post.',     s:'Trapèzes Moy.'},
+  'Shrugs barre':                 {p:'Trapèzes Sup.',      s:''},
+  'Shrugs haltères':              {p:'Trapèzes Sup.',      s:''},
+  'Shrugs':                       {p:'Trapèzes Sup.',      s:''},
+  'Hyperextension':               {p:'Lombaires',          s:'Ischio-jambiers'},
+  'Soulevé de terre':             {p:'Lombaires',          s:'Grand Dorsal'},
+  'Soulevé de terre roumain':     {p:'Ischio-jambiers',    s:'Lombaires'},
+  'Soulevé de terre sumo':        {p:'Quadriceps',         s:'Lombaires'},
+  'Good morning':                 {p:'Ischio-jambiers',    s:'Lombaires'},
+  'Kettlebell swing':             {p:'Fessiers',           s:'Lombaires'},
+
+  // ── ÉPAULES ───────────────────────────────────────────
+  'Développé militaire barre':    {p:'Deltoïde Ant.',      s:'Triceps'},
+  'Développé militaire haltères': {p:'Deltoïde Ant.',      s:'Triceps'},
+  'Développé Arnold':             {p:'Deltoïde Ant.',      s:'Deltoïde Lat.'},
+  'Développé Smith militaire':    {p:'Deltoïde Ant.',      s:'Triceps'},
+  'Élévations latérales':         {p:'Deltoïde Lat.',      s:''},
+  'Élévations latérales câbles':  {p:'Deltoïde Lat.',      s:''},
+  'One arm lateral raise':        {p:'Deltoïde Lat.',      s:''},
+  'Oiseau haltères':              {p:'Deltoïde Post.',     s:''},
+  'Oiseau câbles':                {p:'Deltoïde Post.',     s:''},
+  'One arm rear delt fly':        {p:'Deltoïde Post.',     s:''},
+  'Élévations frontales':         {p:'Deltoïde Ant.',      s:''},
+  'Upright row barre':            {p:'Deltoïde Lat.',      s:'Trapèzes Sup.'},
+  'Upright row câbles':           {p:'Deltoïde Lat.',      s:'Trapèzes Sup.'},
+  'Thruster':                     {p:'Deltoïde Ant.',      s:'Quadriceps'},
+
+  // ── BICEPS ────────────────────────────────────────────
+  'Curl barre droite':            {p:'Biceps',             s:'Avant-bras'},
+  'Curl barre EZ':                {p:'Biceps',             s:'Avant-bras'},
+  'Curl haltères alterné':        {p:'Biceps',             s:'Avant-bras'},
+  'Curl haltères simultané':      {p:'Biceps',             s:'Avant-bras'},
+  'Curl marteau':                 {p:'Brachial',           s:'Avant-bras'},
+  'One arm hammer curl':          {p:'Brachial',           s:'Avant-bras'},
+  'Curl concentration':           {p:'Biceps',             s:''},
+  'Curl câble bas':               {p:'Biceps',             s:'Avant-bras'},
+  'Curl câble haut':              {p:'Biceps',             s:''},
+  'Curl incliné haltères':        {p:'Biceps',             s:''},
+  'Curl pupitre barre':           {p:'Biceps',             s:''},
+  'Curl poulie haute':            {p:'Biceps',             s:''},
+  'One arm dumbbell curl':        {p:'Biceps',             s:'Avant-bras'},
+
+  // ── TRICEPS ───────────────────────────────────────────
+  'Dips triceps':                 {p:'Triceps',            s:'Pecs Bas'},
+  'Weighted dips':                {p:'Triceps',            s:'Pecs Bas'},
+  'Extensions triceps câble':     {p:'Triceps',            s:''},
+  'Pushdown barre droite':        {p:'Triceps',            s:''},
+  'Pushdown corde':               {p:'Triceps',            s:''},
+  'Extensions overhead':          {p:'Triceps',            s:''},
+  'Skull crusher barre':          {p:'Triceps',            s:''},
+  'Skull crusher haltères':       {p:'Triceps',            s:''},
+  'Kickback haltère':             {p:'Triceps',            s:''},
+  'Extensions un bras câble':     {p:'Triceps',            s:''},
+  'Développé rapproché':          {p:'Triceps',            s:'Pecs Milieu'},
+
+  // ── AVANT-BRAS / BRACHIAL ─────────────────────────────
+  // (secondaires surtout — peu d'exercices primaires isolés)
+
+  // ── ABDOMINAUX ────────────────────────────────────────
+  'Crunch classique':             {p:'Abdos Haut',         s:''},
+  'Crunch machine':               {p:'Abdos Haut',         s:''},
+  'Crunch poulie':                {p:'Abdos Haut',         s:''},
+  'Dragon flag':                  {p:'Abdos Haut',         s:'Abdos Bas'},
+  'Ab wheel':                     {p:'Abdos Haut',         s:'Lombaires'},
+  'Relevé de jambes':             {p:'Abdos Bas',          s:''},
+  'Knee raise':                   {p:'Abdos Bas',          s:''},
+  'Side knee raise':              {p:'Obliques',           s:'Abdos Bas'},
+  'Planche':                      {p:'Abdos Haut',         s:'Abdos Bas'},
+  'Planche latérale':             {p:'Obliques',           s:'Abdos Haut'},
+  'Russian twist':                {p:'Obliques',           s:'Abdos Haut'},
+  'Crunch vélo':                  {p:'Obliques',           s:'Abdos Haut'},
+  'Vacuums':                      {p:'Abdos Haut',         s:''},
+
+  // ── QUADRICEPS ────────────────────────────────────────
+  'Squat barre':                  {p:'Quadriceps',         s:'Fessiers'},
+  'Squat':                        {p:'Quadriceps',         s:'Fessiers'},
+  'Squat haltères':               {p:'Quadriceps',         s:'Fessiers'},
+  'Squat gobelet':                {p:'Quadriceps',         s:'Fessiers'},
+  'Squat avant':                  {p:'Quadriceps',         s:'Fessiers'},
+  'Squat Smith':                  {p:'Quadriceps',         s:'Fessiers'},
+  'Leg press 45°':                {p:'Quadriceps',         s:'Fessiers'},
+  'Leg extension':                {p:'Quadriceps',         s:''},
+  'Fentes avant barre':           {p:'Quadriceps',         s:'Fessiers'},
+  'Fentes avant haltères':        {p:'Quadriceps',         s:'Fessiers'},
+  'Fentes bulgares':              {p:'Quadriceps',         s:'Fessiers'},
+  'Pistol squat':                 {p:'Quadriceps',         s:'Fessiers'},
+  'Step up':                      {p:'Quadriceps',         s:'Fessiers'},
+  'Hack squat machine':           {p:'Quadriceps',         s:'Fessiers'},
+  'Box jump':                     {p:'Quadriceps',         s:'Fessiers'},
+  'Sled push':                    {p:'Quadriceps',         s:'Fessiers'},
+
+  // ── ISCHIO-JAMBIERS ───────────────────────────────────
+  'Leg curl couché':              {p:'Ischio-jambiers',    s:''},
+  'Leg curl assis':               {p:'Ischio-jambiers',    s:''},
+  'Leg curl câble':               {p:'Ischio-jambiers',    s:''},
+
+  // ── FESSIERS ──────────────────────────────────────────
+  'Hip thrust barre':             {p:'Fessiers',           s:'Ischio-jambiers'},
+  'Hip thrust machine':           {p:'Fessiers',           s:'Ischio-jambiers'},
+  'Glute bridge':                 {p:'Fessiers',           s:'Ischio-jambiers'},
+  'Kickback câble':               {p:'Fessiers',           s:''},
+  'Abduction machine':            {p:'Fessiers',           s:''},
+  'Adduction machine':            {p:'Quadriceps',         s:''},
+  'Fentes latérales':             {p:'Fessiers',           s:'Quadriceps'},
+
+  // ── MOLLETS ───────────────────────────────────────────
+  'Mollets debout machine':       {p:'Mollets',            s:''},
+  'Mollets debout barre':         {p:'Mollets',            s:''},
+  'Mollets assis machine':        {p:'Soléaire',           s:'Mollets'},
+  'Mollets leg press':            {p:'Mollets',            s:''},
+  'Mollets un pied':              {p:'Mollets',            s:''},
+  'Calves raises standing':       {p:'Mollets',            s:''},
+  'Calves raises seated':         {p:'Soléaire',           s:'Mollets'},
+  'Tibialis debout':              {p:'Avant-bras',         s:''},
+
+  // ── COU ───────────────────────────────────────────────
+  'Neck curl':                    {p:'Cou Ant.',           s:''},
+  'Neck extension':               {p:'Cou Post.',          s:''},
+  'Neck twist':                   {p:'Cou Lat.',           s:''},
+
+  // ── CARDIO / FONCTIONNEL ──────────────────────────────
+  'Corde à sauter':               {p:'Mollets',            s:''},
+  'Burpee':                       {p:'Quadriceps',         s:'Pecs Milieu'},
+  'Battle rope':                  {p:'Deltoïde Ant.',      s:''},
+  'Clean barre':                  {p:'Grand Dorsal',       s:'Deltoïde Ant.'},
+  'Arraché':                      {p:'Deltoïde Ant.',      s:'Grand Dorsal'},
+};
+
+// ════════════════════════════════════════════════════
+// STORAGE — multi-programme + historique
+// ════════════════════════════════════════════════════
+const KEY = 'ascension_v4';
+
+// DB shape:
+// { programs:[{id,name,exercises:[]}], activeProg:id, history:{exId:[{date,sets:[{reps,weight}]}]} }
+let DB = { programs:[], activeProg:null, history:{} };
+
+// Migration: DB.history était indexé par nom d'exercice (mutable), ce qui
+// causait une perte/mélange d'historique en cas de renommage ou de doublon
+// de nom. On copie l'historique existant vers une clé stable = ex.id.
+// L'ancienne entrée par nom est conservée (jamais supprimée) pour ne jamais
+// perdre de données, même si l'historique avait déjà été migré par ailleurs.
+function migrateHistoryToExerciseId(){
+  if(!DB.history || !DB.programs) return;
+  DB.programs.forEach(function(prog){
+    (prog.exercises||[]).forEach(function(ex){
+      if(!ex || !ex.id) return;
+      if(DB.history[ex.id]) return; // déjà migré pour cet exercice
+      const byName = ex.name ? DB.history[ex.name] : null;
+      if(byName && byName.length){
+        // Copie profonde pour ne jamais partager la même référence de tableau
+        // entre la clé historique (nom) et la clé historique (id).
+        DB.history[ex.id] = JSON.parse(JSON.stringify(byName));
+      }
+    });
+  });
+}
+
+function dbLoad(){
+  try{
+    const r = localStorage.getItem(KEY);
+    if(r){ DB = JSON.parse(r); }
+    // Migrate v3 flat exercises
+    if(!DB.programs){
+      const old = DB.exercises||[];
+      DB.programs = [{ id:uid(), name:'Programme A', exercises: old }];
+      DB.activeProg = DB.programs[0].id;
+      delete DB.exercises;
+    }
+    if(!DB.programs.filter(p=>!p.deleted).length){
+      const p = { id:uid(), name:'Programme A', exercises:[] };
+      DB.programs.push(p); DB.activeProg = p.id;
+    }
+    if(!DB.activeProg || !DB.programs.find(p=>p.id===DB.activeProg && !p.deleted)){
+      DB.activeProg = DB.programs.find(p=>!p.deleted).id;
+    }
+    if(!DB.history) DB.history = {};
+    migrateHistoryToExerciseId();
+  } catch {
+    const p = { id:uid(), name:'Programme A', exercises:[] };
+    DB = { programs:[p], activeProg:p.id, history:{} };
+  }
+}
+function dbSave(){
+  try{
+    if(!DB.settings) DB.settings = {};
+    DB.settings.updatedAt = Date.now();
+    localStorage.setItem(KEY,JSON.stringify(DB));
+  }catch{}
+}
+
+// Tamponne un timestamp de modification sur un objet (programme, entrée poids, etc.)
+function touchUpdatedAt(obj){
+  if(obj && typeof obj === 'object') obj.updatedAt = Date.now();
+  return obj;
+}
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,5) }
+
+function getActiveProg(){
+  return DB.programs.find(p=>p.id===DB.activeProg && !p.deleted) || DB.programs.find(p=>!p.deleted);
+}
+
+// ════════════════════════════════════════════════════
+// TABS
+// ════════════════════════════════════════════════════
+function switchTab(tab){
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+  ['programme','volume','timer'].forEach(t=>{
+    const el = document.getElementById('tab-'+t);
+    if(t===tab){
+      el.style.display = '';
+      el.style.animation = 'none';
+      const raf = window.requestAnimationFrame || function(fn){ setTimeout(fn, 16); };
+      raf(()=>{ el.style.animation = 'fi .3s cubic-bezier(.16,1,.3,1)'; });
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  if(tab==='programme'){ renderProgBar(); renderExercises(); }
+  if(tab==='volume')    renderVolume();
+}
+
+document.getElementById('main-nav').addEventListener('click', e=>{
+  const t = e.target.dataset?.tab;
+  if(t) switchTab(t);
+});
+
+// ════════════════════════════════════════════════════
+// MODULE UI — composant "chip" de programme (barre du haut)
+// ════════════════════════════════════════════════════
+// Construit le HTML d'un seul chip de programme (nom éditable + jours +
+// bouton supprimer optionnel). canDel détermine si le bouton × est affiché.
+function createProgramCard(prog, isActive, canDel){
+  const days  = prog.days || [];
+  const daysLabel = days.length ? days.map(function(d){return JOURS_FULL[d];}).join(', ') : '';
+  const chipR = canDel ? '99px 0 0 99px' : '99px';
+  const chipBR= canDel ? 'none' : '';
+  const inpStyle = (isActive?'':'pointer-events:none;')+'width:auto;max-width:90px;min-width:40px;background:transparent;border:none;outline:none;font:inherit;font-weight:700;font-size:12px;color:inherit;padding:0';
+  const daysSpan = daysLabel
+    ? '<span style="font-size:9.5px;font-weight:800;opacity:.65;padding-left:7px;border-left:1px solid '+(isActive?'rgba(255,255,255,.3)':'var(--border-s)')+';margin-left:1px;white-space:nowrap">'+daysLabel+'</span>'
+    : '';
+  const delBtn = canDel
+    ? '<button class="prog-del-btn '+(isActive?'on':'off')+'" onclick="deleteProg(\''+prog.id+'\')">×</button>'
+    : '';
+  return '<div style="display:flex;align-items:center;gap:3px;flex-shrink:0">'
+    + '<div class="prog-chip'+(isActive?' on':'')+'" onclick="switchProg(\''+prog.id+'\')" style="border-radius:'+chipR+';border-right:'+chipBR+'">'
+    + '<input value="'+esc(prog.name)+'" '+(isActive?'':'readonly ')+'onclick="event.stopPropagation()" onchange="renameProg(\''+prog.id+'\',this.value)" onblur="renameProg(\''+prog.id+'\',this.value)" style="'+inpStyle+'">'
+    + daysSpan
+    + '</div>'
+    + delBtn
+    + '</div>';
+}
+
+// ════════════════════════════════════════════════════
+// PROGRAMS MANAGEMENT
+// ════════════════════════════════════════════════════
+function renderProgBar(){
+  const bar = document.getElementById('prog-bar');
+  if(!bar) return;
+  const visiblePrograms = DB.programs.filter(p=>!p.deleted);
+  const canDel = visiblePrograms.length > 1;
+  let html = '';
+
+  visiblePrograms.forEach(function(prog){
+    const on = prog.id === DB.activeProg;
+    html += createProgramCard(prog, on, canDel);
+  });
+
+  html += `<button class="prog-add-btn" onclick="addProg()">+</button>`;
+
+  bar.innerHTML = html;
+  renderInlineDays();
+}
+
+// ── Sélecteur de jours intégré directement dans la carte programme ──
+function renderInlineDays(){
+  const wrap = document.getElementById('prog-days-inline');
+  if(!wrap) return;
+  const prog = getActiveProg();
+  if(!prog) return;
+  const days = prog.days || [];
+
+  wrap.innerHTML = '';
+  JOURS_FULL.forEach(function(name, i){
+    const sel = days.includes(i);
+    const pill = document.createElement('button');
+    pill.textContent = name.slice(0,3);
+    pill.title = name;
+    pill.style.cssText = 'padding:6px 8px;border-radius:8px;font-size:10px;font-weight:800;cursor:pointer;flex-shrink:0;'
+      + (sel
+          ? 'background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 45%),var(--accent-btn);'
+            +'border:1px solid transparent;color:var(--accent-btn-inv);'
+            +'box-shadow:0 1px 0 rgba(255,255,255,.15) inset, 0 4px 10px -3px var(--accent-glow);'
+          : 'background:var(--softer);border:1px solid var(--border-s);color:var(--muted);box-shadow:none;'
+        )
+      + 'transition:all .15s,transform .12s;line-height:1.4';
+    pill.onmousedown = function(){ pill.style.transform = 'scale(.92)'; };
+    pill.onmouseup = pill.onmouseleave = function(){ pill.style.transform = 'scale(1)'; };
+    pill.onclick = function(){ toggleInlineDay(i); };
+    wrap.appendChild(pill);
+  });
+}
+
+function toggleInlineDay(dayIndex){
+  const prog = getActiveProg();
+  if(!prog) return;
+  if(!prog.days) prog.days = [];
+  const idx = prog.days.indexOf(dayIndex);
+  if(idx === -1) prog.days.push(dayIndex); else prog.days.splice(idx,1);
+  prog.days.sort(function(a,b){ return a-b; });
+  touchUpdatedAt(prog);
+  dbSave();
+  renderProgBar();
+}
+
+// Jours de la semaine
+const JOURS_FULL = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+
+function addProg(){
+  const p = { id:uid(), name:`Programme ${String.fromCharCode(65+DB.programs.length)}`, exercises:[], updatedAt:Date.now() };
+  DB.programs.push(p);
+  DB.activeProg = p.id;
+  dbSave(); renderProgBar(); renderExercises(); updateHeader();
+}
+
+function deleteProg(id){
+  if(DB.programs.filter(p=>!p.deleted).length <= 1){ showToast('Au moins 1 programme requis'); return; }
+  const prog = DB.programs.find(p=>p.id===id);
+  if(!prog) return;
+  const wasActive = DB.activeProg === id;
+  // Marquer comme supprimé (tombstone) au lieu de retirer du tableau, pour que
+  // la suppression se propage correctement lors d'une synchronisation avec un
+  // autre appareil (sinon le programme peut réapparaître après une fusion).
+  prog.deleted = true;
+  touchUpdatedAt(prog);
+  if(wasActive){
+    const next = DB.programs.find(p=>!p.deleted);
+    if(next) DB.activeProg = next.id;
+  }
+  dbSave(); renderProgBar(); renderExercises(); updateHeader();
+  // Toast with undo option
+  showToastUndo(`"${prog.name}" supprimé`, ()=>{
+    prog.deleted = false;
+    touchUpdatedAt(prog);
+    if(wasActive) DB.activeProg = prog.id;
+    dbSave(); renderProgBar(); renderExercises(); updateHeader();
+  });
+}
+
+function renameProg(id, name){
+  const prog = DB.programs.find(p=>p.id===id);
+  if(prog){ prog.name = name.trim()||prog.name; touchUpdatedAt(prog); dbSave(); renderProgBar(); }
+}
+
+function switchProg(id){
+  DB.activeProg = id; dbSave();
+  renderProgBar(); renderExercises(); updateHeader();
+}
+
+// ════════════════════════════════════════════════════
+// PROGRAMME — EXERCISES
+// ════════════════════════════════════════════════════
+function addExercise(){
+  const prog = getActiveProg();
+  const names = Object.keys(DB_EX);
+  const mapped = DB_EX[names[0]] || {p:'',s:''};
+  prog.exercises.push({
+    id:uid(), name:names[0], type:'Barre',
+    series:4, reps:'8-12', weight:60, rpe:8, notes:'',
+    restSec: DB.settings?.restDef || 90,
+    primaries:  mapped.p ? [mapped.p] : [],
+    secondaries:mapped.s ? [mapped.s] : [],
+    setLogs:[], collapsed:false, updatedAt: Date.now(),
+  });
+  touchUpdatedAt(prog);
+  dbSave(); renderExercises(); updateHeader();
+  showToast('Exercice ajouté');
+}
+
+function removeExercise(id){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  // Marquer comme supprimé (tombstone) au lieu de retirer du tableau, pour que
+  // la suppression se propage correctement lors d'une synchronisation avec un
+  // autre appareil (sinon l'exercice peut réapparaître après une fusion).
+  ex.deleted = true;
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave(); renderExercises(); updateHeader();
+}
+
+// ── MODAL DE CONFIRMATION CUSTOM (fonctionne partout: mobile, PC, APK) ──
+function showConfirm(message, okLabel, danger){
+  return new Promise(resolve=>{
+    const ov     = document.getElementById('confirm-ov');
+    const msgEl  = document.getElementById('confirm-msg');
+    const okBtn  = document.getElementById('confirm-ok');
+    const noBtn  = document.getElementById('confirm-cancel');
+    msgEl.textContent = message;
+    okBtn.textContent = okLabel || 'Confirmer';
+    // Bouton de confirmation rouge pour les actions destructives (suppression
+    // définitive), violet sinon — renforce la hiérarchie de danger perçue
+    // plutôt qu'un même bouton violet pour "Confirmer" et "Effacer tout".
+    okBtn.classList.toggle('btn-w', !danger);
+    okBtn.classList.toggle('btn-danger-solid', !!danger);
+    ov.style.display = 'flex';
+
+    function cleanup(result){
+      ov.style.display = 'none';
+      okBtn.removeEventListener('click', onOk);
+      noBtn.removeEventListener('click', onNo);
+      ov.removeEventListener('click', onBg);
+      resolve(result);
+    }
+    function onOk(){ cleanup(true); }
+    function onNo(){ cleanup(false); }
+    function onBg(e){ if(e.target === ov) cleanup(false); }
+
+    okBtn.addEventListener('click', onOk);
+    noBtn.addEventListener('click', onNo);
+    ov.addEventListener('click', onBg);
+  });
+}
+
+async function clearAll(){
+  const prog = getActiveProg();
+  const active = prog.exercises.filter(e=>!e.deleted);
+  if(!active.length) return;
+  const ok = await showConfirm('Effacer tous les exercices de ce programme ?', 'Effacer tout', true);
+  if(ok){
+    active.forEach(ex=>{ ex.deleted = true; touchUpdatedAt(ex); });
+    touchUpdatedAt(prog);
+    dbSave(); renderExercises(); updateHeader();
+  }
+}
+
+// ════════════════════════════════════════════════════
+// MODULE UI — carte exercice (onglet Programme)
+// ════════════════════════════════════════════════════
+// Construit les lignes de saisie des séries (reps/kg/✓) pour un exercice.
+// hist = historique déjà filtré (sans les entrées supprimées), newest-first.
+function buildSetRows(ex, hist){
+  let setRows = '';
+  for(let i=0; i<ex.series; i++){
+    const sl = ex.setLogs[i];
+    const lastRef = hist[0]?.sets?.[i];
+    const refReps   = lastRef?.reps   || ex.reps   || '';
+    const refWeight = lastRef?.weight || ex.weight || '';
+    setRows += `
+    <div class="set-log-row">
+      <div class="set-n">${i+1}</div>
+      <input class="inp inp-sm inp-c inp-mono" type="number" min="0" value="${sl.reps||''}"
+        placeholder="${refReps}"
+        onchange="updSetLog('${ex.id}',${i},'reps',this.value)">
+      <input class="inp inp-sm inp-c inp-mono" type="number" min="0" step="0.5" value="${sl.weight||''}"
+        placeholder="${refWeight}"
+        onchange="updSetLog('${ex.id}',${i},'weight',this.value)">
+      <div class="set-ok${sl.done?' done':''}" onclick="toggleSetDone('${ex.id}',${i})">${sl.done?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
+    </div>`;
+  }
+  return setRows;
+}
+
+// Construit les lignes du tiroir d'historique (8 dernières séances avec sets non vides).
+function buildHistRows(ex, hist){
+  let histRows = '';
+  hist.slice(0, 8).forEach((entry, ei) => {
+    const sets = (entry.sets || []).filter(s => s.reps !== '' || s.weight !== '');
+    if (!sets.length) return;
+
+    const n = sets.length;
+    const vol = sets.reduce((a,s) => a + (parseFloat(s.reps)||0)*(parseFloat(s.weight)||0), 0);
+    const volStr = vol > 0 ? Math.round(vol) + ' kg vol.' : '';
+
+    // Grouper les séries identiques ex: [10×80, 10×80, 8×75] → "2×(10 reps@80kg)  8 reps@75kg"
+    const pills = [];
+    let i = 0;
+    while (i < sets.length) {
+      const s = sets[i];
+      const r = s.reps !== '' ? s.reps : '?';
+      const w = s.weight !== '' ? s.weight + 'kg' : '—';
+      let count = 1;
+      while (
+        i + count < sets.length &&
+        sets[i+count].reps === s.reps &&
+        sets[i+count].weight === s.weight
+      ) count++;
+      const label = count > 1
+        ? count + '×(' + r + ' reps à ' + w + ')'
+        : r + ' reps à ' + w;
+      pills.push('<span class="hist-pill">' + label + '</span>');
+      i += count;
+    }
+
+    const meta = n + ' série' + (n>1?'s':'') + (volStr ? ' · ' + volStr : '');
+
+    histRows += '<div class="hist-entry">'
+      + '<div class="hist-entry-top">'
+      + '<span class="hist-date">' + entry.date + '</span>'
+      + '<span class="hist-vol">' + meta + '</span>'
+      + '<span class="hist-del" onclick="deleteHistEntry(\'' + esc(ex.id) + '\',\'' + esc(entry.date) + '\')" style="display:inline-flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>'
+      + '</div>'
+      + '<div class="hist-sets">' + pills.join('') + '</div>'
+      + '</div>';
+  });
+  return histRows;
+}
+
+// Construit la carte DOM complète d'un exercice (en-tête, muscles, config,
+// log de séries, historique). ex doit déjà être normalisé (primaries/secondaries
+// en tableaux, setLogs de la bonne longueur) — c'est le rôle de renderExercises().
+function createExerciseCard(ex){
+  const card = document.createElement('div');
+  card.className = 'ex-card anim'; card.id = 'ex-'+ex.id;
+  card.dataset.exId = ex.id;
+
+  // History for this exercise — déjà stocké newest-first (unshift à l'écriture)
+  // Indexé par ex.id (stable) plutôt que ex.name (modifiable par l'utilisateur)
+  const hist = (DB.history[ex.id]||[]).filter(h=>!h.deleted);
+  const hasHist = hist.length > 0;
+
+  const setRows  = buildSetRows(ex, hist);
+  const histRows = buildHistRows(ex, hist);
+  const displayName = ex.name && ex.name.trim() ? ex.name : 'Nouvel exercice';
+
+  if(ex.collapsed){
+    // ── ÉTAT REPLIÉ : item de liste minimal, uniquement le nom de l'exercice.
+    // Le nom est un simple texte (pas un input) : non modifiable depuis cet
+    // état, il faut déplier la carte pour pouvoir le changer. Toute la ligne
+    // reste cliquable pour dérouler (pas seulement le chevron).
+    card.classList.add('ex-card-collapsed');
+    card.innerHTML = `
+    <div class="ex-collapsed-row" onclick="toggleCollapse('${ex.id}')">
+      <div class="ex-collapsed-main">
+        <div class="ex-collapsed-name">${esc(displayName)}</div>
+        <div class="ex-collapsed-meta">${ex.series} séries${ex.reps?' · '+esc(ex.reps)+' reps':''}${ex.weight?' · '+ex.weight+' kg':''}</div>
+      </div>
+      <div class="ex-actions" onclick="event.stopPropagation()">
+        <button class="btn-ic btn-toggle-collapse" title="Développer" onclick="toggleCollapse('${ex.id}')">
+          <svg class="chevron-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button class="btn-d" onclick="removeExercise('${ex.id}')" style="display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+    </div>`;
+    return card;
+  }
+
+  card.innerHTML = `
+  <!-- EN-TÊTE: nom pleine largeur + boutons inline avec le label -->
+  <div class="ex-header">
+    <div class="ex-header-top">
+      <div class="ex-name-wrap">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+          <div class="ex-name-label" style="margin-bottom:0">Exercice</div>
+          <div class="ex-actions">
+            <button class="btn-ic btn-toggle-collapse is-expanded" title="Réduire" onclick="toggleCollapse('${ex.id}')">
+              <svg class="chevron-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button class="btn-d" onclick="removeExercise('${ex.id}')" style="display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+        </div>
+        <div class="ex-name-inp-wrap">
+          <input class="inp ex-name-inp" list="ex-list" id="exn-${ex.id}"
+            value="${esc(ex.name)}" placeholder="Nom ou choisir dans la liste..."
+            oninput="updExNameLive('${ex.id}',this.value);document.getElementById('exncl-${ex.id}').style.display=this.value?'flex':'none'"
+            onchange="renderExercises();updateHeader()">
+          <button class="ex-name-clear" id="exncl-${ex.id}" style="display:${ex.name?'flex':'none'}"
+            onclick="updEx('${ex.id}','name','');document.getElementById('exn-${ex.id}').value='';this.style.display='none'" style="display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUSCLES -->
+  <div class="muscles-grid">
+    <div>
+      <div class="muscle-label">Muscles primaires</div>
+      <div class="muscle-tags">
+        ${ex.primaries.map((m,i)=>`<span class="mtag">${esc(m)}<span style="cursor:pointer;margin-left:3px;opacity:.6;font-size:10px" onclick="removeMuscle('${ex.id}','p',${i})">×</span></span>`).join('')}
+      </div>
+      <div class="muscle-add-row">
+        <input class="inp inp-sm" id="pi-${ex.id}" placeholder="Pectoraux…" list="muscle-list">
+        <button class="btn-ic" style="flex-shrink:0" onclick="addMuscle('${ex.id}','p')">+</button>
+      </div>
+    </div>
+    <div>
+      <div class="muscle-label">Muscles secondaires</div>
+      <div class="muscle-tags">
+        ${ex.secondaries.map((m,i)=>`<span class="mtag" style="opacity:.65">${esc(m)}<span style="cursor:pointer;margin-left:3px;opacity:.7;font-size:10px" onclick="removeMuscle('${ex.id}','s',${i})">×</span></span>`).join('')}
+      </div>
+      <div class="muscle-add-row">
+        <input class="inp inp-sm" id="si-${ex.id}" placeholder="Triceps…" list="muscle-list">
+        <button class="btn-ic" style="flex-shrink:0" onclick="addMuscle('${ex.id}','s')">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIG -->
+  <div class="ex-config" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0">
+    <div class="ex-config-item">
+      <div class="cfg-lbl">Séries</div>
+      <input class="inp inp-sm inp-c inp-mono" type="number" min="1" max="20" value="${ex.series}"
+        onchange="updEx('${ex.id}','series',+this.value)">
+    </div>
+    <div class="ex-config-item">
+      <div class="cfg-lbl">Rép. cible</div>
+      <input class="inp inp-sm inp-c" value="${esc(ex.reps)}" placeholder="8-12"
+        onchange="updEx('${ex.id}','reps',this.value)" style="min-width:0">
+    </div>
+    <div class="ex-config-item">
+      <div class="cfg-lbl">Kg</div>
+      <input class="inp inp-sm inp-c inp-mono" type="number" step="0.5" value="${ex.weight}"
+        onchange="updEx('${ex.id}','weight',+this.value)">
+    </div>
+    <div class="ex-config-item">
+      <div class="cfg-lbl">Repos</div>
+      <input class="inp inp-sm inp-c inp-mono" type="text" inputmode="numeric" placeholder="1:30"
+        value="${ex.restSec ? Math.floor(ex.restSec/60)+':'+String(ex.restSec%60).padStart(2,'0') : ''}"
+        onchange="updEx('${ex.id}','restSec',parseRestInput(this.value))"
+        title="Format min:sec, ex 1:30">
+    </div>
+  </div>
+
+  <!-- LOG SETS -->
+  <div class="set-log-wrap">
+    <div class="set-log-head">
+      <div></div>
+      <div>Reps</div>
+      <div>Kg</div>
+      <div></div>
+    </div>
+    ${setRows}
+  </div>
+
+  <!-- ACTIONS -->
+  <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap">
+    <button class="btn-w btn-sm" style="flex:1;min-width:140px" onclick="saveToHistory('${ex.id}')">✓ Sauvegarder les séries</button>
+    <button class="btn-g btn-sm" onclick="toggleHist('${ex.id}')" style="flex:1;min-width:140px;white-space:nowrap">
+      <span style="display:inline-flex;vertical-align:middle;margin-right:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>Historique${hasHist?' ('+hist.length+')':''}
+    </button>
+  </div>
+
+  <!-- HISTORIQUE -->
+  <div class="hist-drawer" id="hist-${ex.id}">
+    <div style="font-size:7.5px;letter-spacing:2px;color:var(--muted);font-weight:700;margin-bottom:10px;text-transform:uppercase">Historique des séances</div>
+    ${histRows || '<div style="font-size:11px;color:var(--muted);padding:8px 0">Aucun historique — sauvegarde ta première séance ↑</div>'}
+  </div>
+  `;
+  return card;
+}
+
+function renderExercises(){
+  const prog = getActiveProg();
+  const list = document.getElementById('exercise-list');
+  const empty = document.getElementById('ex-empty');
+  const visibleExercises = prog.exercises.filter(e=>!e.deleted);
+  if(!visibleExercises.length){ list.innerHTML=''; empty.style.display=''; return; }
+  empty.style.display = 'none';
+  list.innerHTML = '';
+
+  visibleExercises.forEach(ex=>{
+    // Migrate old single-string format → arrays
+    if(!Array.isArray(ex.primaries)){
+      const mapped = DB_EX[ex.name]||{p:'',s:''};
+      const raw = ex.primaryCustom||mapped.p||'';
+      ex.primaries = raw ? raw.split(',').map(s=>s.trim()).filter(Boolean) : [];
+      delete ex.primaryCustom;
+    }
+    if(!Array.isArray(ex.secondaries)){
+      const mapped = DB_EX[ex.name]||{p:'',s:''};
+      const raw = ex.secondaryCustom||mapped.s||'';
+      ex.secondaries = raw ? raw.split(',').map(s=>s.trim()).filter(Boolean) : [];
+      delete ex.secondaryCustom;
+    }
+
+    // Ensure setLogs length
+    while(ex.setLogs.length < ex.series) ex.setLogs.push({reps:'',weight:'',notes:'',done:false});
+    ex.setLogs = ex.setLogs.slice(0, ex.series);
+
+    list.appendChild(createExerciseCard(ex));
+  });
+
+  initExerciseDragReorder(list);
+}
+
+// ── RÉORDONNANCEMENT PAR APPUI LONG (drag & drop) ────────────────────
+// Principe: un appui maintenu ~450ms sur une carte (sans bouger) déclenche
+// le mode "saisie" — la carte se détache visuellement et suit le pointeur.
+// En la déplaçant au-dessus/dessous d'une autre carte, l'ordre se met à jour
+// en direct dans le DOM. Au relâchement, le nouvel ordre est persisté dans
+// prog.exercises. Le délai et le seuil de tolérance au mouvement évitent
+// de déclencher un drag par accident lors d'un simple scroll de la liste.
+let _dragState = null;
+
+function initExerciseDragReorder(list){
+  if(list._dragBound) return; // écouteurs déjà attachés une fois pour toutes
+  list._dragBound = true;
+
+  const LONG_PRESS_MS = 450;
+  const MOVE_CANCEL_PX = 10; // tolérance avant le délai: au-delà, on annule (c'est un scroll)
+  let pressTimer = null;
+  let startX = 0, startY = 0;
+  let pendingCard = null;
+
+  function clearPressTimer(){
+    if(pressTimer){ clearTimeout(pressTimer); pressTimer = null; }
+    pendingCard = null;
+  }
+
+  list.addEventListener('pointerdown', function(e){
+    // Ignorer les interactions qui partent d'un champ de saisie, bouton, lien…
+    // — seule la zone "carte" elle-même doit pouvoir déclencher le drag.
+    if(e.target.closest('input, button, textarea, select, a, .mtag')) return;
+    const card = e.target.closest('.ex-card');
+    if(!card || !card.dataset.exId) return;
+
+    startX = e.clientX; startY = e.clientY;
+    pendingCard = card;
+    // IMPORTANT: empêcher dès maintenant le click natif que le navigateur
+    // émet après pointerup (ordre standard: pointerdown → pointerup → click).
+    // Sans ce preventDefault ici, ce click synthétique se déclenche même
+    // après un long-press + drag complet, et rouvre/replie la carte
+    // (.ex-collapsed-row a onclick="toggleCollapse(...)") immédiatement
+    // après le réordonnancement — ce qui donnait l'impression que "rien ne
+    // se passe, comme un simple clic" alors que le drag avait bien eu lieu.
+    e.preventDefault();
+    pressTimer = setTimeout(function(){
+      if(pendingCard) startDrag(pendingCard, e.pointerId, startX, startY);
+    }, LONG_PRESS_MS);
+  });
+
+  list.addEventListener('pointermove', function(e){
+    if(pressTimer && pendingCard){
+      const dx = Math.abs(e.clientX - startX), dy = Math.abs(e.clientY - startY);
+      if(dx > MOVE_CANCEL_PX || dy > MOVE_CANCEL_PX) clearPressTimer();
+      return;
+    }
+    if(_dragState && _dragState.pointerId === e.pointerId) onDragMove(e);
+  });
+
+  list.addEventListener('pointerup', function(e){
+    // Tap court : le timer de long-press n'a pas encore expiré (pas de drag
+    // démarré) → c'est un vrai clic. Comme pointerdown a fait preventDefault
+    // (voir plus haut), le navigateur n'émettra PAS de click natif : on doit
+    // donc déclencher nous-mêmes l'action correspondante (déplier/replier),
+    // sauf si le clic visait un élément qui gère déjà son propre onclick
+    // (bouton supprimer, bouton développer) — ceux-ci sont exclus dès
+    // pointerdown via le sélecteur 'input, button, textarea, select, a,
+    // .mtag' donc pointerdown retourne tôt et pendingCard reste null ici.
+    const wasPending = pressTimer && pendingCard === e.target.closest('.ex-card');
+    clearPressTimer();
+    if(_dragState && _dragState.pointerId === e.pointerId){
+      endDrag();
+    } else if(wasPending){
+      const card = e.target.closest('.ex-card');
+      if(card && card.dataset.exId && card.classList.contains('ex-card-collapsed')){
+        toggleCollapse(card.dataset.exId);
+      }
+    }
+  });
+  list.addEventListener('pointercancel', function(e){
+    clearPressTimer();
+    if(_dragState && _dragState.pointerId === e.pointerId) endDrag(true);
+  });
+  // Si le pointeur quitte la zone de liste pendant l'appui (avant le délai),
+  // on annule plutôt que de déclencher un drag fantôme.
+  list.addEventListener('pointerleave', function(e){
+    if(pressTimer && !_dragState) clearPressTimer();
+  });
+
+  function startDrag(card, pointerId, x, y){
+    pressTimer = null; pendingCard = null;
+    const rect = card.getBoundingClientRect();
+    if(navigator.vibrate) try{ navigator.vibrate(12); }catch(e){}
+
+    card.setPointerCapture && card.setPointerCapture(pointerId);
+    card.classList.add('ex-card-dragging');
+    card.style.position = 'relative';
+    card.style.zIndex = '50';
+    card.style.transform = 'translateY(0px)';
+
+    _dragState = {
+      pointerId, card,
+      offsetY: y - rect.top,
+      startY: y,
+      currentTranslate: 0,
+    };
+  }
+
+  function onDragMove(e){
+    e.preventDefault();
+    const st = _dragState;
+    const card = st.card;
+    st.currentTranslate = e.clientY - st.startY;
+    card.style.transform = 'translateY(' + st.currentTranslate + 'px)';
+
+    // Détecter la carte survolée pour réordonner le DOM en direct
+    const siblings = Array.from(list.querySelectorAll('.ex-card:not(.ex-card-dragging)'));
+    const cardMidY = e.clientY;
+    let target = null, insertBefore = true;
+    for(const sib of siblings){
+      const r = sib.getBoundingClientRect();
+      const mid = r.top + r.height/2;
+      if(cardMidY < mid){ target = sib; insertBefore = true; break; }
+      target = sib; insertBefore = false;
+    }
+    if(target){
+      if(insertBefore) list.insertBefore(card, target);
+      else list.insertBefore(card, target.nextSibling);
+    }
+  }
+
+  function endDrag(cancelled){
+    const st = _dragState;
+    if(!st) return;
+    const card = st.card;
+    card.classList.remove('ex-card-dragging');
+    card.style.position = '';
+    card.style.zIndex = '';
+    card.style.transform = '';
+    _dragState = null;
+    if(cancelled) return;
+
+    // Empêche le click qui suit ce relâchement de déclencher toggleCollapse
+    // (la carte repliée a un onclick sur toute sa zone) — sans ça, terminer
+    // un drag rouvrirait/replierait la carte par accident juste en-dessous.
+    const suppressClick = function(ev){ ev.stopPropagation(); ev.preventDefault(); };
+    card.addEventListener('click', suppressClick, { capture:true, once:true });
+    setTimeout(function(){ card.removeEventListener('click', suppressClick, { capture:true }); }, 0);
+
+    // Persister le nouvel ordre: on relit l'ordre des cartes dans le DOM et
+    // on réordonne prog.exercises en conséquence (les exercices supprimés/
+    // masqués, absents du DOM, gardent leur position relative via filter).
+    const prog = getActiveProg();
+    const orderedIds = Array.from(list.querySelectorAll('.ex-card')).map(c => c.dataset.exId);
+    const byId = {};
+    prog.exercises.forEach(ex => { byId[ex.id] = ex; });
+    const reordered = orderedIds.map(id => byId[id]).filter(Boolean);
+    // Réinjecter les exercices non visibles (supprimés) à leur position d'origine
+    // n'a pas d'importance pour l'ordre logique — on les remet simplement à la fin.
+    const hiddenOnes = prog.exercises.filter(ex => !orderedIds.includes(ex.id));
+    prog.exercises = reordered.concat(hiddenOnes);
+    touchUpdatedAt(prog);
+    dbSave();
+  }
+}
+
+function toggleCollapse(id){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  ex.collapsed = !ex.collapsed;
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave(); renderExercises();
+}
+
+// Parse intelligent du temps de repos: "1:30" → 90s, "130" → 90s (1min30), "45" → 45s
+function parseRestInput(val){
+  val = (val||'').trim();
+  if(!val) return 0;
+  if(val.includes(':')){
+    const parts = val.split(':');
+    const m = parseInt(parts[0]) || 0;
+    const s = parseInt(parts[1]) || 0;
+    return m*60 + s;
+  }
+  const digits = val.replace(/\D/g,'');
+  if(!digits) return 0;
+  if(digits.length <= 2) return parseInt(digits);
+  const sec = parseInt(digits.slice(-2));
+  const min = parseInt(digits.slice(0,-2));
+  return min*60 + sec;
+}
+
+function updEx(id, field, val){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  ex[field] = val;
+  if(field==='series'){
+    while(ex.setLogs.length<val) ex.setLogs.push({reps:'',weight:'',notes:'',done:false});
+    ex.setLogs = ex.setLogs.slice(0,val);
+  }
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave();
+  if(field==='series') renderExercises();
+  updateHeader();
+}
+
+// Mise à jour légère du nom pendant la frappe — AUCUN re-render (préserve le focus)
+function updExNameLive(id, val){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  ex.name = val;
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave();
+}
+
+function updSetLog(id, i, field, val){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex||!ex.setLogs[i]) return;
+  ex.setLogs[i][field] = val;
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave();
+}
+
+function toggleSetDone(id, i){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex||!ex.setLogs[i]) return;
+  ex.setLogs[i].done = !ex.setLogs[i].done;
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave();
+  // Mise à jour visuelle locale sans re-render complet
+  const btn = event.currentTarget;
+  if(btn){
+    const done = ex.setLogs[i].done;
+    btn.innerHTML = done ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : '';
+    btn.className = 'set-ok' + (done ? ' done' : '');
+  }
+}
+
+// ── HISTORY ───────────────────────────────────────
+function saveToHistory(id){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  // Ne garder QUE les séries qui ont au moins reps ou weight
+  const sets = ex.setLogs
+    .map(sl => ({ reps: sl.reps||'', weight: sl.weight||'', done: sl.done||false }))
+    .filter(s => s.reps !== '' || s.weight !== '');
+  if(!sets.length){ showToast('Remplis au moins une série'); return; }
+  const today = new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});
+  if(!DB.history[ex.id]) DB.history[ex.id] = [];
+  DB.history[ex.id].unshift({ date: today, sets, updatedAt: Date.now() });
+  // Ne tronquer que les entrées actives à 20 ; les tombstones (supprimées) ne
+  // comptent pas dans la limite pour ne jamais perdre une entrée active valide.
+  const active  = DB.history[ex.id].filter(h=>!h.deleted).slice(0,20);
+  const deleted = DB.history[ex.id].filter(h=>h.deleted);
+  DB.history[ex.id] = active.concat(deleted);
+  dbSave();
+  showToast('Séries sauvegardées !');
+  renderExercises();
+}
+
+function toggleHist(id){
+  const el = document.getElementById('hist-'+id);
+  if(el) el.classList.toggle('open');
+}
+
+function deleteHistEntry(exId, date){
+  if(!DB.history[exId]) return;
+  const entry = DB.history[exId].find(h=>h.date===date && !h.deleted);
+  if(!entry) return;
+  entry.deleted = true;
+  touchUpdatedAt(entry);
+  dbSave(); renderExercises();
+}
+
+function updateHeader(){
+  const prog = getActiveProg();
+  document.getElementById('h-count').textContent = prog.exercises.filter(e=>!e.deleted).length;
+  updateHdrLiveDot();
+}
+
+function addMuscle(id, side){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  const inp = document.getElementById((side==='p'?'pi-':'si-')+id);
+  if(!inp) return;
+  const val = inp.value.trim();
+  if(!val) return;
+  if(side==='p'){
+    if(!Array.isArray(ex.primaries)) ex.primaries=[];
+    if(!ex.primaries.includes(val)) ex.primaries.push(val);
+  } else {
+    if(!Array.isArray(ex.secondaries)) ex.secondaries=[];
+    if(!ex.secondaries.includes(val)) ex.secondaries.push(val);
+  }
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave(); renderExercises();
+}
+
+function removeMuscle(id, side, i){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===id);
+  if(!ex) return;
+  if(side==='p' && Array.isArray(ex.primaries))   ex.primaries.splice(i,1);
+  if(side==='s' && Array.isArray(ex.secondaries)) ex.secondaries.splice(i,1);
+  touchUpdatedAt(ex);
+  touchUpdatedAt(prog);
+  dbSave(); renderExercises();
+}
+
+// ════════════════════════════════════════════════════
+// VOLUME
+// ════════════════════════════════════════════════════
+function renderVolume(){
+  const list  = document.getElementById('volume-list');
+  const empty = document.getElementById('vol-empty');
+
+  // ── Aggregate across ALL programs → sub-part level ────
+  const vol = {}; // { subPart: séries }
+
+  DB.programs.filter(prog=>!prog.deleted).forEach(prog=>{
+    prog.exercises.filter(ex=>!ex.deleted).forEach(ex=>{
+      const series = +(ex.series) || 0;
+      if(!series) return;
+      const m = DB_EX[ex.name] || {p:'',s:''};
+      const prims = (Array.isArray(ex.primaries) && ex.primaries.length) ? ex.primaries : (m.p?[m.p]:[]);
+      const secs  = (Array.isArray(ex.secondaries) && ex.secondaries.length) ? ex.secondaries : (m.s?[m.s]:[]);
+      const add = (muscle, val) => { if(muscle&&val){ vol[muscle]=(vol[muscle]||0)+val; } };
+      prims.forEach(p => add(p, series));
+      secs.forEach(s  => add(s, series * 0.5));
+    });
+  });
+
+  // ── Fréquence: nb de JOURS DISTINCTS où le muscle est sollicité ──────
+  // Si un muscle est travaillé dans 2 programmes le MÊME jour → compte 1 fois.
+  // Si c'est sur 2 jours différents (même via des programmes différents) → compte 2 fois.
+  const freq = {}; // { muscle: Set<"progId:dayIndex"> }
+  DB.programs.filter(prog=>!prog.deleted).forEach(prog => {
+    const progDays = (prog.days && prog.days.length) ? prog.days : null;
+    prog.exercises.filter(ex=>!ex.deleted).forEach(ex => {
+      const series = +(ex.series) || 0;
+      if(!series) return;
+      const m = DB_EX[ex.name] || {p:'',s:''};
+      const prims = (Array.isArray(ex.primaries) && ex.primaries.length) ? ex.primaries : (m.p?[m.p]:[]);
+      const secs  = (Array.isArray(ex.secondaries) && ex.secondaries.length) ? ex.secondaries : (m.s?[m.s]:[]);
+      [...prims, ...secs].forEach(mu => {
+        if(!mu) return;
+        if(!freq[mu]) freq[mu] = new Set();
+        if(progDays){
+          // Un jour distinct par programme assigné à ce jour précis
+          progDays.forEach(d => freq[mu].add('day-'+d));
+        } else {
+          // Aucun jour défini pour ce programme → on le compte comme un jour "virtuel" unique à ce programme
+          freq[mu].add('prog-'+prog.id);
+        }
+      });
+    });
+  });
+  const freqCount = {}; // { muscle: number }
+  Object.entries(freq).forEach(([mu, set]) => { freqCount[mu] = set.size; });
+
+
+
+  // Vérifier si données
+  if(!Object.keys(vol).length){
+    if(list)  list.innerHTML = '';
+    if(empty) empty.style.display = '';
+    return;
+  }
+  if(empty) empty.style.display = 'none';
+
+  // ── Build grouped structure ────────────────────────────
+  // grouped[parent] = { total, parts:{subPart: séries} }
+  const grouped = {};
+  Object.entries(vol).forEach(([muscle, s]) => {
+    const parent = MUSCLE_PARENT[muscle] || muscle;
+    if(!grouped[parent]) grouped[parent] = { total:0, parts:{} };
+    grouped[parent].total += s;
+    grouped[parent].parts[muscle] = (grouped[parent].parts[muscle]||0) + s;
+  });
+
+  // Sort: follow MUSCLE_GROUPS order, then by total desc
+  const ORDER = Object.keys(MUSCLE_GROUPS);
+  const sorted = Object.entries(grouped).sort((a,b)=>{
+    const ai = ORDER.indexOf(a[0]), bi = ORDER.indexOf(b[0]);
+    if(ai===-1 && bi===-1) return b[1].total - a[1].total;
+    if(ai===-1) return 1; if(bi===-1) return -1;
+    return b[1].total - a[1].total;
+  });
+
+  const maxTotal = Math.max(...sorted.map(([,g])=>g.total), 1);
+  list.innerHTML = '';
+
+  // Status badge helper
+  function statusBadge(total) {
+    const t = Math.round(total);
+    if(t >= 12) return { label:'Priorité',    color:'#F87171', bg:'rgba(248,113,113,.12)', border:'rgba(248,113,113,.25)' };
+    if(t >= 6)  return { label:'Modéré',      color:'#FBBF24', bg:'rgba(251,191,36,.12)',  border:'rgba(251,191,36,.25)'  };
+    if(t >= 3)  return { label:'Maintenance', color:'#34D399', bg:'rgba(52,211,153,.12)',  border:'rgba(52,211,153,.25)'  };
+    return             { label:'Faible',      color:'var(--muted)', bg:'var(--softer)', border:'var(--border-s)' };
+  }
+
+  sorted.forEach(([group, data]) => {
+    const pct  = Math.round((data.total / maxTotal) * 100);
+    const st   = statusBadge(data.total);
+
+    // Sub-parts: only show if sub-part name ≠ group name AND has multiple sub-parts
+    const subEntries = Object.entries(data.parts)
+      .filter(([part]) => part !== group)
+      .sort((a,b) => b[1]-a[1]);
+
+    const subHTML = subEntries.length > 0
+      ? subEntries.map(([part, s]) => {
+          const subPct = Math.round((s / data.total) * 100);
+          return `<div style="display:flex;align-items:center;gap:8px;padding:4px 0">
+            <div style="font-size:10px;color:var(--muted);font-weight:600;width:130px;flex-shrink:0">${esc(part)}</div>
+            <div style="flex:1;height:3px;border-radius:99px;background:var(--softer);overflow:hidden">
+              <div style="height:100%;border-radius:99px;background:var(--muted);opacity:.5;width:${subPct}%"></div>
+            </div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);width:46px;text-align:right;flex-shrink:0">${s%1===0?s:s.toFixed(1)} sér.</div>
+          </div>`;
+        }).join('')
+      : '';
+
+    const div = document.createElement('div');
+    div.className = 'anim';
+    div.style.cssText = 'margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-s)';
+
+    const freqN = freqCount[group] || Object.keys(data.parts).reduce((max, part) => Math.max(max, freqCount[part]||0), 0);
+    const freqLabel = freqN ? `×${freqN}/sem` : '';
+
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:8px">
+        <span style="font-size:15px;font-weight:900;letter-spacing:-.3px;flex:1">${esc(group)}</span>
+        <div style="display:flex;align-items:center;gap:7px;flex-shrink:0">
+          <span style="background:${st.bg};border:1px solid ${st.border};color:${st.color};
+            font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 10px;border-radius:99px">
+            ${st.label}
+          </span>
+          ${freqLabel ? `<span style="background:var(--a2,rgba(99,102,241,.15));border:1px solid var(--accent);color:var(--accent);font-size:9.5px;font-weight:800;letter-spacing:.5px;padding:3px 10px;border-radius:99px">${freqLabel}</span>` : ''}
+          <span style="font-family:var(--mono);font-size:13px;font-weight:700">${data.total%1===0?data.total:data.total.toFixed(1)}</span>
+          <span style="font-size:10px;color:var(--muted)">séries</span>
+        </div>
+      </div>
+      <div class="bar-t" style="margin-bottom:${subHTML?'10px':'0'}">
+        <div class="bar-f" style="width:${pct}%"></div>
+      </div>
+      ${subHTML ? `<div style="padding:8px 10px;background:var(--softer);border:1px solid var(--border-s);border-radius:var(--r4)">${subHTML}</div>` : ''}`;
+
+    list.appendChild(div);
+  });
+}
+
+// ════════════════════════════════════════════════════
+// WAKE LOCK — empêche l'écran de s'éteindre pendant un chrono
+// ════════════════════════════════════════════════════
+let _wakeLock = null;
+async function requestWakeLock(){
+  try{
+    if('wakeLock' in navigator){
+      _wakeLock = await navigator.wakeLock.request('screen');
+      _wakeLock.addEventListener('release', function(){ _wakeLock = null; });
+    }
+  }catch(e){ /* refusé ou non supporté — on continue sans, le calcul horloge murale compense */ }
+}
+function releaseWakeLockIfIdle(){
+  if(_wakeLock && !sessRunning && !restRunning){
+    try{ _wakeLock.release(); }catch(e){}
+    _wakeLock = null;
+  }
+}
+// Ré-acquérir le wake lock quand on revient sur l'app (le navigateur le relâche
+// automatiquement en arrière-plan) + recalculer immédiatement l'affichage réel
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState === 'visible'){
+    if(sessRunning || restRunning) requestWakeLock();
+    if(sessRunning) tickSession();
+    if(restRunning) tickRest();
+  }
+});
+
+// ════════════════════════════════════════════════════
+// SESSION TIMER — basé sur l'horloge murale (Date.now()),
+// fonctionne correctement même si l'écran s'éteint/se verrouille.
+// ════════════════════════════════════════════════════
+let sessRunning=false, sessSec=0, sessInterval=null, sessStartTs=0, sessBaseSec=0;
+const SESS_C = 540.35;
+
+// Pilote le point vert pulsant du header : visible dès qu'une séance ou un
+// repos tourne. Appelé à chaque changement d'état plutôt que dans un
+// interval dédié, pour rester correct même si aucun des deux timers ne
+// tourne actuellement (pas de polling inutile).
+function updateHdrLiveDot(){
+  const dot = document.getElementById('hdr-live-dot');
+  if(!dot) return;
+  dot.classList.toggle('on', !!(sessRunning || restRunning));
+}
+
+function tickSession(){
+  sessSec = sessBaseSec + Math.floor((Date.now() - sessStartTs) / 1000);
+  const t = fmtTime(sessSec);
+  setTxt('sess-time',t); setTxt('h-session',t);
+  const pct = (sessSec%3600)/3600;
+  setOff('sess-arc', SESS_C*(1-pct));
+}
+
+function toggleSession(){
+  if(sessRunning){
+    clearInterval(sessInterval); sessRunning=false;
+    sessBaseSec = sessSec; // mémoriser le temps écoulé à la pause
+    setBtnIcon('sess-btn','play','Reprendre'); setLbl('sess-lbl','PAUSE');
+    releaseWakeLockIfIdle();
+  } else {
+    sessRunning=true;
+    sessStartTs = Date.now();
+    setBtnIcon('sess-btn','pause','Pause'); setLbl('sess-lbl','EN COURS');
+    requestWakeLock();
+    sessInterval = setInterval(tickSession, 1000);
+  }
+  updateHdrLiveDot();
+}
+
+function resetSession(){
+  clearInterval(sessInterval); sessRunning=false; sessSec=0; sessBaseSec=0; sessStartTs=0;
+  setTxt('sess-time','00:00'); setTxt('h-session','00:00');
+  setBtnIcon('sess-btn','play','Démarrer'); setLbl('sess-lbl','PRÊT');
+  setOff('sess-arc', SESS_C);
+  releaseWakeLockIfIdle();
+  updateHdrLiveDot();
+  spinResetIcon('[onclick="resetSession()"]');
+}
+
+// Rejoue l'animation de rotation de l'icône reset, même sur des taps très
+// brefs où :active seul ne suffirait pas à montrer le tour complet.
+function spinResetIcon(selector){
+  const btn = document.querySelector(selector);
+  if(!btn) return;
+  btn.classList.remove('spin');
+  void btn.offsetWidth; // force le reflow pour permettre de rejouer l'animation
+  btn.classList.add('spin');
+}
+
+// ════════════════════════════════════════════════════
+// REST TIMER — basé sur une heure de fin absolue (restEndTs),
+// fonctionne correctement même si l'écran s'éteint/se verrouille.
+// ════════════════════════════════════════════════════
+let restRunning=false, restSec=90, restTotal=90, restInterval=null, restEndTs=0;
+
+function initRestFromSettings(){
+  const def = DB.settings?.restDef || 90;
+  restSec = restTotal = def;
+  const mEl = document.getElementById('rest-min');
+  const sEl = document.getElementById('rest-sec-inp');
+  if(mEl) mEl.value = Math.floor(def / 60);
+  if(sEl) sEl.value = def % 60;
+  document.querySelectorAll('.btn-pre').forEach(b => b.classList.remove('sel'));
+  updateCustomRestPreview();
+  updateRestDisplay();
+}
+
+function setRest(s){
+  if(restRunning) return;
+  restTotal = restSec = s;
+  const mEl = document.getElementById('rest-min');
+  const sEl = document.getElementById('rest-sec-inp');
+  if(mEl) mEl.value = Math.floor(s / 60);
+  if(sEl) sEl.value = s % 60;
+  document.querySelectorAll('.btn-pre').forEach(b=>{
+    const v = parseInt(b.dataset.sec || b.getAttribute('onclick')?.match(/setRest\((\d+)\)/)?.[1] || 0);
+    b.classList.toggle('sel', v === s);
+  });
+  updateRestDisplay();
+}
+
+function updateCustomRestPreview(){
+  const m = parseInt(document.getElementById('rest-min')?.value) || 0;
+  const s = parseInt(document.getElementById('rest-sec-inp')?.value) || 0;
+  const total = m * 60 + s;
+  if(total > 0) setRest(total);
+}
+
+function toggleRest(){
+  if(restRunning){ pauseRest(); }
+  else {
+    if(restSec<=0){ restSec=restTotal; }
+    startRest();
+  }
+}
+
+function tickRest(){
+  restSec = Math.max(0, Math.round((restEndTs - Date.now()) / 1000));
+  updateRestDisplay();
+  if(restSec<=0){
+    clearInterval(restInterval); restRunning=false;
+    setBtnIcon('rest-btn','play','Relancer'); setLbl('rest-lbl','FINI !');
+    showToast('Repos terminé !');
+    notifyLocal('Repos terminé !', 'C\'est reparti — série suivante 💪');
+    restSec = restTotal;
+    releaseWakeLockIfIdle();
+    updateHdrLiveDot();
+  }
+}
+
+// Notification système locale (aucun serveur requis — déclenchée par l'appareil
+// lui-même). Fonctionne tant que l'app reste exécutée en arrière-plan (écran
+// allumé ou Wake Lock actif). Limite réelle : si le téléphone est verrouillé
+// manuellement (bouton power) pendant le repos, l'OS suspend généralement le
+// JS en arrière-plan après quelques secondes/minutes — la notification ne se
+// déclenchera alors qu'au déverrouillage suivant, pas pendant que l'écran est
+// noir. Une vraie notification "pendant" verrouillage prolongé demanderait un
+// push serveur, ce que cette app n'a plus depuis le retrait de Firebase.
+function notifyLocal(title, body){
+  if(DB.settings && DB.settings.notifDisabled) return; // coupé explicitement depuis l'app
+  if(!('Notification' in window) || Notification.permission !== 'granted') return;
+  const opts = {
+    body: body,
+    icon: './icon-192.png',
+    // Badge = petite icône de la barre de status Android, DOIT être une
+    // silhouette monochrome sur fond transparent (spec Android/Chrome) —
+    // utiliser l'icône couleur complète ici donne un rendu dégradé/flou
+    // une fois qu'Android la réduit en masque monochrome automatique.
+    badge: './badge-96.png',
+    vibrate: [120,60,120],
+    tag: 'mytraining-rest',      // remplace une éventuelle notif de repos précédente au lieu de s'empiler
+    renotify: true,              // re-vibre/re-sonne même si une notif avec le même tag existait déjà
+    requireInteraction: true,    // reste affichée (et donc visible sur écran de verrouillage) jusqu'à ce que l'utilisateur la balaie/touche, au lieu de disparaître après quelques secondes
+    silent: false,               // joue le son système de notification, comme un vrai message reçu
+    timestamp: Date.now(),
+    // Pas de boutons d'action: un simple tap sur la notification suffit à
+    // rouvrir/focus l'app (géré par notificationclick dans sw.js) — plus
+    // simple et moins encombré qu'une notif avec deux boutons "Relancer"/"OK".
+  };
+  try{
+    if(navigator.serviceWorker && navigator.serviceWorker.ready){
+      navigator.serviceWorker.ready.then(function(reg){
+        reg.showNotification(title, opts);
+      });
+    } else {
+      new Notification(title, opts);
+    }
+  }catch(e){}
+}
+
+// Affiche le bandeau dans l'un de ces 3 états:
+// - permission='default' → bouton "Activer" (demande la permission navigateur)
+// - permission='granted' && pas désactivé en interne → bouton "Désactiver" (coupe net.notifyLocal)
+// - permission='denied' → bandeau masqué, rien à faire depuis l'app (réglages système requis)
+function renderNotifBanner(){
+  const banner = document.getElementById('notif-banner');
+  if(!banner) return;
+  const supported = 'Notification' in window;
+  if(!supported || Notification.permission === 'denied'){
+    banner.style.display = 'none';
+    return;
+  }
+  const textEl = document.getElementById('notif-banner-text');
+  const btnEl = document.getElementById('notif-banner-btn');
+  const iconEl = document.getElementById('notif-banner-icon');
+  const disabledLocally = !!(DB.settings && DB.settings.notifDisabled);
+
+  if(Notification.permission === 'granted' && !disabledLocally){
+    banner.style.display = 'flex';
+    banner.classList.add('notif-banner-on');
+    if(textEl) textEl.textContent = 'Notifications activées — tu seras averti(e) à la fin du repos.';
+    if(btnEl){ btnEl.textContent = 'Désactiver'; btnEl.setAttribute('onclick','disableNotifications()'); btnEl.className = 'btn-g'; }
+  } else {
+    banner.style.display = 'flex';
+    banner.classList.remove('notif-banner-on');
+    if(textEl) textEl.textContent = 'Active les notifications pour être averti(e) quand le repos est fini. Marche mieux écran allumé ou app au premier plan ; si le téléphone est verrouillé, la notif peut n\'arriver qu\'au déverrouillage.';
+    if(btnEl){ btnEl.textContent = 'Activer'; btnEl.setAttribute('onclick','enableNotifications()'); btnEl.className = 'btn-g'; }
+  }
+}
+
+// Demande la permission de notification au navigateur. Doit être déclenché
+// par un clic utilisateur direct (la plupart des navigateurs bloquent une
+// demande automatique au chargement de la page) — utilisé par le bandeau,
+// et aussi tenté automatiquement au chargement (voir tryAutoEnableNotifications).
+async function enableNotifications(){
+  if(!('Notification' in window)){
+    showToast('Notifications non supportées sur cet appareil');
+    return;
+  }
+  try{
+    const result = await Notification.requestPermission();
+    if(result === 'granted'){
+      if(!DB.settings) DB.settings = {};
+      DB.settings.notifDisabled = false;
+      dbSave();
+      showToast('Notifications activées !');
+      initPush();
+    } else if(result === 'denied'){
+      showToast('Notifications refusées');
+    }
+  }catch(e){
+    showToast('Erreur lors de la demande');
+  }
+  renderNotifBanner();
+}
+
+// Coupe les notifications depuis l'app sans passer par les réglages système:
+// le navigateur ne permet pas à une page de révoquer une permission déjà
+// accordée, donc on utilise un simple interrupteur interne que notifyLocal()
+// respecte. C'est l'arrêt "complet" demandé, équivalent en pratique à une
+// révocation côté utilisateur.
+function disableNotifications(){
+  if(!DB.settings) DB.settings = {};
+  DB.settings.notifDisabled = true;
+  dbSave();
+  showToast('Notifications désactivées');
+  renderNotifBanner();
+  pushCancel();
+}
+
+// Tentative de demande automatique au chargement de l'app (sans attendre un
+// clic sur le bandeau), pour que les notifications fonctionnent "de base".
+// Certains navigateurs bloquent silencieusement une demande non déclenchée
+// par un geste utilisateur direct — dans ce cas la permission reste 'default'
+// et le bandeau "Activer" reste affiché comme filet de secours.
+async function tryAutoEnableNotifications(){
+  if(!('Notification' in window)) return;
+  if(Notification.permission !== 'default') return;
+  try{ await Notification.requestPermission(); }catch(e){}
+  renderNotifBanner();
+  initPush();
+}
+
+function startRest(){
+  if(restRunning) return;
+  restRunning=true;
+  restEndTs = Date.now() + restSec*1000;
+  setBtnIcon('rest-btn','pause','Pause'); setLbl('rest-lbl','EN COURS');
+  requestWakeLock();
+  restInterval = setInterval(tickRest, 1000);
+  pushSchedule(); // notif serveur même si l'écran s'éteint / app fermée
+  updateHdrLiveDot();
+}
+
+function pauseRest(){
+  clearInterval(restInterval); restRunning=false;
+  setBtnIcon('rest-btn','play','Reprendre'); setLbl('rest-lbl','PAUSE');
+  releaseWakeLockIfIdle();
+  pushCancel();
+  updateHdrLiveDot();
+}
+
+function resetRest(){
+  clearInterval(restInterval); restRunning=false;
+  restSec = restTotal;
+  updateRestDisplay();
+  setBtnIcon('rest-btn','play','Lancer'); setLbl('rest-lbl','SEC');
+  releaseWakeLockIfIdle();
+  pushCancel();
+  updateHdrLiveDot();
+  spinResetIcon('[onclick="resetRest()"]');
+}
+
+// Déclenché par l'action "↺ Relancer" de la notification de fin de repos
+// (depuis le service worker, via postMessage ou paramètre d'URL au démarrage).
+function restartRestFromNotif(){
+  resetRest();
+  startRest();
+  showToast('Repos relancé');
+}
+
+function updateRestDisplay(){
+  const t = restSec >= 60 ? fmtTime(restSec) : restSec + 's';
+  setTxt('rest-time', t);
+  setTxt('h-rest', restSec > 0 ? t : 'GO!');
+  const pct = restTotal > 0 ? restSec/restTotal : 0;
+  setOff('rest-arc', SESS_C*(1-pct));
+}
+
+// ════════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════════
+function fmtTime(s){ return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}` }
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s){ return escHtml(s); } // alias historique — voir escHtml() pour l'implémentation
+function setTxt(id,v){ const e=document.getElementById(id); if(e) e.textContent=v; }
+function setLbl(id,v){ setTxt(id,v); }
+// Icônes SVG pour les boutons play/pause des timers (remplace les emojis ▶/⏸)
+const ICON_PLAY  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
+const ICON_PAUSE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+
+// idPrefix: 'sess-btn' ou 'rest-btn'. icon: 'play' ou 'pause'.
+function setBtnIcon(idPrefix, icon, label){
+  const iconEl = document.getElementById(idPrefix+'-icon');
+  const labelEl = document.getElementById(idPrefix+'-label');
+  if(iconEl) iconEl.innerHTML = icon === 'pause' ? ICON_PAUSE : ICON_PLAY;
+  if(labelEl) labelEl.textContent = label;
+}
+function setOff(id,v){ const e=document.getElementById(id); if(e) e.setAttribute('stroke-dashoffset',v.toFixed(2)); }
+
+let toastT=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<span>${msg}</span>`;
+  t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+function showToastUndo(msg, undoFn){
+  const t=document.getElementById('toast');
+  t.innerHTML=`<span style="flex:1">${msg}</span>
+    <button onclick="(${undoFn.toString()})();this.closest('#toast').classList.remove('show')"
+      style="background:var(--accent-btn);color:var(--accent-btn-inv);border:none;border-radius:6px;
+             padding:3px 10px;font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0;
+             touch-action:manipulation;margin-left:10px">Annuler</button>`;
+  t.style.display='flex';
+  t.style.alignItems='center';
+  t.style.gap='0';
+  t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+// Datalist for exercise autocomplete
+function buildDatalist(){
+  const dl = document.createElement('datalist'); dl.id='ex-list';
+  Object.keys(DB_EX).forEach(n=>{ const o=document.createElement('option'); o.value=n; dl.appendChild(o); });
+  document.body.appendChild(dl);
+
+  // Muscle datalist — toutes les sous-parties de la taxonomie complète,
+  // pas seulement celles déjà utilisées par un exercice du catalogue.
+  const allMuscles = [...new Set(Object.values(MUSCLE_GROUPS).flat())].sort();
+  const ml = document.createElement('datalist'); ml.id='muscle-list';
+  allMuscles.forEach(m=>{ const o=document.createElement('option'); o.value=m; ml.appendChild(o); });
+  document.body.appendChild(ml);
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+dbLoad();
+buildDatalist();
+renderProgBar();
+renderExercises();
+updateHeader();
+initRestFromSettings();
+renderNotifBanner();
+tryAutoEnableNotifications();
+
+// App ouverte depuis l'action "↺ Relancer" d'une notification (app était fermée)
+if(new URLSearchParams(window.location.search).get('action') === 'restart-rest'){
+  switchTab('timer');
+  restartRestFromNotif();
+  history.replaceState(null, '', window.location.pathname);
+}
+</script>
+
+<div class="bottom-nav" id="bottom-nav">
+
+<button class="bn-item on" data-tab="programme" onclick="switchTab('programme');setActive(this)">
+  <div class="bn-sym">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Haltère / dumbbell — disques concentriques + barre centrale -->
+      <line x1="7.5" y1="12" x2="16.5" y2="12" stroke-width="2.2"/>
+      <rect x="5.5" y="9.5" width="2.2" height="5" rx="1"/>
+      <rect x="16.3" y="9.5" width="2.2" height="5" rx="1"/>
+      <rect x="2.5" y="8" width="2.4" height="8" rx="1.1"/>
+      <rect x="19.1" y="8" width="2.4" height="8" rx="1.1"/>
+    </svg>
+  </div>
+  <div class="bn-lbl">Séance</div>
+</button>
+
+<button class="bn-item" data-tab="volume" onclick="switchTab('volume');setActive(this)">
+  <div class="bn-sym">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Bar chart croissant -->
+      <rect class="bn-bar" x="3" y="14" width="4" height="7" rx="1"/>
+      <rect class="bn-bar" x="10" y="9" width="4" height="12" rx="1"/>
+      <rect class="bn-bar" x="17" y="4" width="4" height="17" rx="1"/>
+    </svg>
+  </div>
+  <div class="bn-lbl">Volume</div>
+</button>
+
+<button class="bn-item" data-tab="timer" onclick="switchTab('timer');setActive(this)">
+  <div class="bn-sym">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Stopwatch -->
+      <circle cx="12" cy="13" r="8"/>
+      <path d="M9.5 2.5h5"/><path d="M12 2.5v2.5"/>
+      <path d="M18.5 5.5l1.5 1.5"/>
+      <path class="bn-hand" d="M12 9v5l3 2"/>
+    </svg>
+  </div>
+  <div class="bn-lbl">Timer</div>
+</button>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-messaging-compat.js"></script>
+<script>
+// ═══════════════════════════════════════════════
+//  PUSH — minuteur de repos (notif qui arrive même app fermée/écran verrouillé)
+//  Architecture : app.html → Worker Cloudflare (/schedule) → QStash (délai)
+//                → Worker Cloudflare (/fire) → FCM → firebase-messaging-sw.js
+//  Aucun compte utilisateur : juste un deviceId aléatoire stocké en localStorage.
+// ═══════════════════════════════════════════════
+
+// !!! Remplace par l'URL réelle de ton Worker une fois déployé,
+// et par le secret que tu auras choisi côté Worker (variable SHARED_SECRET).
+const PUSH_WORKER_URL = 'https://my-training-push.go-muscu351.workers.dev';
+const PUSH_SHARED_SECRET = 'mt-D14V26G06k29d30j';
+const FCM_VAPID_KEY = 'BIXXuKl1qzDtW468FNa9-BJ-Rd36-gkYhFSG8UFGPig589mb3VcnmZX6GZt9UzopSDdNuTSXwFlfZYhaxpWx2ls';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBavyD0A_MzW_9D-eDqrlNZXDVqgxN343Q",
+  authDomain: "my-training-push.firebaseapp.com",
+  projectId: "my-training-push",
+  storageBucket: "my-training-push.firebasestorage.app",
+  messagingSenderId: "857104272216",
+  appId: "1:857104272216:web:206d257b4985980118b32d",
+};
+
+let fcmToken = null;
+let fcmReady = false;
+
+// Identifiant d'appareil anonyme — pas de compte, juste un identifiant stable
+// stocké en local pour que le Worker sache à quel token FCM correspondre
+// les push programmés pour CET appareil précis.
+function getDeviceId(){
+  let id = localStorage.getItem('mytraining-device-id');
+  if(!id){
+    id = (crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Math.random().toString(36).slice(2) + Date.now());
+    localStorage.setItem('mytraining-device-id', id);
+  }
+  return id;
+}
+
+// Initialise Firebase Messaging et récupère le token FCM de cet appareil.
+// Doit être appelé après que la permission de notification a été accordée
+// (sinon getToken() échoue silencieusement) — on le tente au chargement et
+// après chaque acceptation de permission.
+async function initPush(){
+  if(fcmReady) return;
+  if(!('Notification' in window) || Notification.permission !== 'granted') return;
+  if(!('serviceWorker' in navigator)) return;
+
+  try{
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+
+    // firebase-messaging-sw.js est un SW SÉPARÉ de sw.js (cache/notifs locales).
+    // Les deux coexistent, chacun avec son propre scope/fichier.
+    const swReg = await navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './firebase-cloud-messaging-push-scope' });
+
+    fcmToken = await messaging.getToken({ vapidKey: FCM_VAPID_KEY, serviceWorkerRegistration: swReg });
+    fcmReady = !!fcmToken;
+
+    // Le token peut changer (rotation FCM) — si le repos est en cours au
+    // moment du changement, on reprogramme avec le nouveau token.
+    messaging.onTokenRefresh && messaging.onTokenRefresh(async ()=>{
+      fcmToken = await messaging.getToken({ vapidKey: FCM_VAPID_KEY, serviceWorkerRegistration: swReg });
+      if(restRunning) pushSchedule();
+    });
+  }catch(e){
+    console.log('[push] init failed', e);
+    fcmReady = false;
+  }
+}
+
+// Programme (ou reprogramme) la notification de fin de repos côté serveur.
+// Appelé à chaque démarrage/relance du minuteur. Le Worker annule lui-même
+// l'éventuel envoi déjà programmé pour ce deviceId avant d'en créer un nouveau
+// — donc un simple appel ici suffit, pas besoin d'annuler explicitement avant.
+async function pushSchedule(){
+  if(!fcmReady || !fcmToken) return; // pas de notif locale-only en fallback silencieux : notifyLocal() reste le filet de secours si l'app tourne encore
+  const delaySeconds = Math.max(1, Math.round((restEndTs - Date.now()) / 1000));
+  try{
+    await fetch(PUSH_WORKER_URL + '/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Shared-Secret': PUSH_SHARED_SECRET },
+      body: JSON.stringify({ deviceId: getDeviceId(), token: fcmToken, delaySeconds, action: 'schedule' }),
+    });
+  }catch(e){ console.log('[push] schedule failed', e); }
+}
+
+// Annule la notification programmée côté serveur (pause ou reset du repos).
+async function pushCancel(){
+  if(!fcmReady) return;
+  try{
+    await fetch(PUSH_WORKER_URL + '/schedule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Shared-Secret': PUSH_SHARED_SECRET },
+      body: JSON.stringify({ deviceId: getDeviceId(), action: 'cancel' }),
+    });
+  }catch(e){ console.log('[push] cancel failed', e); }
+}
+
+initPush();
+
+// setActive — inset box-shadow via CSS .on, aucun positionnement JS
+const BN_TAP_ANIM = { programme:'tap-shake', volume:'tap-bars', timer:'tap-sweep' };
+function setActive(el){
+  document.querySelectorAll('.bn-item').forEach(x => x.classList.remove('on'));
+  el.classList.add('on');
+
+  // Animation de "tap" sur l'icône au clic, rejouable même par clics rapprochés.
+  // .tap = pop générique du disque (déjà en place). En plus, une animation
+  // spécifique par onglet sur le contenu SVG lui-même : shake (haltère),
+  // cascade des barres (volume), tour complet de l'aiguille (timer).
+  const sym = el.querySelector('.bn-sym');
+  if(sym){
+    const specificClass = BN_TAP_ANIM[el.dataset.tab];
+    sym.classList.remove('tap','tap-shake','tap-bars','tap-sweep');
+    void sym.offsetWidth; // force le reflow pour pouvoir relancer l'animation
+    sym.classList.add('tap');
+    if(specificClass) sym.classList.add(specificClass);
+  }
+}
+
+// ── SERVICE WORKER ────────────────────────────────────
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js')
+      .then(r=>{
+        console.log('[SW] registered', r.scope);
+        // Vérifier les mises à jour à chaque chargement
+        r.update().catch(()=>{});
+      })
+      .catch(e=>console.log('[SW] error', e));
+  });
+
+  // Recharger automatiquement dès qu'une nouvelle version prend le contrôle.
+  // Si l'utilisateur est en train de saisir une valeur (champ focus), on
+  // diffère le reload pour ne pas perdre la frappe en cours — le rechargement
+  // se déclenche dès que le champ perd le focus.
+  //
+  // GARDE-FOU ANTI-BOUCLE : window.location.reload() recharge toute la page,
+  // donc une simple variable JS (_swRefreshing) est remise à zéro à chaque
+  // reload et ne protège pas contre des déclenchements répétés de
+  // 'controllerchange' sur des chargements successifs (ex: deux service
+  // workers actifs sur la même origine qui se redisputent le contrôle).
+  // On utilise sessionStorage (survit au reload, pas à la fermeture d'onglet)
+  // + un délai minimum entre deux reloads pour casser toute boucle.
+  const RELOAD_GUARD_KEY = 'mt-sw-last-reload';
+  const RELOAD_GUARD_MIN_MS = 4000;
+
+  function isEditingField(){
+    const el = document.activeElement;
+    if(!el) return false;
+    const tag = el.tagName;
+    return tag==='INPUT' || tag==='TEXTAREA' || tag==='SELECT';
+  }
+
+  function canReloadForSW(){
+    const last = parseInt(sessionStorage.getItem(RELOAD_GUARD_KEY) || '0', 10);
+    return (Date.now() - last) > RELOAD_GUARD_MIN_MS;
+  }
+
+  function reloadForSW(){
+    sessionStorage.setItem(RELOAD_GUARD_KEY, String(Date.now()));
+    window.location.reload();
+  }
+
+  let _swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', ()=>{
+    if(_swRefreshing) return;
+    if(!canReloadForSW()){
+      console.log('[SW] controllerchange ignoré (garde-fou anti-boucle)');
+      return;
+    }
+    _swRefreshing = true;
+    if(!isEditingField()){
+      reloadForSW();
+      return;
+    }
+    const onBlur = ()=>{
+      document.removeEventListener('focusout', onBlur);
+      reloadForSW();
+    };
+    document.addEventListener('focusout', onBlur);
+  });
+
+  // Action "↺ Relancer" cliquée sur la notification alors que cette page
+  // était déjà ouverte (le SW nous transmet l'intention via postMessage).
+  navigator.serviceWorker.addEventListener('message', (event)=>{
+    if(event.data && event.data.type === 'restart-rest'){
+      switchTab('timer');
+      restartRestFromNotif();
+    }
+  });
+}
+</script>
+
+</body>
+</html>
