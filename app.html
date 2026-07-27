@@ -924,8 +924,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .muscle-label{font-size:7.5px;color:var(--muted);letter-spacing:1.5px;margin-bottom:5px;font-weight:700;text-transform:uppercase}
 .muscle-tags{display:flex;flex-wrap:wrap;gap:4px;min-height:22px;margin-bottom:7px}
 .muscle-add-row{display:flex;gap:6px;align-items:center}
-.muscle-add-row .inp{flex:1;min-width:0;font-size:12px;padding:9px 12px}
-@media(max-width:899px){.muscle-add-row .inp:focus{font-size:16px}}
 
 /* Config grid: séries / reps / kg / repos — 4 colonnes égales */
 .ex-config{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0;padding-top:14px;border-top:1px solid var(--border-s)}
@@ -935,12 +933,12 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 /* Set log */
 .set-log-wrap{margin:10px 0}
 .set-log-head{
-  display:grid;grid-template-columns:24px 1fr 1fr 32px;
+  display:grid;grid-template-columns:24px 1fr 32px;
   gap:7px;margin-bottom:5px;padding:0 2px;
 }
 .set-log-head>*{font-size:7px;color:var(--muted);text-align:center;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .set-log-row{
-  display:grid;grid-template-columns:24px 1fr 1fr 32px;
+  display:grid;grid-template-columns:24px 1fr 32px;
   gap:7px;align-items:center;margin-bottom:6px;
 }
 .set-n{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;font-weight:700;padding-top:2px}
@@ -1037,29 +1035,69 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .mtag-del:active{transform:scale(.8)}
 
 /* ── HISTORY DRAWER ── */
-.hist-drawer{margin-top:14px;border-top:1px solid var(--border-s);padding-top:14px;display:none}
-.hist-drawer.open{display:block}
+/* Accordéon animé en hauteur (au lieu d'un simple display:none/block) pour
+   une ouverture/fermeture fluide plutôt qu'un pop abrupt. */
+.hist-drawer{
+  margin-top:14px;border-top:1px solid var(--border-s);
+  max-height:0;opacity:0;overflow:hidden;padding-top:0;
+  transition:max-height .4s cubic-bezier(.16,1,.3,1), opacity .3s ease, padding-top .3s ease;
+}
+.hist-drawer.open{max-height:2600px;opacity:1;padding-top:14px}
+
+.hist-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.hist-head-title{
+  display:flex;align-items:center;gap:6px;
+  font-size:7.5px;letter-spacing:2px;color:var(--muted);font-weight:700;text-transform:uppercase;
+}
+.hist-head-title svg{opacity:.55;flex-shrink:0}
+.hist-count-badge{
+  font-family:var(--mono);font-size:9px;font-weight:700;color:#a78bfa;
+  background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.25);
+  padding:2px 7px;border-radius:99px;flex-shrink:0;
+}
+
+.btn-g.open{border-color:var(--border);color:var(--text);background:var(--panel)}
+
 .hist-entry{
-  padding:10px 12px;border-radius:var(--r4);
+  position:relative;
+  padding:11px 12px 11px 16px;border-radius:var(--r4);
   background:linear-gradient(160deg,var(--soft),var(--softer));
   border:1px solid var(--border-s);
-  margin-bottom:7px;
+  margin-bottom:8px;
   box-shadow:0 4px 14px -8px rgba(0,0,0,.4);
   transition:border-color .2s, box-shadow .2s;
 }
-.hist-entry-top{
-  display:flex;align-items:center;gap:8px;margin-bottom:7px;
+.hist-entry:last-child{margin-bottom:0}
+/* Fine barre d'accent à gauche — plus marquée sur la séance la plus récente,
+   pour repérer immédiatement l'entrée en tête de liste sans avoir à lire. */
+.hist-entry::before{
+  content:'';position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:3px;
+  background:linear-gradient(180deg,var(--accent),rgba(139,71,245,.15));
+  opacity:.45;
 }
+.hist-entry-latest{border-color:rgba(124,58,237,.42)}
+.hist-entry-latest::before{opacity:1;box-shadow:0 0 8px -1px var(--accent-glow)}
+
+.hist-entry-top{display:flex;align-items:center;gap:7px;margin-bottom:8px;flex-wrap:wrap}
 .hist-date{
+  display:inline-flex;align-items:center;gap:4px;
   font-family:var(--mono);font-size:9px;color:var(--accent);
   font-weight:700;flex-shrink:0;
   background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.28);
-  padding:3px 8px;border-radius:5px;
+  padding:3px 8px 3px 7px;border-radius:5px;
   box-shadow:0 0 8px -2px var(--accent-glow);
 }
-.hist-vol{
-  font-size:9px;color:var(--muted);font-style:italic;flex:1;
+.hist-date svg{flex-shrink:0;opacity:.85}
+.hist-latest-tag{
+  font-size:7.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  color:#5eead4;background:rgba(45,212,191,.1);border:1px solid rgba(45,212,191,.28);
+  padding:3px 7px;border-radius:5px;flex-shrink:0;
 }
+.hist-vol{
+  display:inline-flex;align-items:center;gap:4px;min-width:0;
+  font-size:9px;color:var(--muted);flex:1;
+}
+.hist-vol svg{flex-shrink:0;opacity:.55}
 .hist-del{
   font-size:11px;cursor:pointer;flex-shrink:0;
   width:20px;height:20px;border-radius:50%;
@@ -1083,6 +1121,19 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   letter-spacing:.3px;
   box-shadow:0 0 8px -3px var(--accent-glow);
 }
+.hist-pill b{color:var(--text);font-weight:800}
+
+/* État vide — placeholder en encadré pointillé plutôt qu'une simple ligne de
+   texte, pour que l'absence d'historique ait la même présence visuelle
+   qu'une carte plutôt qu'un vide gênant. */
+.hist-empty{
+  display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  padding:24px 16px;border:1px dashed var(--border-s);border-radius:var(--r3);
+  color:var(--muted);
+}
+.hist-empty svg{opacity:.35}
+.hist-empty span{font-size:11.5px;line-height:1.5;max-width:220px}
+
 
 /* ── TIMER ── */
 .t-ring{position:relative;display:flex;align-items:center;justify-content:center;width:200px;height:200px;margin:0 auto}
@@ -1491,6 +1542,16 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   </div>
 </div>
 
+<div id="muscle-picker-ov" style="display:none;position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding:0" onclick="if(event.target===this)closeMusclePicker()">
+  <div style="background:linear-gradient(160deg,var(--bg2),rgba(124,58,237,.05));border:1px solid var(--border);border-bottom:none;border-top-left-radius:22px;border-top-right-radius:22px;padding:20px 16px calc(20px + env(safe-area-inset-bottom));max-width:520px;width:100%;max-height:72vh;display:flex;flex-direction:column;box-shadow:0 -20px 60px rgba(0,0,0,.55),0 0 40px -16px var(--accent-glow);animation:slideUp .3s cubic-bezier(.16,1,.3,1)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div id="mp-title" style="font-size:13px;font-weight:800;letter-spacing:.3px;color:var(--text)">Choisir un muscle</div>
+      <button class="btn-ic" onclick="closeMusclePicker()">✕</button>
+    </div>
+    <div id="mp-list" style="overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding-bottom:4px"></div>
+  </div>
+</div>
+
 <script src="muscle-icons.js"></script>
 <script>
 // ════════════════════════════════════════════════════
@@ -1515,7 +1576,6 @@ const MUSCLE_GROUPS = {
   'Quadriceps':        ['Quadriceps'],
   'Ischio-jambiers':   ['Ischio-jambiers'],
   'Mollets':           ['Mollets','Soléaire'],
-  'Cou':               ['Cou Ant.','Cou Post.','Cou Lat.'],
 };
 
 // Inverse map : sous-partie → grande catégorie
@@ -1678,11 +1738,6 @@ const DB_EX = {
   'Calves raises standing':       {p:'Mollets',            s:''},
   'Calves raises seated':         {p:'Soléaire',           s:'Mollets'},
   'Tibialis debout':              {p:'Avant-bras',         s:''},
-
-  // ── COU ───────────────────────────────────────────────
-  'Neck curl':                    {p:'Cou Ant.',           s:''},
-  'Neck extension':               {p:'Cou Post.',          s:''},
-  'Neck twist':                   {p:'Cou Lat.',           s:''},
 
   // ── CARDIO / FONCTIONNEL ──────────────────────────────
   'Corde à sauter':               {p:'Mollets',            s:''},
@@ -2083,16 +2138,12 @@ function buildSetRows(ex, hist){
     const sl = ex.setLogs[i];
     const lastRef = hist[0]?.sets?.[i];
     const refReps   = lastRef?.reps   || ex.reps   || '';
-    const refWeight = lastRef?.weight || ex.weight || '';
     setRows += `
     <div class="set-log-row">
       <div class="set-n">${i+1}</div>
       <input class="inp inp-sm inp-c inp-mono" type="number" min="0" value="${sl.reps||''}"
         placeholder="${refReps}"
         onchange="updSetLog('${ex.id}',${i},'reps',this.value)">
-      <input class="inp inp-sm inp-c inp-mono" type="number" min="0" step="0.5" value="${sl.weight||''}"
-        placeholder="${refWeight}"
-        onchange="updSetLog('${ex.id}',${i},'weight',this.value)">
       <div class="set-ok${sl.done?' done':''}" onclick="toggleSetDone('${ex.id}',${i})">${sl.done?'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}</div>
     </div>`;
   }
@@ -2102,9 +2153,13 @@ function buildSetRows(ex, hist){
 // Construit les lignes du tiroir d'historique (8 dernières séances avec sets non vides).
 function buildHistRows(ex, hist){
   let histRows = '';
-  hist.slice(0, 8).forEach((entry, ei) => {
+  let renderedIndex = 0;
+  hist.slice(0, 8).forEach((entry) => {
     const sets = (entry.sets || []).filter(s => s.reps !== '' || s.weight !== '');
     if (!sets.length) return;
+
+    const isLatest = renderedIndex === 0;
+    renderedIndex++;
 
     const n = sets.length;
     const vol = sets.reduce((a,s) => a + (parseFloat(s.reps)||0)*(parseFloat(s.weight)||0), 0);
@@ -2124,18 +2179,19 @@ function buildHistRows(ex, hist){
         sets[i+count].weight === s.weight
       ) count++;
       const label = count > 1
-        ? count + '×(' + r + ' reps à ' + w + ')'
-        : r + ' reps à ' + w;
+        ? count + '×(<b>' + r + '</b> reps à <b>' + w + '</b>)'
+        : '<b>' + r + '</b> reps à <b>' + w + '</b>';
       pills.push('<span class="hist-pill">' + label + '</span>');
       i += count;
     }
 
     const meta = n + ' série' + (n>1?'s':'') + (volStr ? ' · ' + volStr : '');
 
-    histRows += '<div class="hist-entry">'
+    histRows += '<div class="hist-entry' + (isLatest ? ' hist-entry-latest' : '') + '">'
       + '<div class="hist-entry-top">'
-      + '<span class="hist-date">' + entry.date + '</span>'
-      + '<span class="hist-vol">' + meta + '</span>'
+      + '<span class="hist-date"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M8 2.5v4M16 2.5v4M3 9.5h18"/></svg>' + entry.date + '</span>'
+      + (isLatest ? '<span class="hist-latest-tag">Dernière</span>' : '')
+      + '<span class="hist-vol"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>' + meta + '</span>'
       + '<span class="hist-del" onclick="deleteHistEntry(\'' + esc(ex.id) + '\',\'' + esc(entry.date) + '\')" style="display:inline-flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="display:block"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>'
       + '</div>'
       + '<div class="hist-sets">' + pills.join('') + '</div>'
@@ -2217,8 +2273,7 @@ function createExerciseCard(ex){
         ${ex.primaries.map((m,i)=>`<span class="mtag">${esc(m)}<span class="mtag-del" onclick="removeMuscle('${ex.id}','p',${i})">×</span></span>`).join('')}
       </div>
       <div class="muscle-add-row">
-        <input class="inp inp-sm" id="pi-${ex.id}" placeholder="Pectoraux…" list="muscle-list">
-        <button class="btn-add-muscle" onclick="addMuscle('${ex.id}','p')">+</button>
+        <button class="btn-add-muscle" onclick="openMusclePicker('${ex.id}','p')">+</button>
       </div>
     </div>
     <div>
@@ -2227,8 +2282,7 @@ function createExerciseCard(ex){
         ${ex.secondaries.map((m,i)=>`<span class="mtag" style="opacity:.65">${esc(m)}<span class="mtag-del" onclick="removeMuscle('${ex.id}','s',${i})">×</span></span>`).join('')}
       </div>
       <div class="muscle-add-row">
-        <input class="inp inp-sm" id="si-${ex.id}" placeholder="Triceps…" list="muscle-list">
-        <button class="btn-add-muscle" onclick="addMuscle('${ex.id}','s')">+</button>
+        <button class="btn-add-muscle" onclick="openMusclePicker('${ex.id}','s')">+</button>
       </div>
     </div>
   </div>
@@ -2264,7 +2318,6 @@ function createExerciseCard(ex){
     <div class="set-log-head">
       <div></div>
       <div>Reps</div>
-      <div>Kg</div>
       <div></div>
     </div>
     ${setRows}
@@ -2273,15 +2326,24 @@ function createExerciseCard(ex){
   <!-- ACTIONS -->
   <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap">
     <button class="btn-w btn-sm" style="flex:1;min-width:140px" onclick="saveToHistory('${ex.id}')">✓ Sauvegarder les séries</button>
-    <button class="btn-g btn-sm" onclick="toggleHist('${ex.id}')" style="flex:1;min-width:140px;white-space:nowrap">
-      <span style="display:inline-flex;vertical-align:middle;margin-right:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></span>Historique${hasHist?' ('+hist.length+')':''}
+    <button class="btn-g btn-sm" id="histbtn-${ex.id}" onclick="toggleHist('${ex.id}')" style="flex:1;min-width:140px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:6px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;display:block"><path d="M3 12a9 9 0 1 0 2.6-6.3"/><polyline points="3 4 3 9 8 9"/><path d="M12 7.5V12l3 2"/></svg>Historique${hasHist?' ('+hist.length+')':''}
     </button>
   </div>
 
   <!-- HISTORIQUE -->
   <div class="hist-drawer" id="hist-${ex.id}">
-    <div style="font-size:7.5px;letter-spacing:2px;color:var(--muted);font-weight:700;margin-bottom:10px;text-transform:uppercase">Historique des séances</div>
-    ${histRows || '<div style="font-size:11px;color:var(--muted);padding:8px 0">Aucun historique — sauvegarde ta première séance ↑</div>'}
+    <div class="hist-head">
+      <div class="hist-head-title">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4l3 2"/></svg>
+        Historique des séances
+      </div>
+      ${hasHist ? `<span class="hist-count-badge">${hist.length}</span>` : ''}
+    </div>
+    ${histRows || `<div class="hist-empty">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4l3 2"/></svg>
+        <span>Aucun historique — sauvegarde ta première séance ↑</span>
+      </div>`}
   </div>
   `;
   return card;
@@ -2603,7 +2665,9 @@ function saveToHistory(id){
 
 function toggleHist(id){
   const el = document.getElementById('hist-'+id);
+  const btn = document.getElementById('histbtn-'+id);
   if(el) el.classList.toggle('open');
+  if(btn) btn.classList.toggle('open', el ? el.classList.contains('open') : false);
 }
 
 function deleteHistEntry(exId, date){
@@ -2621,24 +2685,65 @@ function updateHeader(){
   updateHdrLiveDot();
 }
 
-function addMuscle(id, side){
+// ── Menu de sélection des muscles (primaire/secondaire) ──────────────
+// Remplace la saisie libre : le champ est en lecture seule, un clic ouvre
+// ce menu où l'on choisit (toggle) les muscles dans la taxonomie complète.
+let _mpId = null, _mpSide = null;
+
+function openMusclePicker(id, side){
+  _mpId = id; _mpSide = side;
+  const titleEl = document.getElementById('mp-title');
+  if(titleEl) titleEl.textContent = side==='p' ? 'Muscles primaires' : 'Muscles secondaires';
+  renderMusclePickerList();
+  const ov = document.getElementById('muscle-picker-ov');
+  if(ov) ov.style.display = 'flex';
+}
+
+function closeMusclePicker(){
+  const ov = document.getElementById('muscle-picker-ov');
+  if(ov) ov.style.display = 'none';
+  _mpId = null; _mpSide = null;
+}
+
+function renderMusclePickerList(){
+  const wrap = document.getElementById('mp-list');
+  if(!wrap) return;
+  if(!_mpId){ wrap.innerHTML=''; return; }
   const prog = getActiveProg();
-  const ex = prog.exercises.find(e=>e.id===id);
+  const ex = prog.exercises.find(e=>e.id===_mpId);
+  if(!ex){ wrap.innerHTML=''; return; }
+  const arr = _mpSide==='p' ? (ex.primaries||[]) : (ex.secondaries||[]);
+  wrap.innerHTML = Object.entries(MUSCLE_GROUPS).map(([group, parts])=>`
+    <div>
+      <div class="muscle-label" style="margin-bottom:8px">${esc(group)}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${parts.map(m=>{
+          const on = arr.includes(m);
+          return `<button type="button" class="btn-g" style="padding:8px 12px;font-size:12px;${on?'border-color:var(--accent);color:var(--text);background:var(--panel)':''}" onclick="toggleMusclePick('${esc(m)}')">${on?'✓ ':''}${esc(m)}</button>`;
+        }).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleMusclePick(m){
+  const prog = getActiveProg();
+  const ex = prog.exercises.find(e=>e.id===_mpId);
   if(!ex) return;
-  const inp = document.getElementById((side==='p'?'pi-':'si-')+id);
-  if(!inp) return;
-  const val = inp.value.trim();
-  if(!val) return;
-  if(side==='p'){
+  if(_mpSide==='p'){
     if(!Array.isArray(ex.primaries)) ex.primaries=[];
-    if(!ex.primaries.includes(val)) ex.primaries.push(val);
+    const idx = ex.primaries.indexOf(m);
+    if(idx>=0) ex.primaries.splice(idx,1); else ex.primaries.push(m);
   } else {
     if(!Array.isArray(ex.secondaries)) ex.secondaries=[];
-    if(!ex.secondaries.includes(val)) ex.secondaries.push(val);
+    const idx = ex.secondaries.indexOf(m);
+    if(idx>=0) ex.secondaries.splice(idx,1); else ex.secondaries.push(m);
   }
   touchUpdatedAt(ex);
   touchUpdatedAt(prog);
-  dbSave(); renderExercises();
+  dbSave();
+  renderExercises();
+  renderMusclePickerList();
 }
 
 function removeMuscle(id, side, i){
@@ -3197,13 +3302,6 @@ function buildDatalist(){
   const dl = document.createElement('datalist'); dl.id='ex-list';
   Object.keys(DB_EX).forEach(n=>{ const o=document.createElement('option'); o.value=n; dl.appendChild(o); });
   document.body.appendChild(dl);
-
-  // Muscle datalist — toutes les sous-parties de la taxonomie complète,
-  // pas seulement celles déjà utilisées par un exercice du catalogue.
-  const allMuscles = [...new Set(Object.values(MUSCLE_GROUPS).flat())].sort();
-  const ml = document.createElement('datalist'); ml.id='muscle-list';
-  allMuscles.forEach(m=>{ const o=document.createElement('option'); o.value=m; ml.appendChild(o); });
-  document.body.appendChild(ml);
 }
 
 // ════════════════════════════════════════════════════
@@ -3233,16 +3331,16 @@ if(new URLSearchParams(window.location.search).get('action') === 'restart-rest')
 
 <button class="bn-item on" data-tab="programme" onclick="switchTab('programme');setActive(this,event)">
   <div class="bn-sym">
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Haltère épuré : barre centrale + 3 disques dégressifs de chaque côté,
-           plus léger et détaillé qu'une simple paire de plateaux pleins. -->
-      <line x1="7" y1="12" x2="17" y2="12"/>
-      <path d="M6 8.8v6.4"/>
-      <path d="M4 9.4v5.2"/>
-      <path d="M2.4 10.4v3.2"/>
-      <path d="M18 8.8v6.4"/>
-      <path d="M20 9.4v5.2"/>
-      <path d="M21.6 10.4v3.2"/>
+    <svg width="21" height="21" viewBox="0 0 512 512" fill="currentColor">
+      <!-- Haltère plein (icône fournie) : barre centrale + disques pleins de
+           chaque côté, avec petits embouts flottants aux extrémités. -->
+      <rect x="0"   y="211" width="10" height="90"  rx="5"/>
+      <rect x="32"  y="166" width="54" height="180" rx="27"/>
+      <rect x="98"  y="91"  width="72" height="330" rx="36"/>
+      <rect x="170" y="224" width="172" height="64" rx="8"/>
+      <rect x="342" y="91"  width="72" height="330" rx="36"/>
+      <rect x="426" y="166" width="54" height="180" rx="27"/>
+      <rect x="502" y="211" width="10" height="90"  rx="5"/>
     </svg>
   </div>
   <div class="bn-lbl">Séance</div>
