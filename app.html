@@ -2998,17 +2998,14 @@ function renderMusclePickerList(){
   const ex = prog.exercises.find(e=>e.id===_mpId);
   if(!ex){ wrap.innerHTML=''; return; }
   const arr = _mpSide==='p' ? (ex.primaries||[]) : (ex.secondaries||[]);
-  wrap.innerHTML = Object.entries(MUSCLE_GROUPS).map(([group, parts])=>`
-    <div>
-      <div class="muscle-label" style="margin-bottom:8px">${esc(group)}</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">
-        ${parts.map(m=>{
-          const on = arr.includes(m);
-          return `<button type="button" class="btn-g" style="padding:8px 12px;font-size:12px;${on?'border-color:var(--accent);color:var(--text);background:var(--panel)':''}" onclick="toggleMusclePick('${esc(m)}')">${on?'✓ ':''}${esc(m)}</button>`;
-        }).join('')}
-      </div>
-    </div>
-  `).join('');
+  // Uniquement les grands groupes musculaires — plus de sous-parties
+  // (Pecs Haut/Milieu/Bas → juste "Pectoraux").
+  wrap.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:6px">
+    ${Object.keys(MUSCLE_GROUPS).map(group=>{
+      const on = arr.includes(group);
+      return `<button type="button" class="btn-g" style="padding:8px 12px;font-size:12px;${on?'border-color:var(--accent);color:var(--text);background:var(--panel)':''}" onclick="toggleMusclePick('${esc(group)}')">${on?'✓ ':''}${esc(group)}</button>`;
+    }).join('')}
+  </div>`;
 }
 
 function toggleMusclePick(m){
