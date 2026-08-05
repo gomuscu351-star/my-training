@@ -70,9 +70,6 @@ a{-webkit-tap-highlight-color:transparent}
 .card>*{position:relative;z-index:1}
 .soft-c{background:var(--soft);border:1px solid var(--border-s);border-radius:var(--r2)}
 
-/* Fine barre lumineuse en haut de carte, pour donner une identité de couleur
-   propre à certaines sections (ex: Séance = violet, Repos = teal) sans
-   toucher au style de base de .card. */
 .card-accent::after{
   content:'';position:absolute;top:0;left:16%;right:16%;height:2.5px;
   border-radius:0 0 3px 3px;pointer-events:none;z-index:1;
@@ -131,9 +128,6 @@ a{-webkit-tap-highlight-color:transparent}
   background:rgba(239,68,68,.24);transform:scale(.93);
   box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 1px 4px -2px rgba(239,68,68,.3);
 }
-/* Variante pleine rouge pour les confirmations destructives (ex: "Effacer
-   tout") — même relief/glow que .btn-w mais teinté danger, pour distinguer
-   visuellement une action irréversible d'une simple validation neutre. */
 .btn-danger-solid{
   background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%),#ef4444;
   color:#fff;font-weight:800;font-size:13px;border-radius:var(--r3);
@@ -149,11 +143,6 @@ a{-webkit-tap-highlight-color:transparent}
 }
 .btn-sm{padding:8px 13px;font-size:11.5px}
 
-/* ── BOUTONS PREMIUM (Ajouter exercice / Sauvegarder les séries) ──
-   Même identité visuelle que .btn-toggle-collapse (bouton plier/déplier) :
-   fond translucide doux teinté, liseré fin de la même couleur, glow
-   ambiant discret plutôt qu'un dégradé glossy, icône + texte dans la
-   teinte de la couleur d'accent. */
 .btn-premium{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   font-weight:800;letter-spacing:.2px;border-radius:var(--r3);
@@ -197,7 +186,6 @@ a{-webkit-tap-highlight-color:transparent}
   }
 }
 
-
 .btn-ic{
   width:32px;height:32px;border-radius:8px;
   background:var(--soft);border:1px solid var(--border-s);
@@ -210,9 +198,6 @@ a{-webkit-tap-highlight-color:transparent}
 }
 .btn-ic:active{background:var(--panel);transform:scale(.9)}
 
-/* Bouton "+" ajouter un muscle (primaire ou secondaire) — même identité
-   chromatique violette que le reste de l'interface, forme circulaire,
-   glow violet ambiant, rotation au tap. */
 .btn-add-muscle{
   width:34px;height:34px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -242,10 +227,6 @@ a{-webkit-tap-highlight-color:transparent}
              0 0 12px -3px var(--accent-glow);
 }
 
-/* Bouton développer/réduire une carte d'exercice : identité visuelle
-   distincte de .btn-ic générique — teinte violette cohérente avec l'app,
-   glow violet ambiant, et rotation fluide du chevron à ressort qui pivote
-   plutôt que d'échanger deux icônes SVG différentes. */
 .btn-toggle-collapse{
   background:linear-gradient(160deg,rgba(124,58,237,.12),rgba(124,58,237,.04));
   border:1px solid rgba(124,58,237,.24);
@@ -294,23 +275,15 @@ a{-webkit-tap-highlight-color:transparent}
 .inp-mono{font-family:var(--mono)}
 select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 
-/* Réglage du temps de repos par glissement directement sur l'anneau
-   (t-ring-rest) : plus de case séparée. Moitié gauche de l'anneau =
-   minutes (±1 par pas), moitié droite = secondes (±15 par pas). */
 .t-ring-rest{cursor:ns-resize;touch-action:none;user-select:none;-webkit-user-select:none}
 .t-ring-rest.rest-ring-dragging svg{filter:brightness(1.15)}
 .t-ring-rest.rest-ring-dragging .t-disp{text-shadow:0 0 26px rgba(45,212,191,.65)}
-
 
 /* ── BARS ── */
 .bar-t{height:8px;border-radius:99px;background:rgba(128,128,140,.26);border:1px solid rgba(128,128,140,.14);overflow:hidden}
 .bar-f{height:100%;border-radius:99px;background:var(--bar);transition:width .8s cubic-bezier(.16,1,.3,1);box-shadow:0 0 14px var(--accent-glow),0 0 3px rgba(255,255,255,.25) inset}
 
-/* ── VOLUME MUSCULAIRE: cards premium par groupe ──
-   Chaque groupe est une vraie carte avec profondeur (fond, bordure, ombre,
-   liseré haut) plutôt qu'une ligne à peine séparée — même vocabulaire
-   visuel que les cartes exercice de la page Séance (.ex-card) pour une
-   cohérence de bout en bout entre les deux pages principales. */
+/* ── VOLUME MUSCULAIRE: cards premium par groupe ── */
 .vol-card{
   position:relative;overflow:hidden;
   display:flex;gap:14px;align-items:flex-start;
@@ -328,20 +301,7 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .vol-card:hover{ border-color:color-mix(in srgb, var(--vol-accent, var(--accent)) 35%, var(--border-s)) }
 .vol-card:last-child{ margin-bottom:0 }
-/* Groupes avec sous-parties (ex: Pectoraux, Épaules, Trapèzes, Abdominaux,
-   Avant-bras, Mollets) affichent un bloc .vol-subparts en plus, qui
-   allonge nettement la carte. Avec align-items:flex-start (valeur par
-   défaut de .vol-card), l'icône reste collée en haut et paraît décentrée
-   par rapport à la hauteur totale de la carte. On la recentre
-   verticalement uniquement pour ces cartes-là — les cartes sans
-   sous-parties restent inchangées, l'icône y étant déjà quasi centrée
-   naturellement vu leur hauteur plus courte. */
 .vol-card--has-subparts{ align-items:center }
-/* Icône de groupe musculaire — flotte nue sur le fond de la carte, sans
-   puce/chip, sans ombre, sans halo : juste le SVG en grand format,
-   parfaitement centré (display:block supprime l'espace de ligne "inline"
-   qui décale légèrement un <svg> par rapport au centre réel de son
-   conteneur — même correction appliquée à toutes les cartes). */
 .vol-icon-slot{
   position:relative;flex-shrink:0;box-sizing:border-box;
   width:64px;height:64px;
@@ -349,10 +309,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .vol-icon-slot svg{display:block;width:100%;height:100%;margin:auto}
 .vol-body{flex:1;min-width:0}
-/* En-tête de carte : nom + badges à gauche (peut rétrécir/wrap),
-   total séries/sem à droite (jamais compressé ni tronqué). Le côté
-   gauche porte min-width:0 pour pouvoir céder de la place à droite
-   au lieu de forcer un débordement caché par .vol-card{overflow:hidden}. */
 .vol-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px}
 .vol-head-left{flex:1;min-width:0}
 .vol-head-right{text-align:right;flex-shrink:0}
@@ -362,8 +318,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   color:var(--text);
   display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;
 }
-/* Badges Volume + Fréquence : toujours sur une seule ligne, jamais de
-   retour à la ligne — alignés horizontalement avec un espacement fixe. */
 .vol-badges{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:nowrap}
 .vol-status-badge{
   background:var(--vol-accent-bg);border:1px solid var(--vol-accent-border);
@@ -391,58 +345,22 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   .vol-freq-badge{padding:4px 8px;font-size:9px}
   .vol-badges{gap:4px}
 }
-/* Barre principale — sans glow */
 .bar-t{height:8px;border-radius:99px;background:rgba(128,128,140,.18);
   border:1px solid rgba(128,128,140,.1);overflow:hidden}
 .bar-f{height:100%;border-radius:99px;background:var(--bar);
   transition:width .9s cubic-bezier(.16,1,.3,1);}
-/* Zone sous-parties — case restaurée (fond glass + bordure) */
-.vol-subparts{
-  padding:10px 12px;
-  background:rgba(0,0,0,.2);
-  border:1px solid rgba(124,58,237,.1);
-  border-radius:var(--r4);margin-top:12px;
-  backdrop-filter:blur(4px);
-}
-.vol-subpart-row{display:flex;align-items:center;gap:8px;padding:5px 0}
-.vol-subpart-row:first-child{padding-top:2px}
-.vol-subpart-row:last-child{padding-bottom:2px}
-.vol-subpart-name{
-  font-size:10px;color:var(--muted);font-weight:700;
-  width:110px;flex-shrink:0;letter-spacing:.1px;
-}
-.vol-subpart-bar-t{
-  flex:1;height:5px;border-radius:99px;
-  background:rgba(128,128,140,.15);overflow:hidden;
-}
-.vol-subpart-bar-f{
-  height:100%;border-radius:99px;
-  background:linear-gradient(90deg, var(--vol-accent, var(--accent)), var(--vol-accent, var(--accent)));
-  opacity:.75;transition:width .7s cubic-bezier(.16,1,.3,1);
-}
-.vol-subpart-val{
-  font-family:var(--mono);font-size:10px;font-weight:700;
-  color:var(--vol-accent, var(--muted));
-  width:44px;text-align:right;flex-shrink:0;opacity:.8;
-}
-
 
 /* ── GRIDS ── */
-/* mobile: single column by default */
 .g2{display:grid;grid-template-columns:1fr;gap:12px;align-items:stretch}
 .g2>*{min-width:0}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .rows{display:flex;flex-direction:column;gap:10px}
-/* desktop */
 @media(min-width:900px){
   .g2{grid-template-columns:1fr 1fr;gap:16px}
   .g3{grid-template-columns:repeat(3,1fr);gap:14px}
 }
 
 /* ── HEADER ── */
-/* Style "iOS compact" : barre courte façon nav-bar iOS, matériau verre
-   dépoli léger, ombre discrète — priorité à la sobriété et à la hauteur
-   réduite plutôt qu'à l'effet décoratif. */
 .hdr-card{
   position:relative;overflow:hidden;
   padding:clamp(12px,2.8vw,14px) clamp(14px,3.5vw,16px) !important;
@@ -463,8 +381,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   box-shadow:0 1px 0 rgba(255,255,255,.09) inset, 0 14px 30px -16px rgba(0,0,0,.6), 0 0 0 1px rgba(139,71,245,.09);
 }
 .hdr-card::after{
-  /* Liseré spéculaire iOS : un simple trait blanc très fin en haut, sans
-     couleur ni glow — la lumière d'un bord de verre, pas un néon. */
   content:'';position:absolute;top:0;left:0;right:0;height:1px;pointer-events:none;z-index:0;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.4) 50%,transparent);
 }
@@ -486,8 +402,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .hdr-card:hover .hdr-logo{ transform:scale(1.06) rotate(-2deg) }
 .hdr-logo::before{
-  /* Reflet glossy en haut à gauche — donne du volume à l'icône plutôt qu'un
-     simple carré coloré plat. */
   content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
   background:linear-gradient(160deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,0) 45%);
 }
@@ -502,10 +416,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   background:linear-gradient(135deg,#c4b5fd,#8b47f5);
   box-shadow:0 0 6px 1px rgba(167,139,250,.7);
 }
-/* Point pulsant affiché uniquement quand une séance/repos est active —
-   piloté en JS (display none/flex sur #hdr-live-dot) plutôt qu'en CSS pur,
-   l'état "en cours" dépendant de variables JS (restRunning / session timer)
-   qu'on ne peut pas exprimer en sélecteur CSS seul. */
 .hdr-live-dot{
   display:none !important;width:8px;height:8px;border-radius:50%;
   background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.6);
@@ -518,10 +428,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   70%{ box-shadow:0 0 0 7px rgba(52,211,153,0) }
   100%{ box-shadow:0 0 0 0 rgba(52,211,153,0) }
 }
-/* ── HEADER STATS — trois chips, chacun avec une petite icône au-dessus
-   du libellé (façon widget santé iOS) plutôt que du texte nu. Fond verre
-   légèrement plus sombre que la carte pour créer un niveau de profondeur
-   supplémentaire, filets verticaux fins entre chaque chip. */
 .hdr-stats{
   position:relative;
   display:flex;align-items:stretch;
@@ -541,10 +447,9 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .hdr-stat-val{font-size:14.5px;font-weight:800;letter-spacing:-.2px;color:var(--text);line-height:1.15;font-variant-numeric:tabular-nums}
 .hdr-stat-sep{width:1px;align-self:stretch;margin:2px 0;background:linear-gradient(180deg,transparent,rgba(255,255,255,.1) 30%,rgba(255,255,255,.1) 70%,transparent);flex-shrink:0}
 
-
 /* ── TOP NAV (desktop) ── */
 .nav-wrap{
-  display:none; /* hidden on mobile */
+  display:none;
   gap:4px;background:var(--soft);border:1px solid var(--border-s);
   border-radius:var(--r2);padding:4px;overflow-x:auto;
 }
@@ -567,8 +472,7 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .nav-tab:hover:not(.on){color:var(--text)}
 .nav-tab:active{transform:scale(.95)}
 
-/* ── BOTTOM NAV v2 — minimaliste premium : halo diffus + trait indicateur,
-   plus de capsule pleine ni de "case" derrière l'icône (Nothing OS / Apple). */
+/* ── BOTTOM NAV v2 ── */
 .bottom-nav{
   position:fixed;
   left:0;right:0;bottom:0;
@@ -585,7 +489,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
              0 -22px 50px -16px rgba(0,0,0,.7);
   z-index:300;
 }
-/* Halo diffus, sans bord net — se déplace derrière l'icône active */
 .bn-glow{
   position:absolute;top:50%;left:0;
   width:42px;height:42px;
@@ -597,7 +500,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   opacity:0;
 }
 .bn-glow.ready{ opacity:1 }
-/* Trait indicateur fin — glisse sous l'onglet actif, tient lieu de "pilule" */
 .bn-underline{
   position:absolute;bottom:8px;left:0;
   width:16px;height:3px;border-radius:99px;
@@ -642,7 +544,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .bn-item.on .bn-lbl{
   opacity:1;transform:translateY(0);
 }
-/* Ripple discret au clic — cercle qui naît sous le doigt et s'estompe */
 .bn-ripple{
   position:absolute;border-radius:50%;
   background:radial-gradient(circle, rgba(255,255,255,.4) 0%, rgba(255,255,255,0) 72%);
@@ -655,13 +556,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   100%{ transform:translate(-50%,-50%) scale(1); opacity:0 }
 }
 
-/* ── Animations spécifiques par icône, déclenchées via classes jetables
-   (ajoutées/retirées en JS à chaque tap, comme .bn-sym.tap déjà en place) ── */
-
-/* Haltère (Séance) — "bascule" : l'haltère se soulève et se penche comme
-   lors d'un curl, pivotant autour de son centre avec un léger rebond de
-   retour, au lieu de se comprimer sur place (squash & stretch). Axe de
-   mouvement rotation + translation plutôt que scale. */
 @keyframes bnTiltDumbbell{
   0%{   transform:rotate(0deg)    translateY(0) }
   30%{  transform:rotate(-16deg)  translateY(-1.5px) }
@@ -674,11 +568,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   animation:bnTiltDumbbell .55s cubic-bezier(.22,.61,.36,1);
 }
 
-/* Barres (Volume) — chaque barre apparaît en cascade, une après l'autre,
-   en partant du bas (scaleY) avec un léger overshoot. Délais resserrés et
-   durée allongée par rapport à la version initiale : sinon la 1ère barre
-   finit son rebond avant même que la 3e démarre, ce qui casse la sensation
-   de mouvement continu et donne un effet décousu plutôt qu'une vague fluide. */
 @keyframes bnBarGrow{
   0%{ transform:scaleY(0); opacity:.35 }
   55%{ transform:scaleY(1.1) }
@@ -694,21 +583,10 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .bn-sym.tap-bars svg .bn-bar:nth-child(2){ animation-delay:60ms }
 .bn-sym.tap-bars svg .bn-bar:nth-child(3){ animation-delay:120ms }
 
-/* Chronomètre (Timer) — une seule aiguille qui fait un tour complet, cadran
-   fixe. transform-origin en coordonnées SVG absolues (centre du cadran =
-   12px 13px). Sur un <path> SVG, transform-origin en px est interprété
-   nativement dans le repère du viewBox sans dépendre de transform-box —
-   plus largement supporté que transform-box:view-box, et évite tout risque
-   que l'aiguille pivote autour du centre de sa propre bounding box
-   (excentré) plutôt qu'autour du vrai pivot du chronomètre.
-   Vitesse angulaire CONSTANTE (linear) : un vrai balayage d'aiguille se
-   fait à vitesse régulière, un cubic-bezier ease-in/out donnait un
-   mouvement saccadé peu réaliste. */
 @keyframes bnSweepMin{
   from{ transform:rotate(0deg) }
   to{ transform:rotate(360deg) }
 }
-/* Aiguille unique — 1 tour complet, vitesse constante, fluide */
 .bn-sym.tap-sweep svg .bn-hand-min{
   transform-origin:12px 13px;
   animation:bnSweepMin .9s linear;
@@ -718,7 +596,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 
 /* ── PROG BAR ── */
 .prog-bar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-/* ── CARTE PROGRAMME PREMIUM ── */
 .prog-days-row{
   display:flex;flex-direction:column;align-items:stretch;gap:14px;
   margin-bottom:18px;padding-top:16px;position:relative;
@@ -734,8 +611,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   .prog-action-btn{flex:none}
 }
 
-/* Bouton compact de sélection de jours — visible uniquement quand aucun
-   jour n'est sélectionné, remplacé par les chips des jours choisis sinon. */
 .btn-days-trigger{
   display:inline-flex;align-items:center;gap:6px;
   padding:7px 12px;border-radius:99px;
@@ -759,7 +634,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .btn-days-trigger.open .days-chevron{transform:rotate(180deg)}
 
-/* Chips des jours sélectionnés — chacun cliquable pour désélectionner */
 .prog-days-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
 .day-chip-selected{
   display:inline-flex;align-items:center;gap:4px;
@@ -777,11 +651,8 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .day-chip-selected:active{transform:scale(.9)}
 
-/* Dropdown sélecteur de jours */
 .days-picker{
   position:absolute;top:calc(100% + 10px);left:0;z-index:99999;
-  /* Couleur pleine unique en !important : aucun canal alpha, aucun flou,
-     rien ne peut la rendre translucide. */
   background:#150a30 !important;
   opacity:1 !important;
   backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
@@ -851,7 +722,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   color:rgba(124,58,237,.4);letter-spacing:.5px;
 }
 
-/* Bouton + pour ajouter des jours depuis la vue chips */
 .day-chip-add{
   display:inline-flex;align-items:center;justify-content:center;
   width:26px;height:26px;border-radius:50%;font-size:15px;font-weight:300;
@@ -860,9 +730,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   transition:background .2s, border-color .2s, transform .2s cubic-bezier(.34,1.56,.64,1);
 }
 .day-chip-add:active{transform:scale(.88) rotate(90deg)}
-/* ── CHIP DE PROGRAMME — bloc unifié (nom + suppression même couleur) ──
-   Plus de deux éléments séparés avec des styles différents — un seul bloc
-   homogène où le × de suppression est la partie droite du même composant. */
 .prog-chip-wrap{
   display:inline-flex;align-items:center;gap:0;
   padding:8px 14px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;
@@ -897,7 +764,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .prog-chip-wrap.on input{color:#fff;pointer-events:auto}
 .prog-chip-wrap:not(.on) input{pointer-events:none}
-/* Label des jours dans le chip */
 .prog-chip-days{
   font-size:9.5px;font-weight:800;letter-spacing:.3px;
   padding-left:8px;margin-left:5px;white-space:nowrap;
@@ -906,13 +772,11 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .prog-chip-wrap:not(.on) .prog-chip-days{
   border-left-color:rgba(124,58,237,.25);color:#a78bfa;opacity:.8;
 }
-/* Séparateur vertical entre le nom et le × */
 .prog-chip-sep{
   display:inline-block;width:1px;height:14px;
   background:rgba(255,255,255,.18);margin:0 8px;flex-shrink:0;
 }
 .prog-chip-wrap:not(.on) .prog-chip-sep{background:rgba(124,58,237,.25)}
-/* Bouton × intégré — même couleur que le bloc, pas de fond ni bordure propres */
 .prog-chip-del{
   background:none;border:none;color:inherit;opacity:.6;
   font-size:15px;font-weight:300;line-height:1;cursor:pointer;
@@ -922,9 +786,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .prog-chip-del:hover{opacity:1}
 .prog-chip-del:active{transform:scale(.8);opacity:1}
 
-/* Bouton "+" ajouter un programme : pointillés discrets au repos, qui se
-   transforment en plein violet au survol/tap — cohérent avec le ressort
-   et le glow des autres boutons plutôt qu'un simple carré statique. */
 .prog-add-btn{
   padding:7px 16px;border-radius:99px;font-size:18px;font-weight:700;
   background:linear-gradient(160deg,rgba(124,58,237,.1),rgba(124,58,237,.03));
@@ -946,9 +807,7 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   box-shadow:0 0 24px -3px var(--accent-glow);
 }
 
-/* ── EN-TÊTES DE SECTION (icône + libellé), réutilisable sur les pages
-   principales (Séance, etc.) — même langage visuel que le kicker du header
-   global pour une cohérence de bout en bout. ── */
+/* ── EN-TÊTES DE SECTION ── */
 .sec-tag{
   display:inline-flex;align-items:center;gap:6px;
   font-size:8.5px;font-weight:800;letter-spacing:2.6px;color:var(--muted);
@@ -960,8 +819,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   background:rgba(139,71,245,.15);border:1px solid rgba(167,139,250,.26);
 }
 
-/* Icône de l'état vide — puce circulaire plutôt qu'un SVG flottant seul,
-   pour reprendre le vocabulaire visuel des chips utilisés ailleurs. */
 .ex-empty-icon{
   display:flex;align-items:center;justify-content:center;margin:0 auto 16px;
   width:56px;height:56px;border-radius:16px;color:#a996e8;
@@ -970,10 +827,7 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   box-shadow:0 1px 0 rgba(255,255,255,.06) inset;
 }
 
-/* ── EXERCISE CARD ── style "iOS premium" : matériau verre dépoli,
-   grain fin (même technique que .hdr-card) pour casser l'aplat, profondeur
-   en plusieurs couches d'ombre douces et liseré spéculaire fin en haut —
-   plus de faisceau lumineux coloré au centre. */
+/* ── EXERCISE CARD ── */
 .ex-card{
   position:relative;isolation:isolate;
   background:
@@ -994,8 +848,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   mix-blend-mode:overlay;
 }
 .ex-card::after{
-  /* Liseré spéculaire iOS : trait blanc fin, teinté d'un soupçon de violet
-     au survol pour rappeler la couleur de marque sans virer au néon. */
   content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:0;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.32) 50%,transparent);
   pointer-events:none;
@@ -1012,12 +864,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .ex-card:focus-within{border-color:rgba(255,255,255,.16);box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 14px 32px -20px rgba(0,0,0,.55),0 0 0 1px rgba(139,71,245,.22)}
 
-/* ── Réorganisation par appui long ──
-   Pendant le mode réorganisation, la carte active reçoit un liseré discret
-   et deux flèches ▲▼ apparaissent sur le côté gauche, en dehors de la
-   carte. Ce sont exactement les mêmes chevrons que ceux du bouton
-   replier/déplier (.chevron-icon), sans aucune forme de bouton autour :
-   juste le trait violet + son glow, comme partout ailleurs dans l'app. */
 .ex-card-reorder-active{
   position:relative;
   margin-left:36px;width:calc(100% - 36px);
@@ -1062,10 +908,7 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .ex-reorder-btn:disabled:active{transform:none}
 
-/* État replié: item de liste compact, juste le nom */
 .ex-card-collapsed{padding:0;overflow:hidden}
-/* En mode réorganisation, les flèches ▲▼ sont positionnées en dehors de la
-   carte (côté gauche) — l'overflow:hidden du repli les couperait sinon. */
 .ex-card-collapsed.ex-card-reorder-active{overflow:visible}
 .ex-collapsed-row{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -1081,12 +924,10 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .ex-collapsed-name{font-size:14px;font-weight:800;letter-spacing:-.2px;line-height:1.3}
 .ex-collapsed-meta{font-size:10.5px;color:var(--muted);margin-top:2px;font-weight:600}
 
-/* En-tête exercice — nom pleine largeur */
 .ex-header{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
 .ex-header-top{display:flex;align-items:flex-end;gap:8px}
 .ex-name-wrap{flex:1;min-width:0}
 .ex-name-label{font-size:7.5px;letter-spacing:2px;color:var(--muted);margin-bottom:5px;font-weight:700;text-transform:uppercase}
-/* Champ nom avec bouton clear intégré */
 .ex-name-inp-wrap{position:relative;display:flex;align-items:center}
 .ex-name-inp{font-size:14px;font-weight:800;width:100%;margin-bottom:0;padding:10px 36px 10px 12px}
 @media(max-width:899px){.ex-name-inp:focus{font-size:16px}}
@@ -1109,10 +950,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .ex-name-clear:active{transform:translateY(-50%) scale(.85)}
 .ex-actions{display:flex;gap:6px;align-items:center;flex-shrink:0;padding-bottom:1px}
 
-/* Muscles section — un panneau sobre par bloc (principaux / secondaires),
-   plus de petites "cases" colorées individuelles autour de chaque muscle :
-   les noms sont maintenant du texte simple, plus grand, séparés par un
-   point discret, à l'intérieur d'un unique panneau translucide. */
 .muscles-grid{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding-top:14px;position:relative}
 .muscles-grid::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
@@ -1127,7 +964,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .muscle-tags{display:flex;flex-wrap:wrap;align-items:center;row-gap:7px;min-height:24px;margin-bottom:9px}
 .muscle-add-row{display:flex;gap:6px;align-items:center}
 
-/* Config grid: séries / reps / kg / repos — 4 colonnes égales */
 .ex-config{
   display:grid;grid-template-columns:repeat(2,1fr);gap:8px 6px;margin:14px 0;
   padding-top:14px;position:relative;
@@ -1136,8 +972,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.12) 20%,rgba(255,255,255,.12) 80%,transparent);
 }
-/* Chaque champ config dans un léger "puits" vitré, pour segmenter la grille
-   plutôt que des inputs flottant nus les uns à côté des autres. */
 .ex-config-item{
   background:rgba(0,0,0,.14);border:1px solid rgba(139,71,245,.12);
   border-radius:var(--r3);padding:7px 6px 8px;
@@ -1149,7 +983,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .ex-config-item .inp{background:rgba(0,0,0,.15)}
 .cfg-lbl{font-size:6.5px;color:var(--muted);letter-spacing:1px;margin-bottom:4px;font-weight:700;text-transform:uppercase;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Set log */
 .set-log-wrap{margin:10px 0}
 .set-log-head{
   display:flex;align-items:center;
@@ -1169,19 +1002,11 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .set-log-row:focus-within{border-color:rgba(139,71,245,.4)}
 .set-log-row .inp-c{flex:1 1 0;min-width:0;width:auto;max-width:none;background:transparent;border:none;box-shadow:none;padding:6px 4px}
 .set-log-row .inp-c:focus{box-shadow:none;border:none}
-/* Empêche les flèches natives du champ number (affichées au focus dans
-   certains navigateurs desktop) d'élargir le champ et de décaler la case
-   de validation pendant la saisie — la case reste fixe (32px, flex-shrink:0). */
 .set-log-row input[type="number"]::-webkit-outer-spin-button,
 .set-log-row input[type="number"]::-webkit-inner-spin-button{
   -webkit-appearance:none;margin:0;
 }
 .set-log-row input[type="number"]{-moz-appearance:textfield;appearance:textfield}
-/* Sur mobile, .inp-sm:focus passe la police de 13px à 16px (anti-zoom iOS).
-   Sans min-width:0 ci-dessus, ce saut de taille de police change la largeur
-   intrinsèque du champ (flex-basis:auto dépend du contenu/de la police) et
-   décale la case ✓ pile au moment où on tape. min-width:0 force le champ à
-   rester calé sur flex:1 (l'espace disponible) quoi qu'il arrive à la police. */
 .set-n{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;font-weight:700;width:20px;flex-shrink:0}
 .set-ok{
   width:32px;height:32px;border-radius:var(--r4);
@@ -1201,21 +1026,12 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .set-ok.done svg{ animation:setOkCheckDraw .32s cubic-bezier(.16,1,.3,1) .05s both; }
 .set-ok:active{transform:scale(.9)}
-/* Bouton reset (chrono séance / repos) : circulaire plutôt que carré —
-   forme plus naturelle pour une action de rotation/remise à zéro, et qui
-   le distingue clairement du bouton principal rectangulaire à côté. */
 .reset-icon-btn{
   width:48px;height:48px;padding:0!important;border-radius:14px!important;
   flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  /* Fond avec micro-dégradé qui rappelle les .btn-w sans les dominer —
-     le bouton reste clairement secondaire mais pas anonyme. Bordure violette
-     subtile au lieu du gris terne de .btn-g, pour cohérence avec l'identité
-     chromatique du reste de l'interface. */
   background:linear-gradient(160deg,rgba(124,58,237,.12),rgba(124,58,237,.04)) !important;
   border:1px solid rgba(124,58,237,.28) !important;
   color:var(--accent) !important;
-  /* Glow ambiant au repos — léger, pour que le bouton "existe" visuellement
-     à côté du bouton principal sans le disputer. */
   box-shadow:0 0 0 1px rgba(255,255,255,.04) inset,
              0 0 14px -4px var(--accent-glow),
              0 2px 8px -4px rgba(0,0,0,.4) !important;
@@ -1247,9 +1063,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   from{ transform:rotate(0deg) }
   to{ transform:rotate(-360deg) }
 }
-/* Pop satisfaisant à la validation d'une série — un ressort net plutôt
-   qu'un simple changement de couleur statique, pour que cocher une série
-   donne une vraie sensation de feedback "premium" accompli. */
 @keyframes setOkPop{
   0%{ transform:scale(1) }
   35%{ transform:scale(1.22) }
@@ -1282,8 +1095,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .mtag-del:active{transform:scale(.8)}
 
 /* ── HISTORY DRAWER ── */
-/* Accordéon animé en hauteur (au lieu d'un simple display:none/block) pour
-   une ouverture/fermeture fluide plutôt qu'un pop abrupt. */
 .hist-drawer{
   margin-top:14px;position:relative;
   max-height:0;opacity:0;overflow:hidden;padding-top:0;
@@ -1319,8 +1130,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   transition:border-color .2s, box-shadow .2s;
 }
 .hist-entry:last-child{margin-bottom:0}
-/* Fine barre d'accent à gauche — plus marquée sur la séance la plus récente,
-   pour repérer immédiatement l'entrée en tête de liste sans avoir à lire. */
 .hist-entry::before{
   content:'';position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:3px;
   background:linear-gradient(180deg,var(--accent),rgba(139,71,245,.15));
@@ -1374,9 +1183,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .hist-pill b{color:var(--text);font-weight:800}
 
-/* État vide — placeholder en encadré pointillé plutôt qu'une simple ligne de
-   texte, pour que l'absence d'historique ait la même présence visuelle
-   qu'une carte plutôt qu'un vide gênant. */
 .hist-empty{
   display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
   padding:24px 16px;border:1px dashed var(--border-s);border-radius:var(--r3);
@@ -1385,7 +1191,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 .hist-empty svg{opacity:.35}
 .hist-empty span{font-size:11.5px;line-height:1.5;max-width:220px}
 
-
 /* ── TIMER ── */
 .t-ring{position:relative;display:flex;align-items:center;justify-content:center;width:200px;height:200px;margin:0 auto}
 .t-ring::before{
@@ -1393,8 +1198,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   background:radial-gradient(circle,rgba(124,58,237,.2),transparent 70%);
   pointer-events:none;
 }
-/* Fond intérieur "verre dépoli" pour que les chiffres se lisent mieux
-   et donnent une profondeur premium plutôt qu'un fond totalement transparent. */
 .t-ring::after{
   content:'';position:absolute;
   width:140px;height:140px;border-radius:50%;
@@ -1410,9 +1213,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   font-family:var(--mono);font-size:36px;line-height:1;font-weight:700;letter-spacing:3px;
   color:var(--text);text-shadow:0 0 20px rgba(124,58,237,.3);
 }
-/* Étiquette d'état (PRÊT / EN COURS / PAUSE…) en pastille, plutôt qu'un
-   simple texte — plus premium, et sert de support de couleur pour les
-   variantes ci-dessous. */
 .t-lbl{
   display:inline-flex;align-items:center;gap:6px;
   font-size:8px;letter-spacing:2px;font-weight:800;text-transform:uppercase;
@@ -1421,15 +1221,11 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 .t-lbl::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;flex-shrink:0}
 
-/* Séance: identité violette fixe, ne varie jamais dans le temps. */
 .t-lbl-violet{
   background:linear-gradient(160deg,rgba(124,58,237,.16),rgba(124,58,237,.06));
   border:1px solid rgba(124,58,237,.28);color:#c4b5fd;
 }
 
-/* Repos: identité teal au repos, mais dérivée de --rest-hue mis à jour en JS
-   (voir updateRestDisplay) — la couleur glisse du vert au rouge à mesure que
-   le temps restant diminue, pour un signal d'urgence lisible d'un coup d'œil. */
 .t-ring-rest{--rest-hue:150}
 .t-lbl-rest{
   background:hsl(var(--rest-hue) 70% 50% / .16);
@@ -1437,31 +1233,20 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   color:hsl(var(--rest-hue) 85% 72%);
 }
 
-/* Variante "Repos": le ring lui-même suit la même teinte dynamique — glow,
-   filtre et lueur du texte, tous pilotés par --rest-hue. */
 .t-ring-rest::before{background:radial-gradient(circle,hsl(var(--rest-hue) 70% 50% / .28),transparent 70%)}
 .t-ring-rest svg{filter:drop-shadow(0 0 6px hsl(var(--rest-hue) 70% 50% / .5))}
 .t-ring-rest .t-disp{text-shadow:0 0 20px hsl(var(--rest-hue) 70% 50% / .45);transition:text-shadow .3s ease}
 
-/* Anneau "actif": halo qui respire doucement pendant qu'un chrono tourne —
-   activé/désactivé en JS via la classe t-ring-active (voir toggleSession,
-   startRest, etc.), fonctionne aussi bien pour le violet que pour le teal
-   puisqu'elle ne fait qu'animer le ::before déjà coloré par variante. */
 .t-ring-active::before{animation:tRingPulse 1.8s ease-in-out infinite}
 @keyframes tRingPulse{
   0%,100%{opacity:1;transform:scale(1)}
   50%{opacity:.5;transform:scale(1.1)}
 }
 
-/* ── ANNEAU SÉANCE UNIQUEMENT — design premium façon montre boutique ──
-   Tout est scopé à #sess-ring : le repos garde son anneau d'origine
-   intact, seule la Séance change visuellement. */
 #sess-ring{width:230px;height:230px}
 #sess-ring::before{
   inset:-9%;background:radial-gradient(circle,rgba(124,58,237,.26),transparent 72%);filter:blur(1px);
 }
-/* Lunette recentrée en % pour rester concentrique à 230px (au lieu du
-   disque 140px fixe pensé pour 200px). */
 #sess-ring::after{
   top:50%;left:50%;transform:translate(-50%,-50%);
   width:64%;height:64%;
@@ -1471,8 +1256,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 }
 #sess-ring svg{width:100%;height:100%;filter:drop-shadow(0 0 8px var(--accent-glow))}
 #sess-ring .t-center{width:100%;height:100%}
-/* Index façon cadran de montre : graduations fines + repères majeurs tous
-   les 5, légère rotation uniquement pendant que la séance tourne. */
 #sess-ring .ring-ticks{transform-origin:100px 100px;transform-box:fill-box}
 #sess-ring .ring-ticks-min{opacity:.32}
 #sess-ring .ring-ticks-maj{opacity:.6}
@@ -1506,10 +1289,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes gaugePop{0%{transform:translateX(-50%) scale(.6)}70%{transform:translateX(-50%) scale(1.2)}100%{transform:translateX(-50%) scale(1)}}
 @keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-/* Pop du conteneur au tap : ressort amorti à plusieurs rebonds, plus doux
-   qu'un aller-retour scale brutal en 2 paliers — la légère oscillation
-   décroissante (1→0.93→1.07→0.985→1.015→1) lit comme un vrai matériau
-   physique plutôt qu'un "boing" mécanique. */
 @keyframes iconTap{
   0%{ transform:scale(1) }
   22%{ transform:scale(.93) }
@@ -1522,15 +1301,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 </style>
 </head>
 <body>
-<!-- Dégradé + silhouettes partagés par toutes les icônes SVG de groupes
-     musculaires (muscle-icons.js) — définis une seule fois ici. Chacune des
-     11 silhouettes (une par groupe musculaire) est tracée directement depuis
-     l'image de référence dédiée fournie par l'utilisateur (contours
-     vectorisés à partir des pixels réels), panneau par panneau — pas
-     dessinée à la main. Le dégradé colore les zones surlignées ; chaque
-     clipPath reprend le contour exact de sa silhouette source pour que rien
-     ne déborde. Le filtre #muscleGlow ajoute un léger halo, appliqué
-     uniquement à la partie colorée de chaque icône. -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="muscleIconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1570,8 +1340,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
     <clipPath id="molletsClip" clipPathUnits="userSpaceOnUse">
       <path d="M29.69,1.2 L28.73,2.19 L26.72,16.62 L27.03,21.44 L29.52,32.58 L28.15,43.86 L29.38,45.26 L32.36,44.95 L34.78,46.32 L43.6,46.8 L44.53,45.91 L43.95,43.96 L37.18,40.0 L36.08,38.08 L39.23,14.7 L37.72,1.95 L36.9,1.2 Z M18.34,1.2 L11.1,1.2 L10.28,2.09 L8.94,9.61 L8.84,15.69 L11.92,38.29 L10.82,40.03 L4.05,44.0 L3.47,45.6 L4.43,46.8 L13.28,46.32 L15.71,44.95 L18.62,45.26 L19.85,44.0 L18.58,31.76 L21.08,21.06 L21.28,15.8 L19.27,2.09 Z"/>
     </clipPath>
-    <!-- Léger glow appliqué uniquement à la zone colorée (surlignée) de chaque
-         icône de muscle — pas à la silhouette au repos ni à la plaque. -->
     <filter id="muscleGlow" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="1.4" result="blur"/>
       <feMerge>
@@ -1629,10 +1397,9 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
   <button class="nav-tab" data-tab="timer">Temps</button>
 </div>
 
-<!-- ═══ TAB: PROGRAMME (full width, no sidebar) ═══ -->
+<!-- ═══ TAB: PROGRAMME ═══ -->
 <div id="tab-programme">
   <div class="card" style="padding:clamp(18px,4vw,26px)">
-    <!-- Programs bar -->
     <div style="margin-bottom:6px">
       <div class="sec-tag" style="margin-bottom:12px">
         <span class="sec-tag-icon">
@@ -1644,9 +1411,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
     </div>
     <div class="prog-days-row">
       <div class="prog-days-col" style="min-width:0;position:relative">
-        <!-- Sélecteur de jours : bouton compact qui ouvre un dropdown avec
-             cases à cocher — se cache dès qu'au moins un jour est sélectionné,
-             remplacé par les chips des jours choisis (cliquables pour retirer). -->
         <div id="prog-days-trigger-wrap">
           <button id="prog-days-trigger" class="btn-days-trigger" onclick="toggleDaysPicker()">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -1655,13 +1419,7 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
           </button>
         </div>
         <div id="prog-days-inline" class="prog-days-chips"></div>
-        <!-- Overlay complètement opaque (var(--bg), aucune transparence)
-             affiché derrière le dropdown quand il est ouvert — même
-             principe que le menu des muscles : ça fait clairement ressortir
-             le panneau au-dessus, au lieu de le laisser flotter directement
-             sur le reste de l'interface. -->
         <div id="days-picker-ov" style="display:none;position:fixed;inset:0;z-index:99998;background:#000 !important;opacity:1 !important" onclick="toggleDaysPicker()"></div>
-        <!-- Dropdown sélecteur jours -->
         <div id="days-picker" class="days-picker" style="display:none">
           <div class="days-picker-inner" id="days-picker-inner"></div>
         </div>
@@ -1706,7 +1464,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
 <div id="tab-timer" style="display:none">
   <div class="g2" style="gap:18px">
 
-    <!-- Session -->
     <div class="card card-accent card-accent-violet" style="padding:30px;display:flex;flex-direction:column;align-items:center;gap:20px;justify-content:space-between">
       <div style="align-self:flex-start;width:100%">
         <div class="tag tag-icon" style="margin-bottom:6px">
@@ -1723,7 +1480,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
               <stop offset="100%" stop-color="#7c3aed"/>
             </linearGradient>
           </defs>
-          <!-- Index façon cadran de montre : graduations fines + repères majeurs tous les 5 -->
           <g class="ring-ticks ring-ticks-min" fill="none" stroke="#fff"><circle cx="100" cy="100" r="95" stroke-width="1.4" stroke-dasharray="2 7.95"/></g>
           <g class="ring-ticks ring-ticks-maj" fill="none" stroke="#fff"><circle cx="100" cy="100" r="95" stroke-width="2.6" stroke-dasharray="4 45.74"/></g>
           <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="7"/>
@@ -1742,7 +1498,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
       </div>
     </div>
 
-    <!-- Rest -->
     <div class="card card-accent card-accent-teal" style="padding:30px;display:flex;flex-direction:column;align-items:center;gap:18px;justify-content:space-between">
       <div style="align-self:flex-start;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px">
         <div>
@@ -1754,8 +1509,6 @@ select.inp,select.inp-sm{padding-right:8px;cursor:pointer}
         </div>
       </div>
 
-      <!-- Bandeau de gestion des notifications — état "Activer" ou "Désactiver"
-           selon la permission accordée et le flag interne notifDisabled. -->
       <div id="notif-banner" style="display:none;width:100%;background:var(--soft);border:1px solid var(--border-s);border-radius:14px;padding:12px 14px;align-items:center;gap:10px;transition:background .2s,border-color .2s">
         <svg id="notif-banner-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted);flex-shrink:0"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
         <div id="notif-banner-text" style="flex:1;font-size:11px;color:var(--muted);line-height:1.4">Active les notifications pour être averti(e) quand le repos est fini.</div>
@@ -1938,9 +1691,6 @@ const DB_EX = {
   'Extensions un bras câble':     {p:'Triceps',            s:''},
   'Développé rapproché':          {p:'Triceps',            s:'Pecs Milieu'},
 
-  // ── AVANT-BRAS / BRACHIAL ─────────────────────────────
-  // (secondaires surtout — peu d'exercices primaires isolés)
-
   // ── ABDOMINAUX ────────────────────────────────────────
   'Crunch classique':             {p:'Abdos Haut',         s:''},
   'Crunch machine':               {p:'Abdos Haut',         s:''},
@@ -2011,25 +1761,16 @@ const DB_EX = {
 // ════════════════════════════════════════════════════
 const KEY = 'ascension_v4';
 
-// DB shape:
-// { programs:[{id,name,exercises:[]}], activeProg:id, history:{exId:[{date,sets:[{reps,weight}]}]} }
 let DB = { programs:[], activeProg:null, history:{} };
 
-// Migration: DB.history était indexé par nom d'exercice (mutable), ce qui
-// causait une perte/mélange d'historique en cas de renommage ou de doublon
-// de nom. On copie l'historique existant vers une clé stable = ex.id.
-// L'ancienne entrée par nom est conservée (jamais supprimée) pour ne jamais
-// perdre de données, même si l'historique avait déjà été migré par ailleurs.
 function migrateHistoryToExerciseId(){
   if(!DB.history || !DB.programs) return;
   DB.programs.forEach(function(prog){
     (prog.exercises||[]).forEach(function(ex){
       if(!ex || !ex.id) return;
-      if(DB.history[ex.id]) return; // déjà migré pour cet exercice
+      if(DB.history[ex.id]) return;
       const byName = ex.name ? DB.history[ex.name] : null;
       if(byName && byName.length){
-        // Copie profonde pour ne jamais partager la même référence de tableau
-        // entre la clé historique (nom) et la clé historique (id).
         DB.history[ex.id] = JSON.parse(JSON.stringify(byName));
       }
     });
@@ -2040,7 +1781,6 @@ function dbLoad(){
   try{
     const r = localStorage.getItem(KEY);
     if(r){ DB = JSON.parse(r); }
-    // Migrate v3 flat exercises
     if(!DB.programs){
       const old = DB.exercises||[];
       DB.programs = [{ id:uid(), name:'Programme A', exercises: old }];
@@ -2056,6 +1796,21 @@ function dbLoad(){
     }
     if(!DB.history) DB.history = {};
     migrateHistoryToExerciseId();
+    // Migration one-shot : le sélecteur de muscles ne propose plus les
+    // sous-parties (Pecs Haut/Milieu/Bas...) mais uniquement les grands
+    // groupes (Pectoraux...). On vide les sélections déjà enregistrées une
+    // seule fois pour que l'utilisateur reparte de zéro avec le nouveau
+    // sélecteur, sans jamais toucher aux séries/reps/historique.
+    if(!DB.settings) DB.settings = {};
+    if(!DB.settings.musclesResetV2){
+      DB.programs.forEach(function(prog){
+        (prog.exercises||[]).forEach(function(ex){
+          ex.primaries = [];
+          ex.secondaries = [];
+        });
+      });
+      DB.settings.musclesResetV2 = true;
+    }
   } catch {
     const p = { id:uid(), name:'Programme A', exercises:[] };
     DB = { programs:[p], activeProg:p.id, history:{} };
@@ -2069,7 +1824,6 @@ function dbSave(){
   }catch{}
 }
 
-// Tamponne un timestamp de modification sur un objet (programme, entrée poids, etc.)
 function touchUpdatedAt(obj){
   if(obj && typeof obj === 'object') obj.updatedAt = Date.now();
   return obj;
@@ -2108,8 +1862,6 @@ document.getElementById('main-nav').addEventListener('click', e=>{
 // ════════════════════════════════════════════════════
 // MODULE UI — composant "chip" de programme (barre du haut)
 // ════════════════════════════════════════════════════
-// Construit le HTML d'un seul chip de programme (nom éditable + jours +
-// bouton supprimer optionnel). canDel détermine si le bouton × est affiché.
 function createProgramCard(prog, isActive, canDel){
   const days  = prog.days || [];
   const daysLabel = days.length ? days.map(function(d){return JOURS_FULL[d];}).join(', ') : '';
@@ -2117,9 +1869,6 @@ function createProgramCard(prog, isActive, canDel){
   const daysSpan = daysLabel
     ? '<span class="prog-chip-days">'+daysLabel+'</span>'
     : '';
-  // Fusionner le chip et le bouton suppression en UN SEUL bloc — même fond,
-  // même couleur, même bordure. Le × est séparé par un simple diviseur vertical
-  // plutôt que d'être un élément distinct avec un style différent.
   const delPart = canDel
     ? '<span class="prog-chip-sep"></span>'
       + '<button class="prog-chip-del" onclick="event.stopPropagation();deleteProg(\''+prog.id+'\')" title="Supprimer">×</button>'
@@ -2152,7 +1901,6 @@ function renderProgBar(){
   renderInlineDays();
 }
 
-// ── Sélecteur de jours intégré directement dans la carte programme ──
 function renderInlineDays(){
   const wrap = document.getElementById('prog-days-inline');
   const triggerWrap = document.getElementById('prog-days-trigger-wrap');
@@ -2161,14 +1909,11 @@ function renderInlineDays(){
   if(!prog) return;
   const days = prog.days || [];
 
-  // Quand des jours sont sélectionnés : afficher les chips et cacher le bouton.
-  // Quand aucun jour : afficher le bouton, cacher les chips.
   const hasdays = days.length > 0;
   if(triggerWrap) triggerWrap.style.display = hasdays ? 'none' : '';
   wrap.innerHTML = '';
 
   if(hasdays){
-    // Chips des jours sélectionnés — cliquables pour retirer un jour
     days.forEach(function(i){
       const chip = document.createElement('button');
       chip.className = 'day-chip-selected';
@@ -2178,7 +1923,6 @@ function renderInlineDays(){
       chip.onclick = function(){ toggleInlineDay(i); };
       wrap.appendChild(chip);
     });
-    // Petit bouton + pour ajouter d'autres jours sans recacher les chips
     const addMore = document.createElement('button');
     addMore.className = 'day-chip-add';
     addMore.textContent = '+';
@@ -2187,7 +1931,6 @@ function renderInlineDays(){
     wrap.appendChild(addMore);
   }
 
-  // Mettre à jour le picker s'il est ouvert
   const picker = document.getElementById('days-picker');
   if(picker && picker.style.display !== 'none') renderDaysPicker();
 }
@@ -2198,7 +1941,6 @@ function renderDaysPicker(){
   const prog = getActiveProg();
   const days = prog ? (prog.days || []) : [];
 
-  // Ajouter l'en-tête une seule fois (il est dans le DOM fixe du picker)
   const picker = document.getElementById('days-picker');
   if(picker && !picker.querySelector('.days-picker-header')){
     const header = document.createElement('div');
@@ -2233,14 +1975,10 @@ function toggleDaysPicker(){
   picker.style.display = isOpen ? 'none' : 'block';
   if(overlay) overlay.style.display = isOpen ? 'none' : 'block';
   if(trigger) trigger.classList.toggle('open', !isOpen);
-  // Désactiver les pointer-events sur les cartes d'exercice quand le picker
-  // est ouvert — sinon les cartes DOM couvrent physiquement Lundi/Mardi et
-  // interceptent les clics avant qu'ils n'atteignent le dropdown.
   if(exList) exList.style.pointerEvents = isOpen ? '' : 'none';
   if(!isOpen) renderDaysPicker();
 }
 
-// Fermer le picker si on clique ailleurs
 document.addEventListener('click', function(e){
   const picker = document.getElementById('days-picker');
   const overlay = document.getElementById('days-picker-ov');
@@ -2268,7 +2006,6 @@ function toggleInlineDay(dayIndex){
   renderProgBar();
 }
 
-// Jours de la semaine
 const JOURS_FULL = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
 
 function addProg(){
@@ -2283,9 +2020,6 @@ function deleteProg(id){
   const prog = DB.programs.find(p=>p.id===id);
   if(!prog) return;
   const wasActive = DB.activeProg === id;
-  // Marquer comme supprimé (tombstone) au lieu de retirer du tableau, pour que
-  // la suppression se propage correctement lors d'une synchronisation avec un
-  // autre appareil (sinon le programme peut réapparaître après une fusion).
   prog.deleted = true;
   touchUpdatedAt(prog);
   if(wasActive){
@@ -2293,7 +2027,6 @@ function deleteProg(id){
     if(next) DB.activeProg = next.id;
   }
   dbSave(); renderProgBar(); renderExercises(); updateHeader();
-  // Toast with undo option
   showToastUndo(`"${prog.name}" supprimé`, ()=>{
     prog.deleted = false;
     touchUpdatedAt(prog);
@@ -2336,16 +2069,12 @@ function removeExercise(id){
   const prog = getActiveProg();
   const ex = prog.exercises.find(e=>e.id===id);
   if(!ex) return;
-  // Marquer comme supprimé (tombstone) au lieu de retirer du tableau, pour que
-  // la suppression se propage correctement lors d'une synchronisation avec un
-  // autre appareil (sinon l'exercice peut réapparaître après une fusion).
   ex.deleted = true;
   touchUpdatedAt(ex);
   touchUpdatedAt(prog);
   dbSave(); renderExercises(); updateHeader();
 }
 
-// ── MODAL DE CONFIRMATION CUSTOM (fonctionne partout: mobile, PC, APK) ──
 function showConfirm(message, okLabel, danger){
   return new Promise(resolve=>{
     const ov     = document.getElementById('confirm-ov');
@@ -2354,9 +2083,6 @@ function showConfirm(message, okLabel, danger){
     const noBtn  = document.getElementById('confirm-cancel');
     msgEl.textContent = message;
     okBtn.textContent = okLabel || 'Confirmer';
-    // Bouton de confirmation rouge pour les actions destructives (suppression
-    // définitive), violet sinon — renforce la hiérarchie de danger perçue
-    // plutôt qu'un même bouton violet pour "Confirmer" et "Effacer tout".
     okBtn.classList.toggle('btn-w', !danger);
     okBtn.classList.toggle('btn-danger-solid', !!danger);
     ov.style.display = 'flex';
@@ -2393,8 +2119,6 @@ async function clearAll(){
 // ════════════════════════════════════════════════════
 // MODULE UI — carte exercice (onglet Programme)
 // ════════════════════════════════════════════════════
-// Construit les lignes de saisie des séries (reps/kg/✓) pour un exercice.
-// hist = historique déjà filtré (sans les entrées supprimées), newest-first.
 function buildSetRows(ex, hist){
   let setRows = '';
   for(let i=0; i<ex.series; i++){
@@ -2413,7 +2137,6 @@ function buildSetRows(ex, hist){
   return setRows;
 }
 
-// Construit les lignes du tiroir d'historique (8 dernières séances avec sets non vides).
 function buildHistRows(ex, hist){
   let histRows = '';
   let renderedIndex = 0;
@@ -2428,7 +2151,6 @@ function buildHistRows(ex, hist){
     const vol = sets.reduce((a,s) => a + (parseFloat(s.reps)||0)*(parseFloat(s.weight)||0), 0);
     const volStr = vol > 0 ? Math.round(vol) + ' kg vol.' : '';
 
-    // Grouper les séries identiques ex: [10×80, 10×80, 8×75] → "2×(10 reps@80kg)  8 reps@75kg"
     const pills = [];
     let i = 0;
     while (i < sets.length) {
@@ -2463,16 +2185,11 @@ function buildHistRows(ex, hist){
   return histRows;
 }
 
-// Construit la carte DOM complète d'un exercice (en-tête, muscles, config,
-// log de séries, historique). ex doit déjà être normalisé (primaries/secondaries
-// en tableaux, setLogs de la bonne longueur) — c'est le rôle de renderExercises().
 function createExerciseCard(ex){
   const card = document.createElement('div');
   card.className = 'ex-card anim'; card.id = 'ex-'+ex.id;
   card.dataset.exId = ex.id;
 
-  // History for this exercise — déjà stocké newest-first (unshift à l'écriture)
-  // Indexé par ex.id (stable) plutôt que ex.name (modifiable par l'utilisateur)
   const hist = (DB.history[ex.id]||[]).filter(h=>!h.deleted);
   const hasHist = hist.length > 0;
 
@@ -2481,10 +2198,6 @@ function createExerciseCard(ex){
   const displayName = ex.name && ex.name.trim() ? ex.name : 'Nouvel exercice';
 
   if(ex.collapsed){
-    // ── ÉTAT REPLIÉ : item de liste minimal, uniquement le nom de l'exercice.
-    // Le nom est un simple texte (pas un input) : non modifiable depuis cet
-    // état, il faut déplier la carte pour pouvoir le changer. Toute la ligne
-    // reste cliquable pour dérouler (pas seulement le chevron).
     card.classList.add('ex-card-collapsed');
     card.innerHTML = `
     <div class="ex-collapsed-row" onclick="toggleCollapse('${ex.id}')">
@@ -2503,7 +2216,6 @@ function createExerciseCard(ex){
   }
 
   card.innerHTML = `
-  <!-- EN-TÊTE: nom pleine largeur + boutons inline avec le label -->
   <div class="ex-header">
     <div class="ex-header-top">
       <div class="ex-name-wrap">
@@ -2528,7 +2240,6 @@ function createExerciseCard(ex){
     </div>
   </div>
 
-  <!-- MUSCLES -->
   <div class="muscles-grid">
     <div class="muscle-block">
       <div class="muscle-label">Muscles principaux</div>
@@ -2550,7 +2261,6 @@ function createExerciseCard(ex){
     </div>
   </div>
 
-  <!-- CONFIG -->
   <div class="ex-config" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px 6px;margin:14px 0">
     <div class="ex-config-item">
       <div class="cfg-lbl">Séries</div>
@@ -2576,7 +2286,6 @@ function createExerciseCard(ex){
     </div>
   </div>
 
-  <!-- LOG SETS -->
   <div class="set-log-wrap">
     <div class="set-log-head">
       <div></div>
@@ -2586,7 +2295,6 @@ function createExerciseCard(ex){
     ${setRows}
   </div>
 
-  <!-- ACTIONS -->
   <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap">
     <button class="btn-premium btn-premium-emerald btn-sm" style="flex:1;min-width:140px" onclick="saveToHistory('${ex.id}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Sauvegarder les séries</span></button>
     <button class="btn-g btn-sm" id="histbtn-${ex.id}" onclick="toggleHist('${ex.id}')" style="flex:1;min-width:140px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:6px">
@@ -2594,7 +2302,6 @@ function createExerciseCard(ex){
     </button>
   </div>
 
-  <!-- HISTORIQUE -->
   <div class="hist-drawer" id="hist-${ex.id}">
     <div class="hist-head">
       <div class="hist-head-title">
@@ -2622,7 +2329,6 @@ function renderExercises(){
   list.innerHTML = '';
 
   visibleExercises.forEach(ex=>{
-    // Migrate old single-string format → arrays
     if(!Array.isArray(ex.primaries)){
       const mapped = DB_EX[ex.name]||{p:'',s:''};
       const raw = ex.primaryCustom||mapped.p||'';
@@ -2636,7 +2342,6 @@ function renderExercises(){
       delete ex.secondaryCustom;
     }
 
-    // Ensure setLogs length
     while(ex.setLogs.length < ex.series) ex.setLogs.push({reps:'',weight:'',notes:'',done:false});
     ex.setLogs = ex.setLogs.slice(0, ex.series);
 
@@ -2648,20 +2353,14 @@ function renderExercises(){
 }
 
 // ── RÉORGANISATION PAR APPUI LONG (boutons ▲▼) ───────────────────────
-// Principe: un appui long (LONG_PRESS_MS) sur une carte, sans bouger,
-// active le mode "réorganisation" sur cette carte uniquement — deux
-// boutons flottants ▲/▼ apparaissent et déplacent l'exercice d'une
-// position à chaque tap, avec une animation FLIP fluide. Un tap en dehors
-// de la carte active (ou de ses boutons) valide et referme le mode.
-// Une seule carte peut être en mode réorganisation à la fois (_reorderId).
 let _reorderId = null;
 
 function initExerciseReorderInteractions(list){
-  if(list._reorderBound) return; // écouteurs déjà attachés une fois pour toutes
+  if(list._reorderBound) return;
   list._reorderBound = true;
 
-  const LONG_PRESS_MS = 450;  // évite de se déclencher sur un simple tap/scroll
-  const MOVE_CANCEL_PX = 10;  // tolérance de mouvement avant annulation (= scroll)
+  const LONG_PRESS_MS = 450;
+  const MOVE_CANCEL_PX = 10;
 
   let pressTimer = null;
   let pressCard = null;
@@ -2675,10 +2374,7 @@ function initExerciseReorderInteractions(list){
   }
 
   list.addEventListener('pointerdown', function(e){
-    // clic droit / bouton secondaire souris → jamais d'appui long
     if(e.pointerType === 'mouse' && e.button !== 0) return;
-    // Ignorer les interactions qui partent d'un champ de saisie, bouton, lien…
-    // — seule la zone "carte" elle-même doit pouvoir déclencher le mode.
     if(e.target.closest('input, button, textarea, select, a, .mtag, .ex-reorder-btns')) return;
     const card = e.target.closest('.ex-card');
     if(!card || !card.dataset.exId) return;
@@ -2702,9 +2398,6 @@ function initExerciseReorderInteractions(list){
   window.addEventListener('pointercancel', clearPress);
   window.addEventListener('blur', clearPress);
 
-  // Un tap n'importe où en dehors des boutons ▲▼ de la carte active valide
-  // et referme le mode réorganisation — "zone vide" ou une autre carte,
-  // peu importe : on ferme d'abord pour ne jamais superposer deux états.
   document.addEventListener('pointerdown', function(e){
     if(!_reorderId) return;
     if(e.target.closest('.ex-reorder-btns')) return;
@@ -2712,9 +2405,6 @@ function initExerciseReorderInteractions(list){
   }, true);
 }
 
-// Ajoute les boutons flottants ▲▼ sur la carte et bascule son état visuel.
-// Une seule carte à la fois : si une autre carte était déjà active, on la
-// referme proprement avant (pas d'état incohérent avec deux cartes actives).
 function enterReorderMode(id){
   if(_reorderId === id) return;
   if(_reorderId) removeReorderUI(_reorderId);
@@ -2759,9 +2449,6 @@ function removeReorderUI(id){
   if(wrap) wrap.remove();
 }
 
-// Après un renderExercises() (ré-écriture complète du DOM), réapplique les
-// boutons ▲▼ sur la carte encore en mode réorganisation, si elle existe
-// toujours dans la liste visible (sinon on sort proprement du mode).
 function restoreReorderUI(list){
   if(!_reorderId) return;
   const card = list.querySelector('.ex-card[data-ex-id="'+_reorderId+'"]');
@@ -2769,9 +2456,6 @@ function restoreReorderUI(list){
   else _reorderId = null;
 }
 
-// Déplace l'exercice `id` d'une position (dir: -1 monter, +1 descendre)
-// parmi les exercices visibles, persiste le nouvel ordre comme l'ancien
-// système, puis rejoue une animation FLIP fluide sur les cartes qui bougent.
 function moveExerciseStep(id, dir){
   const list = document.getElementById('exercise-list');
   if(!list) return;
@@ -2786,7 +2470,7 @@ function moveExerciseStep(id, dir){
   const idx = visible.findIndex(e=>e.id===id);
   if(idx < 0) return;
   const newIdx = idx + dir;
-  if(newIdx < 0 || newIdx >= visible.length) return; // déjà en haut/en bas
+  if(newIdx < 0 || newIdx >= visible.length) return;
 
   const tmp = visible[idx]; visible[idx] = visible[newIdx]; visible[newIdx] = tmp;
   const hiddenOnes = prog.exercises.filter(e=>e.deleted);
@@ -2794,7 +2478,7 @@ function moveExerciseStep(id, dir){
   touchUpdatedAt(prog);
   dbSave();
 
-  renderExercises(); // reconstruit le DOM ; réapplique aussi l'UI ▲▼ sur `id`
+  renderExercises();
 
   const newList = document.getElementById('exercise-list');
   newList.querySelectorAll('.ex-card').forEach(function(c){
@@ -2820,7 +2504,6 @@ function moveExerciseStep(id, dir){
   });
 }
 
-
 function toggleCollapse(id){
   const prog = getActiveProg();
   const ex = prog.exercises.find(e=>e.id===id);
@@ -2831,7 +2514,6 @@ function toggleCollapse(id){
   dbSave(); renderExercises();
 }
 
-// Parse intelligent du temps de repos: "1:30" → 90s, "130" → 90s (1min30), "45" → 45s
 function parseRestInput(val){
   val = (val||'').trim();
   if(!val) return 0;
@@ -2865,7 +2547,6 @@ function updEx(id, field, val){
   updateHeader();
 }
 
-// Mise à jour légère du nom pendant la frappe — AUCUN re-render (préserve le focus)
 function updExNameLive(id, val){
   const prog = getActiveProg();
   const ex = prog.exercises.find(e=>e.id===id);
@@ -2886,11 +2567,6 @@ function updSetLog(id, i, field, val){
   dbSave();
 }
 
-// Reps d'une série : appelé une fois la saisie terminée (onchange, pas
-// oninput — ne s'exécute donc pas pendant la frappe). Coche automatiquement
-// la case de validation dès qu'une valeur est renseignée, et la décoche si
-// le champ est vidé — sans re-render complet de la carte, pour ne pas faire
-// perdre le focus ni décaler l'interface pendant la saisie.
 function updSetLogReps(id, i, val){
   const prog = getActiveProg();
   const ex = prog.exercises.find(e=>e.id===id);
@@ -2916,7 +2592,6 @@ function toggleSetDone(id, i){
   touchUpdatedAt(ex);
   touchUpdatedAt(prog);
   dbSave();
-  // Mise à jour visuelle locale sans re-render complet
   const btn = event.currentTarget;
   if(btn){
     const done = ex.setLogs[i].done;
@@ -2930,7 +2605,6 @@ function saveToHistory(id){
   const prog = getActiveProg();
   const ex = prog.exercises.find(e=>e.id===id);
   if(!ex) return;
-  // Ne garder QUE les séries qui ont au moins reps ou weight
   const sets = ex.setLogs
     .map(sl => ({ reps: sl.reps||'', weight: sl.weight||'', done: sl.done||false }))
     .filter(s => s.reps !== '' || s.weight !== '');
@@ -2938,8 +2612,6 @@ function saveToHistory(id){
   const today = new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'});
   if(!DB.history[ex.id]) DB.history[ex.id] = [];
   DB.history[ex.id].unshift({ date: today, sets, updatedAt: Date.now() });
-  // Ne tronquer que les entrées actives à 20 ; les tombstones (supprimées) ne
-  // comptent pas dans la limite pour ne jamais perdre une entrée active valide.
   const active  = DB.history[ex.id].filter(h=>!h.deleted).slice(0,20);
   const deleted = DB.history[ex.id].filter(h=>h.deleted);
   DB.history[ex.id] = active.concat(deleted);
@@ -2971,8 +2643,8 @@ function updateHeader(){
 }
 
 // ── Menu de sélection des muscles (primaire/secondaire) ──────────────
-// Remplace la saisie libre : le champ est en lecture seule, un clic ouvre
-// ce menu où l'on choisit (toggle) les muscles dans la taxonomie complète.
+// Uniquement les grands groupes musculaires (Pectoraux, Dos, Épaules...) —
+// plus de sous-parties (Pecs Haut/Milieu/Bas...) à choisir individuellement.
 let _mpId = null, _mpSide = null;
 
 function openMusclePicker(id, side){
@@ -2998,8 +2670,6 @@ function renderMusclePickerList(){
   const ex = prog.exercises.find(e=>e.id===_mpId);
   if(!ex){ wrap.innerHTML=''; return; }
   const arr = _mpSide==='p' ? (ex.primaries||[]) : (ex.secondaries||[]);
-  // Uniquement les grands groupes musculaires — plus de sous-parties
-  // (Pecs Haut/Milieu/Bas → juste "Pectoraux").
   wrap.innerHTML = `<div style="display:flex;flex-wrap:wrap;gap:6px">
     ${Object.keys(MUSCLE_GROUPS).map(group=>{
       const on = arr.includes(group);
@@ -3040,15 +2710,17 @@ function removeMuscle(id, side, i){
 }
 
 // ════════════════════════════════════════════════════
-// VOLUME
+// VOLUME — un total par grand groupe musculaire, plus de détail par
+// sous-partie (le sélecteur ne propose plus que les groupes).
 // ════════════════════════════════════════════════════
 function renderVolume(){
   const list  = document.getElementById('volume-list');
   const empty = document.getElementById('vol-empty');
 
-  // ── Aggregate across ALL programs → sub-part level ────
-  const vol = {}; // { subPart: séries } — pour le détail affiché par sous-partie
-  const parentVol = {}; // { parent: séries } — total du groupe, DÉDUPLIQUÉ par exercice
+  // Total par groupe, dédupliqué par exercice (un exercice ne compte
+  // qu'une fois pour un groupe donné, même s'il liste plusieurs entrées
+  // qui pointent vers ce même groupe).
+  const parentVol = {}; // { parent: séries }
 
   DB.programs.filter(prog=>!prog.deleted).forEach(prog=>{
     prog.exercises.filter(ex=>!ex.deleted).forEach(ex=>{
@@ -3057,16 +2729,10 @@ function renderVolume(){
       const m = DB_EX[ex.name] || {p:'',s:''};
       const prims = (Array.isArray(ex.primaries) && ex.primaries.length) ? ex.primaries : (m.p?[m.p]:[]);
       const secs  = (Array.isArray(ex.secondaries) && ex.secondaries.length) ? ex.secondaries : (m.s?[m.s]:[]);
-      const add = (muscle, val) => { if(muscle&&val){ vol[muscle]=(vol[muscle]||0)+val; } };
-      prims.forEach(p => add(p, series));
-      secs.forEach(s  => add(s, series * 0.5));
 
-      // Total par groupe parent : un même exercice ne doit compter QU'UNE FOIS
-      // par groupe parent, même s'il touche plusieurs sous-parties de ce groupe
-      // (ex: "Mollets assis machine" = principal Soléaire + secondaire Mollets,
-      // les deux appartiennent au groupe "Mollets" → ne pas additionner les deux).
-      // On prend la meilleure pondération obtenue pour ce groupe sur cet exercice.
-      const parentWeight = {}; // { parent: poids max pour CET exercice }
+      // Un même exercice ne doit compter qu'UNE FOIS par groupe parent,
+      // même s'il touche plusieurs entrées de ce groupe.
+      const parentWeight = {};
       const bump = (muscle, weight) => {
         if(!muscle) return;
         const parent = MUSCLE_PARENT[muscle] || muscle;
@@ -3081,9 +2747,7 @@ function renderVolume(){
   });
 
   // ── Fréquence: nb de JOURS DISTINCTS où le muscle est sollicité ──────
-  // Si un muscle est travaillé dans 2 programmes le MÊME jour → compte 1 fois.
-  // Si c'est sur 2 jours différents (même via des programmes différents) → compte 2 fois.
-  const freq = {}; // { muscle: Set<"progId:dayIndex"> }
+  const freq = {}; // { parent: Set<"day-x"|"prog-id"> }
   DB.programs.filter(prog=>!prog.deleted).forEach(prog => {
     const progDays = (prog.days && prog.days.length) ? prog.days : null;
     prog.exercises.filter(ex=>!ex.deleted).forEach(ex => {
@@ -3094,78 +2758,37 @@ function renderVolume(){
       const secs  = (Array.isArray(ex.secondaries) && ex.secondaries.length) ? ex.secondaries : (m.s?[m.s]:[]);
       [...prims, ...secs].forEach(mu => {
         if(!mu) return;
-        if(!freq[mu]) freq[mu] = new Set();
+        const parent = MUSCLE_PARENT[mu] || mu;
+        if(!freq[parent]) freq[parent] = new Set();
         if(progDays){
-          // Un jour distinct par programme assigné à ce jour précis
-          progDays.forEach(d => freq[mu].add('day-'+d));
+          progDays.forEach(d => freq[parent].add('day-'+d));
         } else {
-          // Aucun jour défini pour ce programme → on le compte comme un jour "virtuel" unique à ce programme
-          freq[mu].add('prog-'+prog.id);
+          freq[parent].add('prog-'+prog.id);
         }
       });
     });
   });
-  const freqCount = {}; // { muscle: number }
+  const freqCount = {};
   Object.entries(freq).forEach(([mu, set]) => { freqCount[mu] = set.size; });
 
-  // Agréger la fréquence par groupe musculaire parent : si "Pecs Milieu" et
-  // "Pectoraux Haut" sont travaillés sur 2 jours différents, le parent
-  // "Pectoraux" doit afficher fréquence 2, pas 1.
-  // On construit un Set de jours agrégé pour chaque parent en fusionnant
-  // les sets de toutes ses sous-parties connues dans MUSCLE_GROUPS.
-  const freqParent = {};
-  Object.entries(MUSCLE_GROUPS).forEach(([parent, parts]) => {
-    const combined = new Set();
-    // Ajouter les jours du parent lui-même (si directement utilisé)
-    if(freq[parent]) freq[parent].forEach(d => combined.add(d));
-    // Ajouter les jours de chaque sous-partie
-    parts.forEach(part => {
-      if(freq[part]) freq[part].forEach(d => combined.add(d));
-    });
-    if(combined.size > 0) freqParent[parent] = combined.size;
-  });
-  // Fusionner dans freqCount — le parent prend la valeur agrégée
-  Object.assign(freqCount, freqParent);
-
-
-
-  // Vérifier si données
-  if(!Object.keys(vol).length){
+  if(!Object.keys(parentVol).length){
     if(list)  list.innerHTML = '';
     if(empty) empty.style.display = '';
     return;
   }
   if(empty) empty.style.display = 'none';
 
-  // ── Build grouped structure ────────────────────────────
-  // grouped[parent] = { total, parts:{subPart: séries} }
-  const grouped = {};
-  Object.entries(vol).forEach(([muscle, s]) => {
-    const parent = MUSCLE_PARENT[muscle] || muscle;
-    if(!grouped[parent]) grouped[parent] = { total:0, parts:{} };
-    grouped[parent].parts[muscle] = (grouped[parent].parts[muscle]||0) + s;
-  });
-  // Le total du groupe vient de parentVol (déduplique par exercice), PAS de la
-  // somme des sous-parties — sinon un exo touchant 2 sous-parties du même
-  // groupe (ex: Soléaire + Mollets) compterait ses séries 2 ou 3 fois.
-  Object.keys(grouped).forEach(parent => {
-    grouped[parent].total = parentVol[parent] || 0;
-  });
-
-  // Sort: follow MUSCLE_GROUPS order, then by total desc
   const ORDER = Object.keys(MUSCLE_GROUPS);
-  const sorted = Object.entries(grouped).sort((a,b)=>{
+  const sorted = Object.entries(parentVol).sort((a,b)=>{
     const ai = ORDER.indexOf(a[0]), bi = ORDER.indexOf(b[0]);
-    if(ai===-1 && bi===-1) return b[1].total - a[1].total;
+    if(ai===-1 && bi===-1) return b[1] - a[1];
     if(ai===-1) return 1; if(bi===-1) return -1;
-    return b[1].total - a[1].total;
+    return b[1] - a[1];
   });
 
-  const maxTotal = Math.max(...sorted.map(([,g])=>g.total), 1);
+  const maxTotal = Math.max(...sorted.map(([,t])=>t), 1);
   list.innerHTML = '';
 
-  // Status badge helper — seuils révisés :
-  // Maintenance 1-5 | Modéré 6-10 | Priorité 11-15 | Élevé 16+
   function statusBadge(total) {
     const t = Math.round(total);
     if(t >= 16) return { label:'Élevé',       color:'#F87171', bg:'rgba(248,113,113,.12)', border:'rgba(248,113,113,.25)' };
@@ -3175,33 +2798,17 @@ function renderVolume(){
     return             { label:'Faible',      color:'var(--muted)', bg:'var(--softer)',    border:'var(--border-s)'        };
   }
 
-  sorted.forEach(([group, data]) => {
-    const pct  = Math.round((data.total / maxTotal) * 100);
-    const st   = statusBadge(data.total);
-
-    // Sub-parts: only show if sub-part name ≠ group name AND has multiple sub-parts
-    const subEntries = Object.entries(data.parts)
-      .filter(([part]) => part !== group)
-      .sort((a,b) => b[1]-a[1]);
-
-    const subHTML = subEntries.length > 0
-      ? subEntries.map(([part, s]) => {
-          const subPct = Math.round((s / data.total) * 100);
-          return `<div class="vol-subpart-row">
-            <div class="vol-subpart-name">${esc(part)}</div>
-            <div class="vol-subpart-bar-t"><div class="vol-subpart-bar-f" style="width:${subPct}%"></div></div>
-            <div class="vol-subpart-val">${s%1===0?s:s.toFixed(1)} sér.</div>
-          </div>`;
-        }).join('')
-      : '';
+  sorted.forEach(([group, total]) => {
+    const pct  = Math.round((total / maxTotal) * 100);
+    const st   = statusBadge(total);
 
     const div = document.createElement('div');
-    div.className = 'anim vol-card' + (subHTML ? ' vol-card--has-subparts' : '');
+    div.className = 'anim vol-card';
     div.style.cssText = `--vol-accent:${st.color};--vol-accent-bg:${st.bg};--vol-accent-border:${st.border}`;
 
-    const freqN = freqCount[group] || Object.keys(data.parts).reduce((max, part) => Math.max(max, freqCount[part]||0), 0);
+    const freqN = freqCount[group] || 0;
     const freqLabel = freqN ? `×${freqN}/sem` : '';
-    const totalStr = data.total%1===0 ? data.total : data.total.toFixed(1);
+    const totalStr = total%1===0 ? total : total.toFixed(1);
 
     div.innerHTML = `
       <div class="vol-icon-slot">${getMuscleIcon(group)}</div>
@@ -3221,10 +2828,9 @@ function renderVolume(){
             <div class="vol-total-label">SÉR / SEM</div>
           </div>
         </div>
-        <div class="bar-t" style="height:6px;margin-bottom:${subHTML?'10px':'0'}">
+        <div class="bar-t" style="height:6px">
           <div class="bar-f" style="width:${pct}%"></div>
         </div>
-        ${subHTML ? `<div class="vol-subparts">${subHTML}</div>` : ''}
       </div>`;
 
     list.appendChild(div);
@@ -3232,7 +2838,7 @@ function renderVolume(){
 }
 
 // ════════════════════════════════════════════════════
-// WAKE LOCK — empêche l'écran de s'éteindre pendant un chrono
+// WAKE LOCK
 // ════════════════════════════════════════════════════
 let _wakeLock = null;
 async function requestWakeLock(){
@@ -3241,7 +2847,7 @@ async function requestWakeLock(){
       _wakeLock = await navigator.wakeLock.request('screen');
       _wakeLock.addEventListener('release', function(){ _wakeLock = null; });
     }
-  }catch(e){ /* refusé ou non supporté — on continue sans, le calcul horloge murale compense */ }
+  }catch(e){ /* refusé ou non supporté */ }
 }
 function releaseWakeLockIfIdle(){
   if(_wakeLock && !sessRunning && !restRunning){
@@ -3249,8 +2855,6 @@ function releaseWakeLockIfIdle(){
     _wakeLock = null;
   }
 }
-// Ré-acquérir le wake lock quand on revient sur l'app (le navigateur le relâche
-// automatiquement en arrière-plan) + recalculer immédiatement l'affichage réel
 document.addEventListener('visibilitychange', function(){
   if(document.visibilityState === 'visible'){
     if(sessRunning || restRunning) requestWakeLock();
@@ -3260,16 +2864,11 @@ document.addEventListener('visibilitychange', function(){
 });
 
 // ════════════════════════════════════════════════════
-// SESSION TIMER — basé sur l'horloge murale (Date.now()),
-// fonctionne correctement même si l'écran s'éteint/se verrouille.
+// SESSION TIMER
 // ════════════════════════════════════════════════════
 let sessRunning=false, sessSec=0, sessInterval=null, sessStartTs=0, sessBaseSec=0;
 const SESS_C = 540.35;
 
-// Pilote le point vert pulsant du header : visible dès qu'une séance ou un
-// repos tourne. Appelé à chaque changement d'état plutôt que dans un
-// interval dédié, pour rester correct même si aucun des deux timers ne
-// tourne actuellement (pas de polling inutile).
 function updateHdrLiveDot(){
   const dot = document.getElementById('hdr-live-dot');
   if(!dot) return;
@@ -3287,7 +2886,7 @@ function tickSession(){
 function toggleSession(){
   if(sessRunning){
     clearInterval(sessInterval); sessRunning=false;
-    sessBaseSec = sessSec; // mémoriser le temps écoulé à la pause
+    sessBaseSec = sessSec;
     setBtnIcon('sess-btn','play','Reprendre'); setLbl('sess-lbl','PAUSE');
     releaseWakeLockIfIdle();
   } else {
@@ -3312,19 +2911,16 @@ function resetSession(){
   spinResetIcon('[onclick="resetSession()"]');
 }
 
-// Rejoue l'animation de rotation de l'icône reset, même sur des taps très
-// brefs où :active seul ne suffirait pas à montrer le tour complet.
 function spinResetIcon(selector){
   const btn = document.querySelector(selector);
   if(!btn) return;
   btn.classList.remove('spin');
-  void btn.offsetWidth; // force le reflow pour permettre de rejouer l'animation
+  void btn.offsetWidth;
   btn.classList.add('spin');
 }
 
 // ════════════════════════════════════════════════════
-// REST TIMER — basé sur une heure de fin absolue (restEndTs),
-// fonctionne correctement même si l'écran s'éteint/se verrouille.
+// REST TIMER
 // ════════════════════════════════════════════════════
 let restRunning=false, restSec=90, restTotal=90, restInterval=null, restEndTs=0;
 
@@ -3346,16 +2942,9 @@ function setRest(s){
   updateRestDisplay();
 }
 
-// ── Réglage du temps de repos par glissement directement sur l'anneau ──
-// Plus de case séparée : on glisse verticalement sur l'anneau du temps de
-// repos lui-même. La moitié gauche de l'anneau règle les minutes (pas de
-// 1 min), la moitié droite règle les secondes (pas de 15s) — déterminé par
-// la position horizontale du point de départ du glissement. Fonctionne au
-// doigt (tactile) comme à la souris (Pointer Events couvre les deux) ; la
-// molette est aussi supportée sur desktop, avec le même découpage gauche/droite.
-const REST_SWIPE_PX_PER_STEP = 22; // pixels de glissement par pas
-const REST_SWIPE_MIN = 5;          // 5s minimum
-const REST_SWIPE_MAX = 3600;       // 60min maximum
+const REST_SWIPE_PX_PER_STEP = 22;
+const REST_SWIPE_MIN = 5;
+const REST_SWIPE_MAX = 3600;
 
 function initRestSwipe(){
   const el = document.getElementById('rest-ring');
@@ -3365,7 +2954,7 @@ function initRestSwipe(){
 
   function zoneStep(clientX){
     const rect = el.getBoundingClientRect();
-    return (clientX - rect.left) < rect.width / 2 ? 60 : 15; // gauche=minutes, droite=secondes
+    return (clientX - rect.left) < rect.width / 2 ? 60 : 15;
   }
   function begin(clientX, clientY){
     if(restRunning) return;
@@ -3377,7 +2966,7 @@ function initRestSwipe(){
   }
   function move(clientY){
     if(!dragging) return;
-    const delta = startY - clientY; // positif = glissement vers le haut
+    const delta = startY - clientY;
     const steps = Math.round(delta / REST_SWIPE_PX_PER_STEP);
     if(steps === lastSteps) return;
     lastSteps = steps;
@@ -3401,7 +2990,6 @@ function initRestSwipe(){
   el.addEventListener('pointercancel', end);
   el.addEventListener('lostpointercapture', end);
 
-  // Molette souris : chaque cran ajuste d'un pas, selon la moitié survolée.
   el.addEventListener('wheel', e=>{
     if(restRunning) return;
     e.preventDefault();
@@ -3433,34 +3021,19 @@ function tickRest(){
   }
 }
 
-// Notification système locale (aucun serveur requis — déclenchée par l'appareil
-// lui-même). Fonctionne tant que l'app reste exécutée en arrière-plan (écran
-// allumé ou Wake Lock actif). Limite réelle : si le téléphone est verrouillé
-// manuellement (bouton power) pendant le repos, l'OS suspend généralement le
-// JS en arrière-plan après quelques secondes/minutes — la notification ne se
-// déclenchera alors qu'au déverrouillage suivant, pas pendant que l'écran est
-// noir. Une vraie notification "pendant" verrouillage prolongé demanderait un
-// push serveur, ce que cette app n'a plus depuis le retrait de Firebase.
 function notifyLocal(title, body){
-  if(DB.settings && DB.settings.notifDisabled) return; // coupé explicitement depuis l'app
+  if(DB.settings && DB.settings.notifDisabled) return;
   if(!('Notification' in window) || Notification.permission !== 'granted') return;
   const opts = {
     body: body,
     icon: './icon-192.png',
-    // Badge = petite icône de la barre de status Android, DOIT être une
-    // silhouette monochrome sur fond transparent (spec Android/Chrome) —
-    // utiliser l'icône couleur complète ici donne un rendu dégradé/flou
-    // une fois qu'Android la réduit en masque monochrome automatique.
     badge: './badge-96.png',
     vibrate: [120,60,120],
-    tag: 'mytraining-rest',      // remplace une éventuelle notif de repos précédente au lieu de s'empiler
-    renotify: true,              // re-vibre/re-sonne même si une notif avec le même tag existait déjà
-    requireInteraction: true,    // reste affichée (et donc visible sur écran de verrouillage) jusqu'à ce que l'utilisateur la balaie/touche, au lieu de disparaître après quelques secondes
-    silent: false,               // joue le son système de notification, comme un vrai message reçu
+    tag: 'mytraining-rest',
+    renotify: true,
+    requireInteraction: true,
+    silent: false,
     timestamp: Date.now(),
-    // Pas de boutons d'action: un simple tap sur la notification suffit à
-    // rouvrir/focus l'app (géré par notificationclick dans sw.js) — plus
-    // simple et moins encombré qu'une notif avec deux boutons "Relancer"/"OK".
   };
   try{
     if(navigator.serviceWorker && navigator.serviceWorker.ready){
@@ -3473,10 +3046,6 @@ function notifyLocal(title, body){
   }catch(e){}
 }
 
-// Affiche le bandeau dans l'un de ces 3 états:
-// - permission='default' → bouton "Activer" (demande la permission navigateur)
-// - permission='granted' && pas désactivé en interne → bouton "Désactiver" (coupe net.notifyLocal)
-// - permission='denied' → bandeau masqué, rien à faire depuis l'app (réglages système requis)
 function renderNotifBanner(){
   const banner = document.getElementById('notif-banner');
   if(!banner) return;
@@ -3487,7 +3056,6 @@ function renderNotifBanner(){
   }
   const textEl = document.getElementById('notif-banner-text');
   const btnEl = document.getElementById('notif-banner-btn');
-  const iconEl = document.getElementById('notif-banner-icon');
   const disabledLocally = !!(DB.settings && DB.settings.notifDisabled);
 
   if(Notification.permission === 'granted' && !disabledLocally){
@@ -3503,10 +3071,6 @@ function renderNotifBanner(){
   }
 }
 
-// Demande la permission de notification au navigateur. Doit être déclenché
-// par un clic utilisateur direct (la plupart des navigateurs bloquent une
-// demande automatique au chargement de la page) — utilisé par le bandeau,
-// et aussi tenté automatiquement au chargement (voir tryAutoEnableNotifications).
 async function enableNotifications(){
   if(!('Notification' in window)){
     showToast('Notifications non supportées sur cet appareil');
@@ -3529,11 +3093,6 @@ async function enableNotifications(){
   renderNotifBanner();
 }
 
-// Coupe les notifications depuis l'app sans passer par les réglages système:
-// le navigateur ne permet pas à une page de révoquer une permission déjà
-// accordée, donc on utilise un simple interrupteur interne que notifyLocal()
-// respecte. C'est l'arrêt "complet" demandé, équivalent en pratique à une
-// révocation côté utilisateur.
 function disableNotifications(){
   if(!DB.settings) DB.settings = {};
   DB.settings.notifDisabled = true;
@@ -3543,11 +3102,6 @@ function disableNotifications(){
   pushCancel();
 }
 
-// Tentative de demande automatique au chargement de l'app (sans attendre un
-// clic sur le bandeau), pour que les notifications fonctionnent "de base".
-// Certains navigateurs bloquent silencieusement une demande non déclenchée
-// par un geste utilisateur direct — dans ce cas la permission reste 'default'
-// et le bandeau "Activer" reste affiché comme filet de secours.
 async function tryAutoEnableNotifications(){
   if(!('Notification' in window)) return;
   if(Notification.permission !== 'default') return;
@@ -3563,7 +3117,7 @@ function startRest(){
   setBtnIcon('rest-btn','pause','Pause'); setLbl('rest-lbl','EN COURS');
   requestWakeLock();
   restInterval = setInterval(tickRest, 1000);
-  pushSchedule(); // notif serveur même si l'écran s'éteint / app fermée
+  pushSchedule();
   document.getElementById('rest-ring')?.classList.add('t-ring-active');
   updateHdrLiveDot();
 }
@@ -3589,8 +3143,6 @@ function resetRest(){
   spinResetIcon('[onclick="resetRest()"]');
 }
 
-// Déclenché par l'action "↺ Relancer" de la notification de fin de repos
-// (depuis le service worker, via postMessage ou paramètre d'URL au démarrage).
 function restartRestFromNotif(){
   resetRest();
   startRest();
@@ -3603,9 +3155,6 @@ function updateRestDisplay(){
   setTxt('h-rest', restSec > 0 ? t : 'GO!');
   const pct = restTotal > 0 ? restSec/restTotal : 0;
   setOff('rest-arc', SESS_C*(1-pct));
-  // Teinte dynamique du ring de repos : vert (plein temps restant) → rouge
-  // (repos presque fini). 145 = vert, 0 = rouge — dégradé HSL sur le temps
-  // restant réel, pas sur un simple seuil, pour un glissement continu.
   const hue = Math.max(0, Math.round(pct * 145));
   document.getElementById('rest-ring')?.style.setProperty('--rest-hue', hue);
 }
@@ -3615,14 +3164,12 @@ function updateRestDisplay(){
 // ════════════════════════════════════════════════════
 function fmtTime(s){ return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}` }
 function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function esc(s){ return escHtml(s); } // alias historique — voir escHtml() pour l'implémentation
+function esc(s){ return escHtml(s); }
 function setTxt(id,v){ const e=document.getElementById(id); if(e) e.textContent=v; }
 function setLbl(id,v){ setTxt(id,v); }
-// Icônes SVG pour les boutons play/pause des timers (remplace les emojis ▶/⏸)
 const ICON_PLAY  = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 3 20 12 6 21 6 3"/></svg>';
 const ICON_PAUSE = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
 
-// idPrefix: 'sess-btn' ou 'rest-btn'. icon: 'play' ou 'pause'.
 function setBtnIcon(idPrefix, icon, label){
   const iconEl = document.getElementById(idPrefix+'-icon');
   const labelEl = document.getElementById(idPrefix+'-label');
@@ -3653,7 +3200,6 @@ function showToastUndo(msg, undoFn){
   clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),4000);
 }
 
-// Datalist for exercise autocomplete
 function buildDatalist(){
   const dl = document.createElement('datalist'); dl.id='ex-list';
   Object.keys(DB_EX).forEach(n=>{ const o=document.createElement('option'); o.value=n; dl.appendChild(o); });
@@ -3672,7 +3218,6 @@ initRestFromSettings();
 renderNotifBanner();
 tryAutoEnableNotifications();
 
-// App ouverte depuis l'action "↺ Relancer" d'une notification (app était fermée)
 if(new URLSearchParams(window.location.search).get('action') === 'restart-rest'){
   switchTab('timer');
   restartRestFromNotif();
@@ -3688,8 +3233,6 @@ if(new URLSearchParams(window.location.search).get('action') === 'restart-rest')
 <button class="bn-item on" data-tab="programme" onclick="switchTab('programme');setActive(this,event)">
   <div class="bn-sym">
     <svg width="21" height="21" viewBox="0 0 512 512" fill="currentColor">
-      <!-- Haltère plein (icône fournie) : barre centrale + disques pleins de
-           chaque côté, avec petits embouts flottants aux extrémités. -->
       <rect x="0"   y="211" width="10" height="90"  rx="5"/>
       <rect x="32"  y="166" width="54" height="180" rx="27"/>
       <rect x="98"  y="91"  width="72" height="330" rx="36"/>
@@ -3705,7 +3248,6 @@ if(new URLSearchParams(window.location.search).get('action') === 'restart-rest')
 <button class="bn-item" data-tab="volume" onclick="switchTab('volume');setActive(this,event)">
   <div class="bn-sym">
     <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Bar chart croissant, espacement affiné pour un rendu plus léger -->
       <rect class="bn-bar" x="3.4" y="14" width="4" height="7" rx="1.7"/>
       <rect class="bn-bar" x="10" y="9" width="4" height="12" rx="1.7"/>
       <rect class="bn-bar" x="16.6" y="3.6" width="4" height="17.4" rx="1.7"/>
@@ -3717,8 +3259,6 @@ if(new URLSearchParams(window.location.search).get('action') === 'restart-rest')
 <button class="bn-item" data-tab="timer" onclick="switchTab('timer');setActive(this,event)">
   <div class="bn-sym">
     <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Chronographe : cadran + couronne + 4 index cardinaux discrets,
-           rendu plus détaillé/premium qu'un simple cercle nu. -->
       <circle cx="12" cy="13" r="8.3"/>
       <path d="M9.5 2.3h5"/><path d="M12 2.3v2.4"/>
       <path d="M18.2 5.1l1.5 1.5"/>
@@ -3726,7 +3266,6 @@ if(new URLSearchParams(window.location.search).get('action') === 'restart-rest')
       <path d="M17.85 13h-1.15" stroke-width="1.3" opacity=".5"/>
       <path d="M12 19.8v-1.15" stroke-width="1.3" opacity=".5"/>
       <path d="M6.15 13h1.15" stroke-width="1.3" opacity=".5"/>
-      <!-- Aiguille unique — pivot 12,13 -->
       <path class="bn-hand-min" d="M12 7.9v5.1"/>
       <circle cx="12" cy="13" r="0.9" fill="currentColor" stroke="none"/>
     </svg>
@@ -3740,14 +3279,8 @@ if(new URLSearchParams(window.location.search).get('action') === 'restart-rest')
 <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-messaging-compat.js"></script>
 <script>
 // ═══════════════════════════════════════════════
-//  PUSH — minuteur de repos (notif qui arrive même app fermée/écran verrouillé)
-//  Architecture : app.html → Worker Cloudflare (/schedule) → QStash (délai)
-//                → Worker Cloudflare (/fire) → FCM → firebase-messaging-sw.js
-//  Aucun compte utilisateur : juste un deviceId aléatoire stocké en localStorage.
+//  PUSH — minuteur de repos
 // ═══════════════════════════════════════════════
-
-// !!! Remplace par l'URL réelle de ton Worker une fois déployé,
-// et par le secret que tu auras choisi côté Worker (variable SHARED_SECRET).
 const PUSH_WORKER_URL = 'https://my-training-push.go-muscu351.workers.dev';
 const PUSH_SHARED_SECRET = 'mt-D14V26G06k29d30j';
 const FCM_VAPID_KEY = 'BIXXuKl1qzDtW468FNa9-BJ-Rd36-gkYhFSG8UFGPig589mb3VcnmZX6GZt9UzopSDdNuTSXwFlfZYhaxpWx2ls';
@@ -3764,9 +3297,6 @@ const firebaseConfig = {
 let fcmToken = null;
 let fcmReady = false;
 
-// Identifiant d'appareil anonyme — pas de compte, juste un identifiant stable
-// stocké en local pour que le Worker sache à quel token FCM correspondre
-// les push programmés pour CET appareil précis.
 function getDeviceId(){
   let id = localStorage.getItem('mytraining-device-id');
   if(!id){
@@ -3776,10 +3306,6 @@ function getDeviceId(){
   return id;
 }
 
-// Initialise Firebase Messaging et récupère le token FCM de cet appareil.
-// Doit être appelé après que la permission de notification a été accordée
-// (sinon getToken() échoue silencieusement) — on le tente au chargement et
-// après chaque acceptation de permission.
 async function initPush(){
   if(fcmReady) return;
   if(!('Notification' in window) || Notification.permission !== 'granted') return;
@@ -3789,15 +3315,11 @@ async function initPush(){
     firebase.initializeApp(firebaseConfig);
     const messaging = firebase.messaging();
 
-    // firebase-messaging-sw.js est un SW SÉPARÉ de sw.js (cache/notifs locales).
-    // Les deux coexistent, chacun avec son propre scope/fichier.
     const swReg = await navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './firebase-cloud-messaging-push-scope' });
 
     fcmToken = await messaging.getToken({ vapidKey: FCM_VAPID_KEY, serviceWorkerRegistration: swReg });
     fcmReady = !!fcmToken;
 
-    // Le token peut changer (rotation FCM) — si le repos est en cours au
-    // moment du changement, on reprogramme avec le nouveau token.
     messaging.onTokenRefresh && messaging.onTokenRefresh(async ()=>{
       fcmToken = await messaging.getToken({ vapidKey: FCM_VAPID_KEY, serviceWorkerRegistration: swReg });
       if(restRunning) pushSchedule();
@@ -3808,12 +3330,8 @@ async function initPush(){
   }
 }
 
-// Programme (ou reprogramme) la notification de fin de repos côté serveur.
-// Appelé à chaque démarrage/relance du minuteur. Le Worker annule lui-même
-// l'éventuel envoi déjà programmé pour ce deviceId avant d'en créer un nouveau
-// — donc un simple appel ici suffit, pas besoin d'annuler explicitement avant.
 async function pushSchedule(){
-  if(!fcmReady || !fcmToken) return; // pas de notif locale-only en fallback silencieux : notifyLocal() reste le filet de secours si l'app tourne encore
+  if(!fcmReady || !fcmToken) return;
   const delaySeconds = Math.max(1, Math.round((restEndTs - Date.now()) / 1000));
   try{
     await fetch(PUSH_WORKER_URL + '/schedule', {
@@ -3824,7 +3342,6 @@ async function pushSchedule(){
   }catch(e){ console.log('[push] schedule failed', e); }
 }
 
-// Annule la notification programmée côté serveur (pause ou reset du repos).
 async function pushCancel(){
   if(!fcmReady) return;
   try{
@@ -3838,14 +3355,8 @@ async function pushCancel(){
 
 initPush();
 
-// setActive — halo + trait indicateur positionnés via JS (transform), reste
-// purement visuel : aucune incidence sur la logique de switchTab / onglets.
 const BN_TAP_ANIM = { programme:'tap-press', volume:'tap-bars', timer:'tap-sweep' };
 
-// Déplace le halo (.bn-glow) et le trait (.bn-underline) derrière/sous
-// l'icône de l'item actif. `animate=false` (au chargement / resize) coupe
-// la transition le temps du positionnement initial pour éviter un
-// glissement parasite au démarrage.
 function positionBnIndicator(el, animate){
   const nav       = document.getElementById('bottom-nav');
   const glow      = document.getElementById('bn-glow');
@@ -3855,7 +3366,7 @@ function positionBnIndicator(el, animate){
 
   const navRect = nav.getBoundingClientRect();
   const symRect = sym.getBoundingClientRect();
-  const cx = symRect.left + symRect.width / 2 - navRect.left; // centre de l'icône, relatif à la nav
+  const cx = symRect.left + symRect.width / 2 - navRect.left;
 
   const glowSize = 42;
   const glowX = Math.round(cx - glowSize / 2);
@@ -3871,7 +3382,7 @@ function positionBnIndicator(el, animate){
     glow.style.transition = 'none';
     underline.style.transition = 'none';
     apply();
-    void glow.offsetWidth; // reflow avant de réactiver la transition
+    void glow.offsetWidth;
     glow.style.transition = '';
     underline.style.transition = '';
     glow.classList.add('ready');
@@ -3881,7 +3392,6 @@ function positionBnIndicator(el, animate){
   }
 }
 
-// Ripple discret au point de contact, purement décoratif.
 function spawnBnRipple(el, evt){
   if(!evt) return;
   const rect = el.getBoundingClientRect();
@@ -3901,22 +3411,16 @@ function setActive(el, evt){
   positionBnIndicator(el, true);
   spawnBnRipple(el, evt);
 
-  // Animation de "tap" sur l'icône au clic, rejouable même par clics rapprochés.
-  // .tap = pop générique du disque (déjà en place). En plus, une animation
-  // spécifique par onglet sur le contenu SVG lui-même : shake (haltère),
-  // cascade des barres (volume), tour complet de l'aiguille (timer).
   const sym = el.querySelector('.bn-sym');
   if(sym){
     const specificClass = BN_TAP_ANIM[el.dataset.tab];
     sym.classList.remove('tap','tap-press','tap-bars','tap-sweep');
-    void sym.offsetWidth; // force le reflow pour pouvoir relancer l'animation
+    void sym.offsetWidth;
     sym.classList.add('tap');
     if(specificClass) sym.classList.add(specificClass);
   }
 }
 
-// Positionnement initial du halo/trait (sans transition) + repositionnement
-// au resize/rotation d'écran, sans jamais toucher à l'onglet actif lui-même.
 (function initBnIndicator(){
   const place = () => {
     const active = document.querySelector('.bn-item.on') || document.querySelector('.bn-item');
@@ -3931,30 +3435,16 @@ function setActive(el, evt){
   window.addEventListener('orientationchange', () => requestAnimationFrame(place));
 })();
 
-// ── SERVICE WORKER ────────────────────────────────────
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>{
     navigator.serviceWorker.register('sw.js')
       .then(r=>{
         console.log('[SW] registered', r.scope);
-        // Vérifier les mises à jour à chaque chargement
         r.update().catch(()=>{});
       })
       .catch(e=>console.log('[SW] error', e));
   });
 
-  // Recharger automatiquement dès qu'une nouvelle version prend le contrôle.
-  // Si l'utilisateur est en train de saisir une valeur (champ focus), on
-  // diffère le reload pour ne pas perdre la frappe en cours — le rechargement
-  // se déclenche dès que le champ perd le focus.
-  //
-  // GARDE-FOU ANTI-BOUCLE : window.location.reload() recharge toute la page,
-  // donc une simple variable JS (_swRefreshing) est remise à zéro à chaque
-  // reload et ne protège pas contre des déclenchements répétés de
-  // 'controllerchange' sur des chargements successifs (ex: deux service
-  // workers actifs sur la même origine qui se redisputent le contrôle).
-  // On utilise sessionStorage (survit au reload, pas à la fermeture d'onglet)
-  // + un délai minimum entre deux reloads pour casser toute boucle.
   const RELOAD_GUARD_KEY = 'mt-sw-last-reload';
   const RELOAD_GUARD_MIN_MS = 4000;
 
@@ -3994,8 +3484,6 @@ if('serviceWorker' in navigator){
     document.addEventListener('focusout', onBlur);
   });
 
-  // Action "↺ Relancer" cliquée sur la notification alors que cette page
-  // était déjà ouverte (le SW nous transmet l'intention via postMessage).
   navigator.serviceWorker.addEventListener('message', (event)=>{
     if(event.data && event.data.type === 'restart-rest'){
       switchTab('timer');
