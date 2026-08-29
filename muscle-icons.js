@@ -375,11 +375,13 @@ const MUSCLE_ICONS = {
     </g>
   `,
 
-  // Érecteurs du rachis — tracé exactement depuis la référence fournie
-  // (silhouette de dos, bande centrale surlignée le long de la colonne).
+  // Érecteurs du rachis — même silhouette de dos détaillée (dosClip +
+  // DOS_BG_FRAGMENTS) que Trapèzes/Grand Dorsal/Lombaires, pour retrouver
+  // le même niveau de détail musculaire ; seul le surlignage change
+  // (bande centrale le long de la colonne, tracée depuis la référence).
   'Érecteurs du rachis': `
-    <g clip-path="url(#erecteursDuRachisClip)">
-      <path fill="rgba(167,139,250,.20)" stroke="rgba(167,139,250,.85)" stroke-width="1.1" stroke-linejoin="round" d="M0,0 H48 V48 H0 Z"/>
+    <g clip-path="url(#dosClip)">
+      <g fill="rgba(167,139,250,.20)" stroke="rgba(167,139,250,.85)" stroke-width="1.1" stroke-linejoin="round">${DOS_BG_FRAGMENTS}</g>
       <g filter="url(#muscleGlow)">
         <path fill="url(#muscleIconGrad)" stroke="rgba(15,8,28,.6)" stroke-width="0.9" stroke-linejoin="round" d="M22.87,2.61 L19.51,7.62 L20.83,16.06 L20.74,24.82 L21.91,28.5 L21.44,34.51 L22.12,44.73 L22.91,45.86 L23.7,45.36 L23.77,43.81 L23.39,29.6 L23.77,28.81 L23.77,13.37 L23.64,2.71 Z"/>
         <path fill="url(#muscleIconGrad)" stroke="rgba(15,8,28,.6)" stroke-width="0.9" stroke-linejoin="round" d="M24.66,2.59 L24.46,44.34 L25.11,45.86 L25.67,45.61 L25.99,44.15 L26.76,34.7 L26.22,28.61 L27.3,24.9 L27.29,16.71 L28.59,7.9 L25.51,2.86 Z"/>
